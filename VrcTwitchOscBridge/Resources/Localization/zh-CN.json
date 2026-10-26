@@ -2097,5 +2097,12 @@
   "Advanced triggers (open full editor)": "高级触发器（打开完整编辑器）",
   "Advanced range is on. DiamondRelay accepts 0.01m to 10000m technically; extreme values can be uncomfortable or world-blocked.": "高级范围已开启。DiamondRelay 在技术上接受 0.01m 到 10000m；极端数值可能令人不适，或会被世界限制。",
   "Safe range is 0.1m to 100m.": "安全范围为 0.1m 到 100m。",
-  "VRChat world min/max will be bypassed for this redeem.": "此 redeem 将绕过 VRChat 世界的高度最小/最大限制。"
+  "VRChat world min/max will be bypassed for this redeem.": "此 redeem 将绕过 VRChat 世界的高度最小/最大限制。",
+  "Cash Payments listen for StreamElements tips and Streamlabs donations. Tokens are stored in Windows Credential Manager.": "Cash Payments listen for StreamElements tips and Streamlabs donations. Tokens are stored in Windows Credential Manager.",
+  "DiamondRelay has removed the developer heartbeat. No live feedback pings are sent, including when loading an existing profile.": "DiamondRelay has removed the developer heartbeat. No live feedback pings are sent, including when loading an existing profile.",
+  "StreamElements and Streamlabs payment scaling rules.": "StreamElements and Streamlabs payment scaling rules.",
+  "StreamElements, Streamlabs payments and reward fire sales": "StreamElements, Streamlabs payments and reward fire sales",
+  "This clears Twitch, VRChat, StreamElements, and Streamlabs saved login tokens. Redeems and custom theme assets are restored from the backup.": "This clears Twitch, VRChat, StreamElements, and Streamlabs saved login tokens. Redeems and custom theme assets are restored from the backup.",
+  "An independent Twitch-to-VRChat bridge. Source and issue tracking: github.com/Zam6969/DiamondRelay": "An independent Twitch-to-VRChat bridge. Source and issue tracking: github.com/Zam6969/DiamondRelay",
+  "Based on MIT-licensed source. Original copyright and license notices are included in LICENSE.": "Based on MIT-licensed source. Original copyright and license notices are included in LICENSE."
 }

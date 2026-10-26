@@ -2097,5 +2097,12 @@
   "Advanced triggers (open full editor)": "Расширенные триггеры (открыть полный редактор)",
   "Advanced range is on. DiamondRelay accepts 0.01m to 10000m technically; extreme values can be uncomfortable or world-blocked.": "Расширенный диапазон включён. DiamondRelay технически принимает значения от 0,01 м до 10 000 м, но экстремальные значения могут быть некомфортными или заблокированы миром.",
   "Safe range is 0.1m to 100m.": "Безопасный диапазон: от 0,1 м до 100 м.",
-  "VRChat world min/max will be bypassed for this redeem.": "Для этого redeem ограничения min/max высоты мира VRChat будут обойдены."
+  "VRChat world min/max will be bypassed for this redeem.": "Для этого redeem ограничения min/max высоты мира VRChat будут обойдены.",
+  "Cash Payments listen for StreamElements tips and Streamlabs donations. Tokens are stored in Windows Credential Manager.": "Cash Payments listen for StreamElements tips and Streamlabs donations. Tokens are stored in Windows Credential Manager.",
+  "DiamondRelay has removed the developer heartbeat. No live feedback pings are sent, including when loading an existing profile.": "DiamondRelay has removed the developer heartbeat. No live feedback pings are sent, including when loading an existing profile.",
+  "StreamElements and Streamlabs payment scaling rules.": "StreamElements and Streamlabs payment scaling rules.",
+  "StreamElements, Streamlabs payments and reward fire sales": "StreamElements, Streamlabs payments and reward fire sales",
+  "This clears Twitch, VRChat, StreamElements, and Streamlabs saved login tokens. Redeems and custom theme assets are restored from the backup.": "This clears Twitch, VRChat, StreamElements, and Streamlabs saved login tokens. Redeems and custom theme assets are restored from the backup.",
+  "An independent Twitch-to-VRChat bridge. Source and issue tracking: github.com/Zam6969/DiamondRelay": "An independent Twitch-to-VRChat bridge. Source and issue tracking: github.com/Zam6969/DiamondRelay",
+  "Based on MIT-licensed source. Original copyright and license notices are included in LICENSE.": "Based on MIT-licensed source. Original copyright and license notices are included in LICENSE."
 }

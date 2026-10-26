@@ -6,10 +6,10 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <AssemblyName>DiamondRelayUpdater</AssemblyName>
     <RootNamespace>DiamondRelayUpdater</RootNamespace>
-    <Version>3.2.0</Version>
-    <AssemblyVersion>3.2.0.0</AssemblyVersion>
-    <FileVersion>3.2.0.0</FileVersion>
-    <InformationalVersion>3.2.0</InformationalVersion>
+    <Version>3.2.1</Version>
+    <AssemblyVersion>3.2.1.0</AssemblyVersion>
+    <FileVersion>3.2.1.0</FileVersion>
+    <InformationalVersion>3.2.1</InformationalVersion>
     <Product>DiamondRelay Updater</Product>
     <Title>DiamondRelay Updater</Title>
     <Description>Dedicated updater helper for DiamondRelay</Description>

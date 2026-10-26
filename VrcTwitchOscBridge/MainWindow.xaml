@@ -1560,7 +1560,7 @@
                                Margin="0,0,10,0"
                                Stretch="Uniform" />
                         <StackPanel VerticalAlignment="Center">
-                            <TextBlock Text="DiamondRelay"
+                            <TextBlock Text="{loc:Translate 'DiamondRelay'}"
                                        Foreground="{DynamicResource TitleBarTextBrush}"
                                        FontWeight="SemiBold"
                                        FontSize="15"
@@ -3490,9 +3490,9 @@
                     </Style>
                 </Border.Style>
                 <StackPanel Margin="24" HorizontalAlignment="Center" MaxWidth="760">
-                    <TextBlock Text="DiamondRelay" FontSize="28" FontWeight="Bold" Foreground="{DynamicResource TextBrush}" />
-                    <TextBlock Margin="0,12,0,0" Text="An independent Twitch-to-VRChat bridge. Source and issue tracking: github.com/Zam6969/DiamondRelay" Foreground="{DynamicResource TextBrush}" TextWrapping="Wrap" />
-                    <TextBlock Margin="0,12,0,0" Text="Based on MIT-licensed source. Original copyright and license notices are included in LICENSE." Foreground="{DynamicResource MutedBrush}" TextWrapping="Wrap" />
+                    <TextBlock Text="{loc:Translate 'DiamondRelay'}" FontSize="28" FontWeight="Bold" Foreground="{DynamicResource TextBrush}" />
+                    <TextBlock Margin="0,12,0,0" Text="{loc:Translate 'An independent Twitch-to-VRChat bridge. Source and issue tracking: github.com/Zam6969/DiamondRelay'}" Foreground="{DynamicResource TextBrush}" TextWrapping="Wrap" />
+                    <TextBlock Margin="0,12,0,0" Text="{loc:Translate 'Based on MIT-licensed source. Original copyright and license notices are included in LICENSE.'}" Foreground="{DynamicResource MutedBrush}" TextWrapping="Wrap" />
                 </StackPanel>
             </Border>
         </Grid>

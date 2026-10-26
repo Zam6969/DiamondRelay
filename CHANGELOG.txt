@@ -3,6 +3,13 @@ DiamondRelay Changelog
 
 Newest updates appear first. This changelog focuses on the changes users will notice most.
 
+v3.2.1
+- First independently published DiamondRelay Windows x64 release.
+- Removed hard-coded developer chat access and developer heartbeat/World Guard network calls.
+- Removed Ko-fi integration and upstream donation, Discord, and promotional About content.
+- Restricted VRChat thumbnail cookies and redirects, blocked avatar cache path traversal, and fixed theme path containment.
+- Update checks now use Zam6969/DiamondRelay. See SECURITY-AUDIT.md for audit coverage and remaining limits.
+
 v3.2.0 bug fix 8
 - Fixed Avatar Swap cards below the available window height becoming unreachable. The left Avatar Swaps card list now scrolls independently while the Return Avatar bar and right-side editor stay visible.
 - Added layout regression coverage for the independent card-pane scrollbar while preserving wrapped cards and preventing horizontal overflow.
