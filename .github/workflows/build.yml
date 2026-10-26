@@ -87,7 +87,7 @@ jobs:
         run: >-
           dotnet test .\VrcTwitchOscBridge.Tests\VrcTwitchOscBridge.Tests.csproj
           --no-restore -c Release --nologo
-          --filter "FullyQualifiedName~RemovedIntegrationsTests|FullyQualifiedName~ForkSecurityTests|FullyQualifiedName~DevChatCommandParserTests|FullyQualifiedName~ApplicationUpdateServiceTests|FullyQualifiedName~VrChatCurrentWorldTests|FullyQualifiedName~WorldCommandBlacklistServiceTests|FullyQualifiedName~WorldCommandPrivacyRegressionTests"
+          --filter "FullyQualifiedName~AvatarImageSecurityTests|FullyQualifiedName~RemovedIntegrationsTests|FullyQualifiedName~ForkSecurityTests|FullyQualifiedName~DevChatCommandParserTests|FullyQualifiedName~ApplicationUpdateServiceTests|FullyQualifiedName~VrChatCurrentWorldTests|FullyQualifiedName~WorldCommandBlacklistServiceTests|FullyQualifiedName~WorldCommandPrivacyRegressionTests"
 
       - name: Build
         run: dotnet build .\VrcTwitchOscBridge\VrcTwitchOscBridge.csproj --no-restore -c Release

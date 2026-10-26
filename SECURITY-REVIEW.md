@@ -33,3 +33,7 @@ The Windows Release application compiles with .NET 10. Security regression tests
 Validation: all 278 targeted security, update, developer-command, and world-privacy tests passed. A broader upstream suite run was stopped after failures and slow/hanging tests. A separate unchanged-baseline run reproduced five failures out of ten tests across payment summaries, scale timer fairness, and movement window layout. Application behavior has not been tested against live Twitch or VRChat accounts.
 
 Ko-fi removal validation: legacy connection settings are ignored, imported provider-ID-2 rules cannot be enabled, and webhook/relay entry points and promotional commands are absent. The expanded targeted suite passes 278 tests.
+
+## Expanded repository audit
+
+See [SECURITY-AUDIT.md](SECURITY-AUDIT.md) for the whole-tree scan, historical secret-pattern scan, dependency results, three additional confirmed fixes, and 428 passing targeted tests.

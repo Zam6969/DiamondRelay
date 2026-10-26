@@ -1,6 +1,7 @@
 using System.Collections.Concurrent;
 using System.IO;
 using System.Net.Http;
+using System.Net;
 using System.Threading;
 using System.Windows;
 using System.Windows.Media;
@@ -14,14 +15,22 @@ namespace VrcTwitchOscBridge.Services;
 /// </summary>
 public sealed class AvatarImageService
 {
-    private static readonly HttpClient HttpClient = CreateHttpClient();
+    private static readonly HttpClient SharedHttpClient = CreateHttpClient();
+    private const int MaxThumbnailBytes = 8 * 1024 * 1024;
+    private readonly HttpClient httpClient;
 
     private static HttpClient CreateHttpClient()
     {
-        var client = new HttpClient { Timeout = TimeSpan.FromSeconds(10) };
+        var client = new HttpClient(CreateThumbnailHttpClientHandler()) { Timeout = TimeSpan.FromSeconds(10) };
         client.DefaultRequestHeaders.UserAgent.ParseAdd("DiamondRelay/desktop");
         return client;
     }
+
+    internal static HttpClientHandler CreateThumbnailHttpClientHandler() => new()
+    {
+        AllowAutoRedirect = false,
+        UseCookies = false
+    };
 
     private readonly string iconFolder;
     private readonly string cacheFolder;
@@ -39,14 +48,18 @@ public sealed class AvatarImageService
     }
 
     public AvatarImageService()
+        : this(SharedHttpClient,
+            Path.Combine(AppDataPaths.ThemeAssetsFolder, "AvatarIcons"),
+            Path.Combine(AppDataPaths.ThemeAssetsFolder, "AvatarIcons", "Cache"))
     {
-        var themeAssets = AppDataPaths.ThemeAssetsFolder ?? string.Empty;
-        iconFolder = string.IsNullOrWhiteSpace(themeAssets)
-            ? string.Empty
-            : Path.Combine(themeAssets, "AvatarIcons");
-        cacheFolder = string.IsNullOrWhiteSpace(iconFolder)
-            ? string.Empty
-            : Path.Combine(iconFolder, "Cache");
+    }
+
+    // Injected clients remain caller-owned. Production uses the restricted shared handler.
+    internal AvatarImageService(HttpClient httpClient, string iconFolder, string cacheFolder)
+    {
+        this.httpClient = httpClient;
+        this.iconFolder = iconFolder;
+        this.cacheFolder = cacheFolder;
 
         if (!string.IsNullOrWhiteSpace(iconFolder) && !Directory.Exists(iconFolder))
         {
@@ -155,7 +168,7 @@ public sealed class AvatarImageService
     /// </summary>
     public string? SaveCustomIcon(string avatarId, string sourceFilePath)
     {
-        if (string.IsNullOrWhiteSpace(iconFolder) || !File.Exists(sourceFilePath))
+        if (!IsSafeAvatarId(avatarId) || string.IsNullOrWhiteSpace(iconFolder) || !File.Exists(sourceFilePath))
         {
             return null;
         }
@@ -208,7 +221,7 @@ public sealed class AvatarImageService
 
     private ImageSource? LoadVrChatThumbnail(string avatarId, string? thumbnailUrl)
     {
-        if (string.IsNullOrWhiteSpace(thumbnailUrl) || string.IsNullOrWhiteSpace(cacheFolder))
+        if (!IsSafeAvatarId(avatarId) || string.IsNullOrWhiteSpace(thumbnailUrl) || string.IsNullOrWhiteSpace(cacheFolder))
         {
             return null;
         }
@@ -221,19 +234,13 @@ public sealed class AvatarImageService
 
         try
         {
-            using var request = new HttpRequestMessage(HttpMethod.Get, thumbnailUrl);
-            if (!string.IsNullOrWhiteSpace(vrChatAuthCookie))
-            {
-                request.Headers.TryAddWithoutValidation("Cookie", $"auth={vrChatAuthCookie}");
-            }
-
-            using var response = HttpClient.Send(request);
-            if (!response.IsSuccessStatusCode)
+            using var response = SendThumbnailRequestAsync(thumbnailUrl, CancellationToken.None).GetAwaiter().GetResult();
+            if (response is null || !response.IsSuccessStatusCode)
             {
                 return null;
             }
 
-            var bytes = response.Content.ReadAsByteArrayAsync().GetAwaiter().GetResult();
+            var bytes = ReadThumbnailBytesAsync(response, CancellationToken.None).GetAwaiter().GetResult();
             File.WriteAllBytes(cachePath, bytes);
             return LoadImageFromFile(cachePath);
         }
@@ -245,7 +252,7 @@ public sealed class AvatarImageService
 
     private async Task<ImageSource?> LoadVrChatThumbnailAsync(string avatarId, string? thumbnailUrl, CancellationToken cancellationToken)
     {
-        if (string.IsNullOrWhiteSpace(thumbnailUrl) || string.IsNullOrWhiteSpace(cacheFolder))
+        if (!IsSafeAvatarId(avatarId) || string.IsNullOrWhiteSpace(thumbnailUrl) || string.IsNullOrWhiteSpace(cacheFolder))
         {
             return null;
         }
@@ -258,20 +265,14 @@ public sealed class AvatarImageService
 
         try
         {
-            using var request = new HttpRequestMessage(HttpMethod.Get, thumbnailUrl);
-            if (!string.IsNullOrWhiteSpace(vrChatAuthCookie))
-            {
-                request.Headers.TryAddWithoutValidation("Cookie", $"auth={vrChatAuthCookie}");
-            }
-
-            using var response = await HttpClient.SendAsync(request, cancellationToken);
-            if (!response.IsSuccessStatusCode)
+            using var response = await SendThumbnailRequestAsync(thumbnailUrl, cancellationToken).ConfigureAwait(false);
+            if (response is null || !response.IsSuccessStatusCode)
             {
                 System.Diagnostics.Debug.WriteLine($"[AvatarImageService] HTTP {(int)response.StatusCode} for {thumbnailUrl}");
                 return null;
             }
 
-            var bytes = await response.Content.ReadAsByteArrayAsync(cancellationToken);
+            var bytes = await ReadThumbnailBytesAsync(response, cancellationToken).ConfigureAwait(false);
             File.WriteAllBytes(cachePath, bytes);
             return LoadImageFromFile(cachePath);
         }
@@ -283,6 +284,54 @@ public sealed class AvatarImageService
         {
             return null;
         }
+    }
+
+    private static bool IsSafeAvatarId(string? avatarId) =>
+        !string.IsNullOrWhiteSpace(avatarId) && avatarId.Length <= 128
+        && avatarId.All(character => char.IsAsciiLetterOrDigit(character) || character is '_' or '-');
+
+    private async Task<HttpResponseMessage?> SendThumbnailRequestAsync(string thumbnailUrl, CancellationToken cancellationToken)
+    {
+        if (!Uri.TryCreate(thumbnailUrl, UriKind.Absolute, out var uri)) return null;
+        for (var redirect = 0; redirect <= 4; redirect++)
+        {
+            if (uri.Scheme != Uri.UriSchemeHttps || !string.IsNullOrEmpty(uri.UserInfo)) return null;
+            using var request = new HttpRequestMessage(HttpMethod.Get, uri);
+            // The VRChat session belongs only to the exact HTTPS API origin, never a CDN or imported URL.
+            if (uri.IsDefaultPort && string.Equals(uri.Host, "api.vrchat.cloud", StringComparison.OrdinalIgnoreCase)
+                && !string.IsNullOrWhiteSpace(vrChatAuthCookie))
+            {
+                request.Headers.TryAddWithoutValidation("Cookie", $"auth={vrChatAuthCookie}");
+            }
+
+            var response = await httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+            if (response.StatusCode is not (HttpStatusCode.MovedPermanently or HttpStatusCode.Redirect
+                or HttpStatusCode.RedirectMethod or HttpStatusCode.TemporaryRedirect or HttpStatusCode.PermanentRedirect))
+                return response;
+
+            var location = response.Headers.Location;
+            response.Dispose();
+            if (location is null || !Uri.TryCreate(uri, location, out var next)) return null;
+            uri = next;
+        }
+        return null;
+    }
+
+    private static async Task<byte[]> ReadThumbnailBytesAsync(HttpResponseMessage response, CancellationToken cancellationToken)
+    {
+        if (response.Content.Headers.ContentLength > MaxThumbnailBytes)
+            throw new InvalidDataException("Avatar thumbnail exceeded the download limit.");
+        await using var stream = await response.Content.ReadAsStreamAsync(cancellationToken).ConfigureAwait(false);
+        using var bytes = new MemoryStream();
+        var buffer = new byte[8192];
+        int count;
+        while ((count = await stream.ReadAsync(buffer, cancellationToken).ConfigureAwait(false)) > 0)
+        {
+            if (bytes.Length + count > MaxThumbnailBytes)
+                throw new InvalidDataException("Avatar thumbnail exceeded the download limit.");
+            bytes.Write(buffer, 0, count);
+        }
+        return bytes.ToArray();
     }
 
     private static ImageSource? LoadImageFromFile(string path)

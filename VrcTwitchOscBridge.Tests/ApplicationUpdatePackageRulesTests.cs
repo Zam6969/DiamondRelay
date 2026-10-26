@@ -144,7 +144,7 @@ public sealed class ApplicationUpdatePackageRulesTests
     [Theory]
     [InlineData(ApplicationUpdateChannel.Stable, "3.2.0", "DiamondRelay.exe")]
     [InlineData(ApplicationUpdateChannel.Stable, "3.2.0", "DiamondRelay-v3.2.0.exe")]
-    [InlineData(ApplicationUpdateChannel.Beta, "3.2.1-beta1", "diamondrelaytwitchosc-V3.2.1-BETA1.EXE")]
+    [InlineData(ApplicationUpdateChannel.Beta, "3.2.1-beta1", "diamondrelay-V3.2.1-BETA1.EXE")]
     [InlineData(ApplicationUpdateChannel.BugFix, "3.2.0-bugfix1", "DiamondRelay-v3.2.0-bugfix1.exe")]
     public void IsExpectedInstalledPackageEntryExecutableName_AcceptsStaticOrExactLegacyName(
         ApplicationUpdateChannel channel,

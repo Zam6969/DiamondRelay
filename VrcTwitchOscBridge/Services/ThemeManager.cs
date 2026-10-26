@@ -231,7 +231,8 @@ internal static class ThemeAssetStore
         try
         {
             var candidatePath = Path.GetFullPath(Path.Combine(AppDataPaths.PortableSaveFolder, relativePath));
-            var themeAssetsRoot = Path.GetFullPath(AppDataPaths.ThemeAssetsFolder);
+            var themeAssetsRoot = Path.TrimEndingDirectorySeparator(Path.GetFullPath(AppDataPaths.ThemeAssetsFolder))
+                + Path.DirectorySeparatorChar;
             if (!candidatePath.StartsWith(themeAssetsRoot, StringComparison.OrdinalIgnoreCase))
             {
                 return null;
