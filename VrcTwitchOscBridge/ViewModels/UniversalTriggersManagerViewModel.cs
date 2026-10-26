@@ -257,7 +257,7 @@ public class UniversalTriggersManagerViewModel : ObservableObject, IDisposable
             if (SelectedTrigger.UsesLinkedExistingReward)
             {
                 if (string.IsNullOrWhiteSpace(SelectedTrigger.RewardId)) return "Select a Twitch reward to link";
-                return "Listen-only - Crystal Relay will not edit this reward";
+                return "Listen-only - DiamondRelay will not edit this reward";
             }
             if (string.IsNullOrWhiteSpace(SelectedTrigger.RewardId)) return "Pending sync - new reward will be created on Save";
             if (MainWindowViewModel.HasUniversalTriggerAvatarParameterGate(SelectedTrigger)

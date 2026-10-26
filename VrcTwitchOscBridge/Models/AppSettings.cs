@@ -81,7 +81,7 @@ public sealed class AppSettings : ObservableObject
     private bool emergencyRedeemStopEnabled;
     private bool desktopModeInputLockEnabled;
     private bool restartVrChatInDesktopMode;
-    private bool liveFeedbackHeartbeatEnabled = true;
+    private bool liveFeedbackHeartbeatEnabled;
     private bool betaApplicationUpdatesEnabled;
     private bool easterEggsEnabled = true;
     private bool mainWindowTrayTipShown;
@@ -565,16 +565,11 @@ public sealed class AppSettings : ObservableObject
         set => SetProperty(ref restartVrChatInDesktopMode, value);
     }
 
+    // Retained for profile compatibility; telemetry is removed from this fork.
     public bool LiveFeedbackHeartbeatEnabled
     {
-        get => true;
-        set
-        {
-            if (value)
-            {
-                SetProperty(ref liveFeedbackHeartbeatEnabled, true);
-            }
-        }
+        get => false;
+        set => SetProperty(ref liveFeedbackHeartbeatEnabled, false);
     }
 
     public bool BetaApplicationUpdatesEnabled

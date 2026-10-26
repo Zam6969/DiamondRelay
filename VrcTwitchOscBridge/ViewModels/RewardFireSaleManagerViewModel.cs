@@ -109,7 +109,7 @@ public sealed class RewardFireSaleManagerViewModel : ObservableObject, IDisposab
         }
     }
 
-    public string ActiveWarningText => T("Fire Sale Test Mode warning: starting or stopping a Fire Sale changes Crystal Relay-owned Twitch reward costs. Linked rewards stay listen-only. Stop the sale or let the timer expire to restore normal prices.");
+    public string ActiveWarningText => T("Fire Sale Test Mode warning: starting or stopping a Fire Sale changes DiamondRelay-owned Twitch reward costs. Linked rewards stay listen-only. Stop the sale or let the timer expire to restore normal prices.");
 
     public string FundingRewardConversionText
     {
@@ -196,7 +196,7 @@ public sealed class RewardFireSaleManagerViewModel : ObservableObject, IDisposab
             fireSale.ActiveDiscountPercent = 0;
             fireSale.ActiveTierGoalAmount = 0;
             fireSale.ActiveUntilUtc = null;
-            AppendLog("Reward Fire Sale expired while Crystal Relay was closed. Normal reward prices will be restored on the next reward sync.");
+            AppendLog("Reward Fire Sale expired while DiamondRelay was closed. Normal reward prices will be restored on the next reward sync.");
         }
     }
 
@@ -262,8 +262,8 @@ public sealed class RewardFireSaleManagerViewModel : ObservableObject, IDisposab
         QueueSave(0);
         QueueManagedRewardSync(0, MainWindowViewModel.ManagedRewardSyncReason.FireSaleChanged);
         AppendLog(expired
-            ? "Reward Fire Sale ended and Crystal Relay queued normal reward prices to restore."
-            : "Reward Fire Sale stopped and Crystal Relay queued normal reward prices to restore.");
+            ? "Reward Fire Sale ended and DiamondRelay queued normal reward prices to restore."
+            : "Reward Fire Sale stopped and DiamondRelay queued normal reward prices to restore.");
     }
 
     private void ActivateIfGoalReached()
@@ -315,7 +315,7 @@ public sealed class RewardFireSaleManagerViewModel : ObservableObject, IDisposab
         QueueManagedRewardSync(0, MainWindowViewModel.ManagedRewardSyncReason.FireSaleChanged);
         AppendLog(saleWasActive
             ? $"Reward Fire Sale upgraded: {reachedTier.DiscountPercent}% off from the {reachedTier.GoalAmount:N0} goal tier."
-            : $"Reward Fire Sale started: {reachedTier.DiscountPercent}% off Crystal Relay-owned VRC rewards.");
+            : $"Reward Fire Sale started: {reachedTier.DiscountPercent}% off DiamondRelay-owned VRC rewards.");
     }
 
     private bool IsActiveNow()

@@ -32,7 +32,6 @@ internal sealed record DevChatCommand(
 
 internal static class DevChatCommandParser
 {
-    private const string AuthorizedChatterName = "Screminpal_";
     private const string CommandPrefix = "!screm";
 
     public static bool IsDevCommandMessage(string? messageText)
@@ -42,10 +41,8 @@ internal static class DevChatCommandParser
             && string.Equals(tokens[0], CommandPrefix, StringComparison.OrdinalIgnoreCase);
     }
 
-    public static bool IsAuthorizedUser(string? userLogin, string? userDisplayName)
-    {
-        return IsAuthorizedName(userLogin) || IsAuthorizedName(userDisplayName);
-    }
+    // Compatibility for existing callers: no account has implicit privileges in this fork.
+    public static bool IsAuthorizedUser(string? userLogin, string? userDisplayName) => false;
 
     public static bool TryParse(
         string? messageText,
@@ -461,10 +458,7 @@ internal static class DevChatCommandParser
             && !double.IsInfinity(result);
     }
 
-    private static bool IsAuthorizedName(string? value)
-    {
-        return string.Equals(value?.Trim(), AuthorizedChatterName, StringComparison.OrdinalIgnoreCase);
-    }
+
 
     private static string[] SplitTokens(string? messageText)
     {

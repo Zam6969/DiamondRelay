@@ -54,11 +54,11 @@ jobs:
           blocked_file_names = {
               join("A", "G", "E", "N", "T", "S", ".", "m", "d").lower(),
               ".dev.vars",
-              "backup-crystal-relay-project.ps1",
-              "backup-crystal-relay-appdata.ps1",
-              "open-crystal-relay-github-desktop-workflow.ps1",
-              "prepare-crystal-relay-github-uploads.ps1",
-              "sync-crystal-relay-github-repos.ps1",
+              "backup-diamondrelay-project.ps1",
+              "backup-diamondrelay-appdata.ps1",
+              "open-diamondrelay-github-desktop-workflow.ps1",
+              "prepare-diamondrelay-github-uploads.ps1",
+              "sync-diamondrelay-github-repos.ps1",
               "github-upload-notes.txt",
               "release-change-record.txt",
           }

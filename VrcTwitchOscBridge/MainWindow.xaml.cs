@@ -187,7 +187,7 @@ private static readonly string[] LoadingStoryboardKeys =
             viewModel.SelectedTheme,
             LocalizationService.Translate("Major UI Update — Please Verify Your Rewards"),
             LocalizationService.Translate(
-                "Crystal Relay's main layout has been reorganized. " +
+                "DiamondRelay's main layout has been reorganized. " +
                 "Your reward configurations are still here, but some sections may have moved or look different.\n\n" +
                 "Please review each of your reward systems to make sure everything transferred correctly:"),
             finePrint:
@@ -346,7 +346,7 @@ private static readonly string[] LoadingStoryboardKeys =
                 this,
                 viewModel.SelectedTheme,
                 LocalizationService.Translate("Custom Theme"),
-                LocalizationService.Format("Crystal Relay could not import that background image.\n\n{0}", ex.Message),
+                LocalizationService.Format("DiamondRelay could not import that background image.\n\n{0}", ex.Message),
                 LocalizationService.Translate("OK"));
         }
     }
@@ -405,7 +405,7 @@ private static readonly string[] LoadingStoryboardKeys =
             this,
             viewModel.SelectedTheme,
             "Fooma Twitch Interaction",
-            "Universal Triggers can import Fooma Twitch Interaction JSON configs for assist-style OSC actions. If you do not have that system yet, Crystal Relay can open its Gumroad page for you.",
+            "Universal Triggers can import Fooma Twitch Interaction JSON configs for assist-style OSC actions. If you do not have that system yet, DiamondRelay can open its Gumroad page for you.",
             "Open Fooma Page",
             "Close");
 
@@ -1149,7 +1149,7 @@ private static readonly string[] LoadingStoryboardKeys =
             if (!viewModel.IsApplicationSelfUpdateSupported)
             {
                 var fallbackMessage = LocalizationService.Format(
-                    "A newer Crystal Relay update is available.\n\nCurrent version: {0}\nLatest version: {1}\n\nIf you continue, Crystal Relay will open the GitHub release page in your browser.",
+                    "A newer DiamondRelay update is available.\n\nCurrent version: {0}\nLatest version: {1}\n\nIf you continue, DiamondRelay will open the GitHub release page in your browser.",
                     availableUpdate.CurrentVersion,
                     availableUpdate.LatestVersion);
                 var shouldOpenReleasePage = ThemedDialogWindow.ShowYesNo(
@@ -1168,7 +1168,7 @@ private static readonly string[] LoadingStoryboardKeys =
             }
 
             var updateMessage = LocalizationService.Format(
-                "A newer Crystal Relay update is available.\n\nCurrent version: {0}\nLatest version: {1}\n\nIf you continue, Crystal Relay will download the update, close, replace the app files, and reopen.",
+                "A newer DiamondRelay update is available.\n\nCurrent version: {0}\nLatest version: {1}\n\nIf you continue, DiamondRelay will download the update, close, replace the app files, and reopen.",
                 availableUpdate.CurrentVersion,
                 availableUpdate.LatestVersion);
 
@@ -1182,13 +1182,13 @@ private static readonly string[] LoadingStoryboardKeys =
                     this,
                     viewModel.SelectedTheme,
                     LocalizationService.Format(
-                        "Bug Fix Push {0} for Crystal Relay v{1}",
+                        "Bug Fix Push {0} for DiamondRelay v{1}",
                         availableUpdate.BugFixSequence,
                         availableUpdate.LatestBaseVersion),
                     availableUpdate.ReleaseTitle,
                     releaseBody,
                     LocalizationService.Translate(
-                        "This Bug Fix Push cannot be permanently skipped. Choose Later to be reminded the next time Crystal Relay starts."),
+                        "This Bug Fix Push cannot be permanently skipped. Choose Later to be reminded the next time DiamondRelay starts."),
                     LocalizationService.Translate("Update Now"),
                     LocalizationService.Translate("Later"),
                     LocalizationService.Translate("View on GitHub"),
@@ -1283,14 +1283,14 @@ private static readonly string[] LoadingStoryboardKeys =
         {
             viewModel.AppendDiagnosticLog(
                 LocalizationService.Format(
-                    "Crystal Relay could not install the update automatically: {0}",
+                    "DiamondRelay could not install the update automatically: {0}",
                     ex.Message));
             var shouldOpenReleasePage = ThemedDialogWindow.ShowYesNo(
                 this,
                 viewModel.SelectedTheme,
                 LocalizationService.Translate("Update Failed"),
                 LocalizationService.Format(
-                    "Crystal Relay could not install the update automatically.\n\n{0}\n\nOpen the GitHub release page instead?",
+                    "DiamondRelay could not install the update automatically.\n\n{0}\n\nOpen the GitHub release page instead?",
                     ex.Message),
                 LocalizationService.Translate("Open Update Page"),
                 LocalizationService.Translate("Close"));
@@ -1428,7 +1428,7 @@ private static readonly string[] LoadingStoryboardKeys =
         Close();
     }
 
-    private void OnRestartCrystalRelayClicked(object sender, RoutedEventArgs e)
+    private void OnRestartDiamondRelayClicked(object sender, RoutedEventArgs e)
     {
         if (isGracefulShutdownInProgress || isGracefulShutdownCompleted)
         {
@@ -1438,16 +1438,16 @@ private static readonly string[] LoadingStoryboardKeys =
         if (!ThemedDialogWindow.ShowYesNo(
                 this,
                 viewModel.SelectedTheme,
-                LocalizationService.Translate("Restart Crystal Relay?"),
-                LocalizationService.Translate("Crystal Relay will close and reopen. Open Crystal Relay windows will be restored.")))
+                LocalizationService.Translate("Restart DiamondRelay?"),
+                LocalizationService.Translate("DiamondRelay will close and reopen. Open DiamondRelay windows will be restored.")))
         {
             return;
         }
 
-        StartRestart(ApplicationRestartMode.CrystalRelayOnly);
+        StartRestart(ApplicationRestartMode.DiamondRelayOnly);
     }
 
-    private async void OnRestartVrChatAndCrystalRelayClicked(object sender, RoutedEventArgs e)
+    private async void OnRestartVrChatAndDiamondRelayClicked(object sender, RoutedEventArgs e)
     {
         if (isGracefulShutdownInProgress || isGracefulShutdownCompleted)
         {
@@ -1457,8 +1457,8 @@ private static readonly string[] LoadingStoryboardKeys =
         if (!ThemedDialogWindow.ShowYesNo(
                 this,
                 viewModel.SelectedTheme,
-                LocalizationService.Translate("Restart VRChat and Crystal Relay?"),
-                LocalizationService.Translate("Crystal Relay will read your current VRChat instance, close VRChat, force-close it if needed, reopen that instance, and restart Crystal Relay.")))
+                LocalizationService.Translate("Restart VRChat and DiamondRelay?"),
+                LocalizationService.Translate("DiamondRelay will read your current VRChat instance, close VRChat, force-close it if needed, reopen that instance, and restart DiamondRelay.")))
         {
             return;
         }
@@ -1474,13 +1474,13 @@ private static readonly string[] LoadingStoryboardKeys =
                     viewModel.SelectedTheme,
                     LocalizationService.Translate("VRChat restart unavailable"),
                     string.IsNullOrWhiteSpace(location.FailureReason)
-                        ? LocalizationService.Translate("Crystal Relay could not find a current VRChat instance to rejoin. VRChat was not restarted.")
+                        ? LocalizationService.Translate("DiamondRelay could not find a current VRChat instance to rejoin. VRChat was not restarted.")
                         : location.FailureReason);
                 return;
             }
 
             StartRestart(
-                ApplicationRestartMode.VrChatAndCrystalRelay,
+                ApplicationRestartMode.VrChatAndDiamondRelay,
                 location.LaunchUri,
                 viewModel.Settings.RestartVrChatInDesktopMode);
         }
@@ -1694,7 +1694,7 @@ private static readonly string[] LoadingStoryboardKeys =
                 this,
                 viewModel.SelectedTheme,
                 "Error: 418 - I am a teapot",
-                "You shook Crystal Relay a little too hard.",
+                "You shook DiamondRelay a little too hard.",
                 finePrint: "Fine print: this is just an easter egg, not a real error.");
         }
         finally
@@ -2200,10 +2200,10 @@ private static readonly string[] LoadingStoryboardKeys =
         trayIconImage = CreateTrayIconImage();
 
         var contextMenu = new WinForms.ContextMenuStrip();
-        var openMenuItem = new WinForms.ToolStripMenuItem(LocalizationService.Translate("Open Crystal Relay"));
+        var openMenuItem = new WinForms.ToolStripMenuItem(LocalizationService.Translate("Open DiamondRelay"));
         openMenuItem.Click += OnTrayOpenMenuItemClicked;
 
-        var quitMenuItem = new WinForms.ToolStripMenuItem(LocalizationService.Translate("Quit Crystal Relay"));
+        var quitMenuItem = new WinForms.ToolStripMenuItem(LocalizationService.Translate("Quit DiamondRelay"));
         quitMenuItem.Click += OnTrayQuitMenuItemClicked;
 
         contextMenu.Items.Add(openMenuItem);
@@ -2212,7 +2212,7 @@ private static readonly string[] LoadingStoryboardKeys =
 
         trayNotifyIcon = new WinForms.NotifyIcon
         {
-            Text = "Crystal Relay",
+            Text = "DiamondRelay",
             Icon = trayIconImage,
             Visible = false,
             ContextMenuStrip = contextMenu
@@ -2345,8 +2345,8 @@ private static readonly string[] LoadingStoryboardKeys =
         viewModel.Settings.MainWindowTrayTipShown = true;
         trayNotifyIcon.ShowBalloonTip(
             5000,
-            "Crystal Relay",
-            LocalizationService.Translate("Crystal Relay is still running in the system tray. Double-click the tray icon to open it again."),
+            "DiamondRelay",
+            LocalizationService.Translate("DiamondRelay is still running in the system tray. Double-click the tray icon to open it again."),
             WinForms.ToolTipIcon.Info);
     }
 
@@ -2361,7 +2361,7 @@ private static readonly string[] LoadingStoryboardKeys =
         return ThemedDialogWindow.ShowYesNo(
             owner,
             viewModel.SelectedTheme,
-            LocalizationService.Translate("Quit Crystal Relay?"),
+            LocalizationService.Translate("Quit DiamondRelay?"),
             LocalizationService.Translate("Do you really want to quit this program for good?"));
     }
 

@@ -6,7 +6,7 @@ namespace VrcTwitchOscBridge.Services;
 
 /// <summary>
 /// Thin wrapper around Windows Credential Manager.
-/// Crystal Relay uses this for OAuth tokens and the VRChat auth cookie so secrets stay out of normal JSON files.
+/// DiamondRelay uses this for OAuth tokens and the VRChat auth cookie so secrets stay out of normal JSON files.
 /// </summary>
 public sealed class WindowsCredentialStore
 {

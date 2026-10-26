@@ -62,7 +62,7 @@ public sealed class VrChatCurrentWorldTests
             Assert.Equal(string.Empty, request.Uri.Query);
             Assert.Equal($"auth={SyntheticAuthCookie}", Assert.Single(request.Headers["Cookie"]));
             Assert.Equal("application/json", Assert.Single(request.Headers["Accept"]));
-            Assert.Equal("CrystalRelayTwitchOsc/desktop", Assert.Single(request.Headers["User-Agent"]));
+            Assert.Equal("DiamondRelay/desktop", Assert.Single(request.Headers["User-Agent"]));
         });
         Assert.DoesNotContain(fixture.Handler.Requests, request =>
             request.Uri.AbsolutePath.Contains("/instances", StringComparison.OrdinalIgnoreCase)
@@ -318,7 +318,7 @@ public sealed class VrChatCurrentWorldTests
         Assert.Equal(TimeSpan.FromSeconds(18), httpClient.Timeout);
         Assert.Equal("application/json", Assert.Single(httpClient.DefaultRequestHeaders.Accept).MediaType);
         Assert.Equal(
-            "CrystalRelayTwitchOsc/desktop",
+            "DiamondRelay/desktop",
             Assert.Single(httpClient.DefaultRequestHeaders.UserAgent).ToString());
     }
 
@@ -363,8 +363,8 @@ public sealed class VrChatCurrentWorldTests
             new MediaTypeWithQualityHeaderValue("application/json"));
         httpClient.DefaultRequestHeaders.Accept.Add(
             new MediaTypeWithQualityHeaderValue("text/plain"));
-        httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("CrystalRelayTwitchOsc/legacy");
-        httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("CrystalRelayTwitchOsc/desktop");
+        httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("DiamondRelay/legacy");
+        httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("DiamondRelay/desktop");
         httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("OtherClient/1.0");
 
         using var firstService = new VrChatApiClient(httpClient);
@@ -377,7 +377,7 @@ public sealed class VrChatCurrentWorldTests
             string.Equals(header.MediaType, "text/plain", StringComparison.OrdinalIgnoreCase));
 
         var crystalRelayUserAgent = Assert.Single(httpClient.DefaultRequestHeaders.UserAgent, product =>
-            string.Equals(product.Product?.Name, "CrystalRelayTwitchOsc", StringComparison.OrdinalIgnoreCase));
+            string.Equals(product.Product?.Name, "DiamondRelay", StringComparison.OrdinalIgnoreCase));
         Assert.Equal("desktop", crystalRelayUserAgent.Product?.Version);
         Assert.Contains(httpClient.DefaultRequestHeaders.UserAgent, product =>
             string.Equals(product.Product?.Name, "OtherClient", StringComparison.Ordinal));

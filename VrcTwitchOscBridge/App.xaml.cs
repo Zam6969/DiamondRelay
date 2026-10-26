@@ -17,8 +17,8 @@ namespace VrcTwitchOscBridge;
 /// </summary>
 public partial class App : Application
 {
-    private const string SingleInstanceMutexName = @"Local\CrystalRelay.SingleInstance";
-    private const string ActivateExistingWindowMessageName = "CrystalRelay.ActivateExistingWindow";
+    private const string SingleInstanceMutexName = @"Local\DiamondRelay.SingleInstance";
+    private const string ActivateExistingWindowMessageName = "DiamondRelay.ActivateExistingWindow";
     private static readonly int activateExistingWindowMessageId = RegisterWindowMessage(ActivateExistingWindowMessageName);
     private static int crashNoticeShown;
 
@@ -117,7 +117,7 @@ public partial class App : Application
     {
         try
         {
-            var portableProfilePath = Path.Combine(AppDataPaths.PortableSaveFolder, "crystal-relay.rules.json");
+            var portableProfilePath = Path.Combine(AppDataPaths.PortableSaveFolder, "diamondrelay.rules.json");
             if (!File.Exists(portableProfilePath))
             {
                 return new FastProfilePreferences(AppLanguage.SystemDefault, AppTheme.VoidCrystal);
@@ -197,7 +197,7 @@ public partial class App : Application
         try
         {
             var builder = new StringBuilder();
-            builder.AppendLine(LocalizationService.Translate("Crystal Relay ran into an unexpected error and needs to close."));
+            builder.AppendLine(LocalizationService.Translate("DiamondRelay ran into an unexpected error and needs to close."));
 
             var exceptionMessage = exceptionObject switch
             {
@@ -221,7 +221,7 @@ public partial class App : Application
             else if (!string.IsNullOrWhiteSpace(crashLogResult.FailureReason))
             {
                 builder.AppendLine();
-                builder.AppendLine(LocalizationService.Translate("Crystal Relay tried to save a crash log, but logging failed."));
+                builder.AppendLine(LocalizationService.Translate("DiamondRelay tried to save a crash log, but logging failed."));
                 builder.AppendLine(crashLogResult.FailureReason);
             }
 
@@ -232,7 +232,7 @@ public partial class App : Application
             {
                 MessageBox.Show(
                     builder.ToString(),
-                    LocalizationService.Translate("Crystal Relay Crash"),
+                    LocalizationService.Translate("DiamondRelay Crash"),
                     MessageBoxButton.OK,
                     MessageBoxImage.Error);
             }

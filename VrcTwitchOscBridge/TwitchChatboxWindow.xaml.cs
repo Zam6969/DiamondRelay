@@ -1007,7 +1007,7 @@ public static class ChatMessageInlinePresenter
         {
             Timeout = TimeSpan.FromSeconds(4)
         };
-        client.DefaultRequestHeaders.UserAgent.ParseAdd("CrystalRelay/2.8.9 (+https://github.com/seluvia/crystal-relay-public)");
+        client.DefaultRequestHeaders.UserAgent.ParseAdd("DiamondRelay/2.8.9 (+https://github.com/seluvia/diamondrelay-public)");
         return client;
     }
 

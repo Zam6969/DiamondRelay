@@ -10,7 +10,7 @@ namespace VrcTwitchOscBridge.Tests;
 public sealed class WorldCommandPrivacyRegressionTests
 {
     private const string GenericProtectedWorldMessage =
-        "This VRChat world is protected right now, so Crystal Relay is not sharing the world link.";
+        "This VRChat world is protected right now, so DiamondRelay is not sharing the world link.";
     private const string BuildWorldCommandSignature =
         "private async Task<string> BuildWorldCommandMessageAsync(";
     private const string CurrentWorldLookupSignature =
@@ -68,7 +68,7 @@ public sealed class WorldCommandPrivacyRegressionTests
                 $"Unexpected helper flow in blocked branch: {invocationPath}"));
 
         var methodReturns = GetExecutableReturns(method);
-        var unavailableReturnPattern = $@"^\s*return\s+T\s*\(\s*""{Regex.Escape("Crystal Relay could not find a public VRChat world to share right now.")}""\s*\)\s*;\s*$";
+        var unavailableReturnPattern = $@"^\s*return\s+T\s*\(\s*""{Regex.Escape("DiamondRelay could not find a public VRChat world to share right now.")}""\s*\)\s*;\s*$";
         var currentWorldReturnPattern = $@"^\s*return\s+SanitizeBotMessage\s*\(\s*TF\s*\(\s*""{Regex.Escape("Current VRChat world: {0} - {1}")}""\s*,\s*world\s*\.\s*WorldName\s*,\s*world\s*\.\s*WorldUrl\s*\)\s*\)\s*;\s*$";
         Assert.Collection(
             methodReturns,

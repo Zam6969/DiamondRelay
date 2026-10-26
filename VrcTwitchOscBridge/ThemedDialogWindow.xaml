@@ -2,8 +2,8 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:shell="clr-namespace:System.Windows.Shell;assembly=PresentationFramework"
-        Title="Crystal Relay"
-        Icon="Assets/crystal-relay-icon.ico"
+        Title="DiamondRelay"
+        Icon="Assets/diamondrelay-icon.ico"
         SizeToContent="Height"
         Width="500"
         MinWidth="500"
@@ -166,7 +166,7 @@
                     </Grid.ColumnDefinitions>
 
                     <DockPanel VerticalAlignment="Center">
-                        <Image Source="Assets/crystal-relay-icon.png"
+                        <Image Source="Assets/diamondrelay-icon.png"
                                Width="18"
                                Height="18"
                                Margin="0,0,10,0"
@@ -179,7 +179,7 @@
                                        FontWeight="Bold"
                                        Foreground="{DynamicResource TitleBarTextBrush}" />
                             <TextBlock Margin="8,0,0,0"
-                                       Text="Crystal Relay"
+                                       Text="DiamondRelay"
                                        Foreground="{DynamicResource TitleBarSubTextBrush}"
                                        VerticalAlignment="Center" />
                         </StackPanel>
@@ -223,7 +223,7 @@
                                 Visibility="{Binding AccentStripVisibility, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" />
 
                         <DockPanel Grid.Row="1">
-                            <Image Source="Assets/crystal-relay-icon.png"
+                            <Image Source="Assets/diamondrelay-icon.png"
                                    Width="36"
                                    Height="36"
                                    Margin="0,0,12,0"
@@ -236,7 +236,7 @@
                                            Foreground="{DynamicResource TextBrush}"
                                            TextWrapping="Wrap" />
                                 <TextBlock Margin="0,6,0,0"
-                                           Text="Crystal Relay"
+                                           Text="DiamondRelay"
                                            Foreground="{DynamicResource MutedBrush}" />
                             </StackPanel>
                         </DockPanel>

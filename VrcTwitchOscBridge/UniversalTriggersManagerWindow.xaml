@@ -12,7 +12,7 @@
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance Type=vm:UniversalTriggersManagerViewModel}"
         Title="{loc:Translate 'Universal Triggers'}"
-        Icon="Assets/crystal-relay-icon.ico"
+        Icon="Assets/diamondrelay-icon.ico"
         Width="980"
         Height="640"
         MinWidth="720"

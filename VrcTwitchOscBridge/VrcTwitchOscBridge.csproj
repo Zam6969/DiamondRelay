@@ -9,21 +9,21 @@
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
     <EnableDefaultApplicationDefinition>false</EnableDefaultApplicationDefinition>
     <EnableDefaultPageItems>false</EnableDefaultPageItems>
-    <ApplicationIcon>Assets\crystal-relay-icon.ico</ApplicationIcon>
+    <ApplicationIcon>Assets\diamondrelay-icon.ico</ApplicationIcon>
     <UseWindowsForms>true</UseWindowsForms>
     <Version>3.2.0</Version>
     <AssemblyVersion>3.2.0.0</AssemblyVersion>
     <FileVersion>3.2.0.0</FileVersion>
     <InformationalVersion>3.2.0</InformationalVersion>
-    <AssemblyName>CrystalRelayTwitchOsc</AssemblyName>
-    <Product>Crystal Relay</Product>
-    <Title>Crystal Relay - Twitch to OSC</Title>
-    <Description>Crystal Relay Twitch to OSC bridge for VRChat</Description>
+    <AssemblyName>DiamondRelay</AssemblyName>
+    <Product>DiamondRelay</Product>
+    <Title>DiamondRelay - Twitch to OSC</Title>
+    <Description>DiamondRelay Twitch to OSC bridge for VRChat</Description>
     <Authors>ScreminPal</Authors>
     <Company>ScreminPal</Company>
     <Copyright>Copyright (c) 2026 ScreminPal</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <RepositoryUrl>https://github.com/seluvia/crystal-relay-public</RepositoryUrl>
+    <RepositoryUrl>https://github.com/Zam6969/DiamondRelay</RepositoryUrl>
   </PropertyGroup>
   <ItemGroup>
     <Using Remove="System.Drawing" />
@@ -67,8 +67,8 @@
     <Page Include="UserControls\InlineSubsRuleRowControl.xaml" />
     <Page Include="UserControls\RouletteRewardSettingsControl.xaml" />
 
-    <Resource Include="Assets\crystal-relay-icon.ico" />
-    <Resource Include="Assets\crystal-relay-icon.png" />
+    <Resource Include="Assets\diamondrelay-icon.ico" />
+    <Resource Include="Assets\diamondrelay-icon.png" />
     <Resource Include="Assets\fooma-icon.png" />
     <Resource Include="Assets\bubblegum-cuddles.png" />
     <Resource Include="Assets\moon-bunny-wink.jpg" />

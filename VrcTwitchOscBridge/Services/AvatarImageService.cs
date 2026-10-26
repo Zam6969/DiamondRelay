@@ -19,7 +19,7 @@ public sealed class AvatarImageService
     private static HttpClient CreateHttpClient()
     {
         var client = new HttpClient { Timeout = TimeSpan.FromSeconds(10) };
-        client.DefaultRequestHeaders.UserAgent.ParseAdd("CrystalRelayTwitchOsc/desktop");
+        client.DefaultRequestHeaders.UserAgent.ParseAdd("DiamondRelay/desktop");
         return client;
     }
 

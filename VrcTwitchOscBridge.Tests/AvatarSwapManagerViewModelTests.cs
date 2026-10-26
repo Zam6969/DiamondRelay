@@ -2136,7 +2136,7 @@ public sealed class AvatarSwapManagerViewModelTests
             IsGlobalCooldownEnabled = false,
             GlobalCooldownSeconds = 0,
             BackgroundColor = ManagedRewardPresentation.ReadyBackgroundColor,
-            Prompt = "Managed by Crystal Relay.",
+            Prompt = "Managed by DiamondRelay.",
             IsUserInputRequired = false
         };
         var result = await SynchronizeManagedRewardAsync(
@@ -2252,7 +2252,7 @@ public sealed class AvatarSwapManagerViewModelTests
             IsGlobalCooldownEnabled = false,
             GlobalCooldownSeconds = 0,
             BackgroundColor = ManagedRewardPresentation.ReadyBackgroundColor,
-            Prompt = "Managed by Crystal Relay.",
+            Prompt = "Managed by DiamondRelay.",
             IsUserInputRequired = false
         };
         var duplicateReward = new TwitchApiClient.CustomRewardResponse
@@ -2264,7 +2264,7 @@ public sealed class AvatarSwapManagerViewModelTests
             IsGlobalCooldownEnabled = false,
             GlobalCooldownSeconds = 0,
             BackgroundColor = ManagedRewardPresentation.ReadyBackgroundColor,
-            Prompt = "Managed by Crystal Relay.",
+            Prompt = "Managed by DiamondRelay.",
             IsUserInputRequired = false
         };
         var orderedTargets = titleOnlyTargetFirst
@@ -3995,7 +3995,7 @@ public sealed class AvatarSwapManagerViewModelTests
             true,
             0,
             ManagedRewardPresentation.ReadyBackgroundColor,
-            "Managed by Crystal Relay.",
+            "Managed by DiamondRelay.",
             false,
             CancellationToken.None
         }));

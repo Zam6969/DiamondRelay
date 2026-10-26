@@ -10,14 +10,14 @@ public sealed class ApplicationSelfUpdateBugFixTests
     [Fact]
     public void ValidateReleaseAsset_AcceptsDedicatedBugFixAsset()
     {
-        var update = CreateBugFixUpdate("CrystalRelayBugFix-v3.2.0-bugfix1-win-x64.zip");
+        var update = CreateBugFixUpdate("DiamondRelayBugFix-v3.2.0-bugfix1-win-x64.zip");
         ApplicationSelfUpdateService.ValidateReleaseAsset(update);
     }
 
     [Fact]
     public void ValidateReleaseAsset_RejectsStableAssetForBugFixChannel()
     {
-        var update = CreateBugFixUpdate("CrystalRelayTwitchOsc-v3.2.0-bugfix1-win-x64.zip");
+        var update = CreateBugFixUpdate("DiamondRelay-v3.2.0-bugfix1-win-x64.zip");
         Assert.Throws<ApplicationSelfUpdateException>(() =>
             ApplicationSelfUpdateService.ValidateReleaseAsset(update));
     }
@@ -25,7 +25,7 @@ public sealed class ApplicationSelfUpdateBugFixTests
     [Fact]
     public void ValidateReleaseAsset_RejectsWrongBugFixAssetCasing()
     {
-        var update = CreateBugFixUpdate("crystalrelaybugfix-v3.2.0-bugfix1-win-x64.zip");
+        var update = CreateBugFixUpdate("diamondrelaybugfix-v3.2.0-bugfix1-win-x64.zip");
         Assert.Throws<ApplicationSelfUpdateException>(() =>
             ApplicationSelfUpdateService.ValidateReleaseAsset(update));
     }
@@ -33,13 +33,13 @@ public sealed class ApplicationSelfUpdateBugFixTests
     [Fact]
     public void ValidatePackageManifest_AcceptsBugFixChannelAndVersion()
     {
-        var update = CreateBugFixUpdate("CrystalRelayBugFix-v3.2.0-bugfix1-win-x64.zip");
+        var update = CreateBugFixUpdate("DiamondRelayBugFix-v3.2.0-bugfix1-win-x64.zip");
         var manifest = new ApplicationUpdatePackageManifest(
-            "Crystal Relay",
+            "DiamondRelay",
             "3.2.0-bugfix1",
             "bugfix",
             "win-x64",
-            "Crystal Relay.exe");
+            "DiamondRelay.exe");
 
         ApplicationSelfUpdateService.ValidatePackageManifest(manifest, update);
     }
@@ -47,13 +47,13 @@ public sealed class ApplicationSelfUpdateBugFixTests
     [Fact]
     public void ValidatePackageManifest_AcceptsLegacyVersionedBugFixEntry()
     {
-        var update = CreateBugFixUpdate("CrystalRelayBugFix-v3.2.0-bugfix1-win-x64.zip");
+        var update = CreateBugFixUpdate("DiamondRelayBugFix-v3.2.0-bugfix1-win-x64.zip");
         var manifest = new ApplicationUpdatePackageManifest(
-            "Crystal Relay",
+            "DiamondRelay",
             "3.2.0-bugfix1",
             "bugfix",
             "win-x64",
-            "CrystalRelayTwitchOsc-v3.2.0-bugfix1.exe");
+            "DiamondRelay-v3.2.0-bugfix1.exe");
 
         ApplicationSelfUpdateService.ValidatePackageManifest(manifest, update);
     }
@@ -64,28 +64,28 @@ public sealed class ApplicationSelfUpdateBugFixTests
     [InlineData("test")]
     public void ValidatePackageManifest_RejectsWrongBugFixChannel(string channel)
     {
-        var update = CreateBugFixUpdate("CrystalRelayBugFix-v3.2.0-bugfix1-win-x64.zip");
+        var update = CreateBugFixUpdate("DiamondRelayBugFix-v3.2.0-bugfix1-win-x64.zip");
         var manifest = new ApplicationUpdatePackageManifest(
-            "Crystal Relay",
+            "DiamondRelay",
             "3.2.0-bugfix1",
             channel,
             "win-x64",
-            "CrystalRelayTwitchOsc-v3.2.0-bugfix1.exe");
+            "DiamondRelay-v3.2.0-bugfix1.exe");
 
         Assert.Throws<ApplicationSelfUpdateException>(() =>
             ApplicationSelfUpdateService.ValidatePackageManifest(manifest, update));
     }
 
     [Theory]
-    [InlineData("3.2.0-bugfix2", "CrystalRelayTwitchOsc-v3.2.0-bugfix1.exe")]
-    [InlineData("3.2.0-bugfix1", "CrystalRelayTwitchOsc-v3.2.0-bugfix2.exe")]
+    [InlineData("3.2.0-bugfix2", "DiamondRelay-v3.2.0-bugfix1.exe")]
+    [InlineData("3.2.0-bugfix1", "DiamondRelay-v3.2.0-bugfix2.exe")]
     public void ValidatePackageManifest_RejectsWrongVersionOrEntry(
         string version,
         string entryExecutableName)
     {
-        var update = CreateBugFixUpdate("CrystalRelayBugFix-v3.2.0-bugfix1-win-x64.zip");
+        var update = CreateBugFixUpdate("DiamondRelayBugFix-v3.2.0-bugfix1-win-x64.zip");
         var manifest = new ApplicationUpdatePackageManifest(
-            "Crystal Relay",
+            "DiamondRelay",
             version,
             "bugfix",
             "win-x64",
@@ -126,8 +126,8 @@ public sealed class ApplicationSelfUpdateBugFixTests
     public void MainAndDedicatedUpdater_UseSharedInstallTargetPolicy()
     {
         var mainSource = File.ReadAllText(FindSourceFile("VrcTwitchOscBridge", "Services", "ApplicationSelfUpdateService.cs"));
-        var updaterSource = File.ReadAllText(FindSourceFile("CrystalRelayUpdater", "Program.cs"));
-        var updaterProject = File.ReadAllText(FindSourceFile("CrystalRelayUpdater", "CrystalRelayUpdater.csproj"));
+        var updaterSource = File.ReadAllText(FindSourceFile("DiamondRelayUpdater", "Program.cs"));
+        var updaterProject = File.ReadAllText(FindSourceFile("DiamondRelayUpdater", "DiamondRelayUpdater.csproj"));
 
         Assert.Contains("ApplicationUpdatePackageRules.GetInstallTargetDirectory", mainSource, StringComparison.Ordinal);
         Assert.Contains("ApplicationUpdatePackageRules.GetInstallTargetDirectory", updaterSource, StringComparison.Ordinal);
@@ -145,7 +145,7 @@ public sealed class ApplicationSelfUpdateBugFixTests
     [Fact]
     public void DedicatedUpdater_UsesAcknowledgedTransactionalRollbackSequence()
     {
-        var updaterSource = File.ReadAllText(FindSourceFile("CrystalRelayUpdater", "Program.cs"));
+        var updaterSource = File.ReadAllText(FindSourceFile("DiamondRelayUpdater", "Program.cs"));
 
         Assert.Contains("ApplicationUpdateRollback.PrepareCompleteBackup", updaterSource, StringComparison.Ordinal);
         Assert.Contains("ApplicationUpdateRollback.WaitForStartupAcknowledgementAsync", updaterSource, StringComparison.Ordinal);
@@ -185,7 +185,7 @@ public sealed class ApplicationSelfUpdateBugFixTests
     [Fact]
     public void DedicatedUpdater_ValidatesPreviousEntryBeforeRestoredLaunch()
     {
-        var updaterSource = File.ReadAllText(FindSourceFile("CrystalRelayUpdater", "Program.cs"));
+        var updaterSource = File.ReadAllText(FindSourceFile("DiamondRelayUpdater", "Program.cs"));
         var validationStart = updaterSource.IndexOf(
             "private static void ValidateApplyManifest",
             StringComparison.Ordinal);
@@ -275,7 +275,7 @@ public sealed class ApplicationSelfUpdateBugFixTests
     [Fact]
     public void DedicatedUpdater_TerminationFailureIsSignaledAfterKillWait()
     {
-        var updaterSource = File.ReadAllText(FindSourceFile("CrystalRelayUpdater", "Program.cs"));
+        var updaterSource = File.ReadAllText(FindSourceFile("DiamondRelayUpdater", "Program.cs"));
         var terminationStart = updaterSource.IndexOf(
             "private static void TryTerminateProcess",
             StringComparison.Ordinal);
@@ -306,7 +306,7 @@ public sealed class ApplicationSelfUpdateBugFixTests
             FindSourceFile("VrcTwitchOscBridge", "Services", "ApplicationUpdateRollback.cs"));
         var serviceSource = File.ReadAllText(
             FindSourceFile("VrcTwitchOscBridge", "Services", "ApplicationSelfUpdateService.cs"));
-        var updaterSource = File.ReadAllText(FindSourceFile("CrystalRelayUpdater", "Program.cs"));
+        var updaterSource = File.ReadAllText(FindSourceFile("DiamondRelayUpdater", "Program.cs"));
 
         Assert.Contains("TerminateProcessTreeAndWait", rollbackSource, StringComparison.Ordinal);
         Assert.Contains("process.Kill(entireProcessTree: true);", rollbackSource, StringComparison.Ordinal);
@@ -325,7 +325,7 @@ public sealed class ApplicationSelfUpdateBugFixTests
     {
         var serviceSource = File.ReadAllText(
             FindSourceFile("VrcTwitchOscBridge", "Services", "ApplicationSelfUpdateService.cs"));
-        var updaterSource = File.ReadAllText(FindSourceFile("CrystalRelayUpdater", "Program.cs"));
+        var updaterSource = File.ReadAllText(FindSourceFile("DiamondRelayUpdater", "Program.cs"));
 
         foreach (var source in new[] { serviceSource, updaterSource })
         {
@@ -361,7 +361,7 @@ public sealed class ApplicationSelfUpdateBugFixTests
             FindSourceFile("VrcTwitchOscBridge", "Services", "ApplicationUpdateRollback.cs"));
         var serviceSource = File.ReadAllText(
             FindSourceFile("VrcTwitchOscBridge", "Services", "ApplicationSelfUpdateService.cs"));
-        var updaterSource = File.ReadAllText(FindSourceFile("CrystalRelayUpdater", "Program.cs"));
+        var updaterSource = File.ReadAllText(FindSourceFile("DiamondRelayUpdater", "Program.cs"));
 
         Assert.Contains("target-presence.flag", rollbackSource, StringComparison.Ordinal);
         Assert.Contains("GetRecordedTargetPresence", rollbackSource, StringComparison.Ordinal);
@@ -377,7 +377,7 @@ public sealed class ApplicationSelfUpdateBugFixTests
     {
         var serviceSource = File.ReadAllText(
             FindSourceFile("VrcTwitchOscBridge", "Services", "ApplicationSelfUpdateService.cs"));
-        var updaterSource = File.ReadAllText(FindSourceFile("CrystalRelayUpdater", "Program.cs"));
+        var updaterSource = File.ReadAllText(FindSourceFile("DiamondRelayUpdater", "Program.cs"));
 
         foreach (var source in new[] { serviceSource, updaterSource })
         {
@@ -393,7 +393,7 @@ public sealed class ApplicationSelfUpdateBugFixTests
     [Fact]
     public void DedicatedUpdater_PostAcknowledgementCleanupChecksDeletionResults()
     {
-        var updaterSource = File.ReadAllText(FindSourceFile("CrystalRelayUpdater", "Program.cs"));
+        var updaterSource = File.ReadAllText(FindSourceFile("DiamondRelayUpdater", "Program.cs"));
         var cleanupStart = updaterSource.IndexOf(
             "cleanupAfterAcknowledgementAsync:",
             StringComparison.Ordinal);
@@ -438,7 +438,7 @@ public sealed class ApplicationSelfUpdateBugFixTests
     {
         var serviceSource = File.ReadAllText(
             FindSourceFile("VrcTwitchOscBridge", "Services", "ApplicationSelfUpdateService.cs"));
-        var updaterSource = File.ReadAllText(FindSourceFile("CrystalRelayUpdater", "Program.cs"));
+        var updaterSource = File.ReadAllText(FindSourceFile("DiamondRelayUpdater", "Program.cs"));
 
         foreach (var source in new[] { serviceSource, updaterSource })
         {
@@ -454,7 +454,7 @@ public sealed class ApplicationSelfUpdateBugFixTests
     {
         var serviceSource = File.ReadAllText(
             FindSourceFile("VrcTwitchOscBridge", "Services", "ApplicationSelfUpdateService.cs"));
-        var updaterSource = File.ReadAllText(FindSourceFile("CrystalRelayUpdater", "Program.cs"));
+        var updaterSource = File.ReadAllText(FindSourceFile("DiamondRelayUpdater", "Program.cs"));
 
         var fallbackStart = serviceSource.IndexOf(
             "var executablePath =",
@@ -547,7 +547,7 @@ public sealed class ApplicationSelfUpdateBugFixTests
             FindSourceFile("VrcTwitchOscBridge", "Services", "ApplicationUpdateRollback.cs"));
         var serviceSource = File.ReadAllText(
             FindSourceFile("VrcTwitchOscBridge", "Services", "ApplicationSelfUpdateService.cs"));
-        var updaterSource = File.ReadAllText(FindSourceFile("CrystalRelayUpdater", "Program.cs"));
+        var updaterSource = File.ReadAllText(FindSourceFile("DiamondRelayUpdater", "Program.cs"));
 
         Assert.Contains("internal static class ApplicationUpdatePathSafety", rollbackSource, StringComparison.Ordinal);
         Assert.Contains("ValidateCopiedDirectoryTree", rollbackSource, StringComparison.Ordinal);
@@ -567,7 +567,7 @@ public sealed class ApplicationSelfUpdateBugFixTests
     [Fact]
     public void DedicatedUpdater_ReturnsFailureStatusWhenApplyFails()
     {
-        var updaterSource = File.ReadAllText(FindSourceFile("CrystalRelayUpdater", "Program.cs"));
+        var updaterSource = File.ReadAllText(FindSourceFile("DiamondRelayUpdater", "Program.cs"));
         var mainStart = updaterSource.IndexOf("public static async Task<int> Main", StringComparison.Ordinal);
         var applyStart = updaterSource.IndexOf("private static async Task<int> ApplyUpdateAsync", StringComparison.Ordinal);
         var catchStart = updaterSource.IndexOf("catch (Exception ex)", applyStart, StringComparison.Ordinal);
@@ -585,7 +585,7 @@ public sealed class ApplicationSelfUpdateBugFixTests
     {
         var serviceSource = File.ReadAllText(
             FindSourceFile("VrcTwitchOscBridge", "Services", "ApplicationSelfUpdateService.cs"));
-        var updaterSource = File.ReadAllText(FindSourceFile("CrystalRelayUpdater", "Program.cs"));
+        var updaterSource = File.ReadAllText(FindSourceFile("DiamondRelayUpdater", "Program.cs"));
 
         Assert.Contains("Guid.NewGuid():N", serviceSource, StringComparison.Ordinal);
         Assert.Contains("ClearStaleStartupAcknowledgement", serviceSource, StringComparison.Ordinal);
@@ -593,11 +593,11 @@ public sealed class ApplicationSelfUpdateBugFixTests
     }
 
     private static ApplicationUpdatePackageManifest CreateBugFixManifest() => new(
-        "Crystal Relay",
+        "DiamondRelay",
         "3.2.0-bugfix1",
         "bugfix",
         "win-x64",
-        "Crystal Relay.exe");
+        "DiamondRelay.exe");
 
     private static ApplicationUpdateInfo CreateBugFixUpdate(string assetName) => new(
         CurrentVersion: "3.2.0",
@@ -605,11 +605,11 @@ public sealed class ApplicationSelfUpdateBugFixTests
         LatestBaseVersion: "3.2.0",
         Channel: ApplicationUpdateChannel.BugFix,
         BugFixSequence: 1,
-        ReleaseTitle: "Crystal Relay v3.2.0 Bug Fix Push 1",
+        ReleaseTitle: "DiamondRelay v3.2.0 Bug Fix Push 1",
         ReleaseBody: "Fix details",
-        ReleasePageUrl: "https://github.com/seluvia/crystal-relay-public/releases/tag/v3.2.0-bugfix1",
+        ReleasePageUrl: "https://github.com/seluvia/diamondrelay-public/releases/tag/v3.2.0-bugfix1",
         AssetName: assetName,
-        AssetDownloadUrl: $"https://github.com/seluvia/crystal-relay-public/releases/download/v3.2.0-bugfix1/{assetName}",
+        AssetDownloadUrl: $"https://github.com/seluvia/diamondrelay-public/releases/download/v3.2.0-bugfix1/{assetName}",
         AssetSizeBytes: 1024,
         Sha256Digest: $"sha256:{new string('a', 64)}");
 
@@ -632,7 +632,7 @@ public sealed class ApplicationSelfUpdateBugFixTests
         {
             var path = System.IO.Path.Combine(
                 System.IO.Path.GetTempPath(),
-                $"CrystalRelayUpdate-{Guid.NewGuid():N}");
+                $"DiamondRelayUpdate-{Guid.NewGuid():N}");
             Directory.CreateDirectory(path);
             return new TemporaryFolder(path);
         }

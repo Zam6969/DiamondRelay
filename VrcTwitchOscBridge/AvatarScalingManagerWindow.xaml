@@ -11,7 +11,7 @@
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance Type=vm:AvatarScalingManagerViewModel}"
         Title="{loc:Translate 'Avatar Scaling Manager'}"
-        Icon="Assets/crystal-relay-icon.ico"
+        Icon="Assets/diamondrelay-icon.ico"
         Width="1100"
         Height="700"
         MinWidth="860"
@@ -1743,7 +1743,7 @@
                                                                 </Expander.Header>
                                                                 <StackPanel Margin="0,8,0,0">
                                                                     <TextBlock Margin="0,0,0,8"
-                                                                               Text="{loc:Translate 'Use cheer text like Cheer100 grow or Cheer100 shrink. No keyword keeps the existing positive growth behavior; if both words appear, Crystal Relay skips the scale instead of guessing.'}"
+                                                                               Text="{loc:Translate 'Use cheer text like Cheer100 grow or Cheer100 shrink. No keyword keeps the existing positive growth behavior; if both words appear, DiamondRelay skips the scale instead of guessing.'}"
                                                                                Foreground="{DynamicResource TitleBarSubTextBrush}"
                                                                                TextWrapping="Wrap" />
                                                                     <UniformGrid Columns="2" Margin="0,8,0,0">

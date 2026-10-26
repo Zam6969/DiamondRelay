@@ -25,7 +25,7 @@ public static class EmbeddedMediaCacheService
         }
 
         var extension = Path.GetExtension(relativePath);
-        var tempDirectory = Path.Combine(Path.GetTempPath(), "CrystalRelay", "media-cache");
+        var tempDirectory = Path.Combine(Path.GetTempPath(), "DiamondRelay", "media-cache");
         Directory.CreateDirectory(tempDirectory);
         var tempPath = Path.Combine(tempDirectory, $"{Guid.NewGuid():N}{extension}");
 

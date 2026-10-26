@@ -7,8 +7,8 @@ namespace VrcTwitchOscBridge.Services;
 
 internal static class ApplicationRestartService
 {
-    private const string HelperArgument = "--crystal-relay-restart-helper";
-    private const string RestoreArgument = "--crystal-relay-restore-session";
+    private const string HelperArgument = "--diamondrelay-restart-helper";
+    private const string RestoreArgument = "--diamondrelay-restore-session";
     private const string VrChatProtocolCommandSubKey = @"vrchat\shell\open\command";
     private const string VrChatUserProtocolCommandSubKey = @"Software\Classes\vrchat\shell\open\command";
     private const string VrChatDesktopModeArgument = "--no-vr";
@@ -73,7 +73,7 @@ internal static class ApplicationRestartService
 
         var executablePath = Environment.ProcessPath
             ?? Process.GetCurrentProcess().MainModule?.FileName
-            ?? throw new InvalidOperationException("Crystal Relay could not find its executable path.");
+            ?? throw new InvalidOperationException("DiamondRelay could not find its executable path.");
 
         var processInfo = new ProcessStartInfo
         {
@@ -99,13 +99,13 @@ internal static class ApplicationRestartService
 
         await WaitForParentExitAsync(request.ParentProcessId);
 
-        if (state.Mode == ApplicationRestartMode.VrChatAndCrystalRelay)
+        if (state.Mode == ApplicationRestartMode.VrChatAndDiamondRelay)
         {
             await RestartVrChatAsync(state.VrChatLaunchUri, state.RestartVrChatInDesktopMode);
         }
 
         await Task.Delay(RelaunchDelay);
-        RelaunchCrystalRelay(request.SessionPath);
+        RelaunchDiamondRelay(request.SessionPath);
     }
 
     private static async Task WaitForParentExitAsync(int parentProcessId)
@@ -287,7 +287,7 @@ internal static class ApplicationRestartService
         return true;
     }
 
-    private static void RelaunchCrystalRelay(string sessionPath)
+    private static void RelaunchDiamondRelay(string sessionPath)
     {
         var executablePath = Environment.ProcessPath
             ?? Process.GetCurrentProcess().MainModule?.FileName
@@ -344,8 +344,8 @@ internal static class ApplicationRestartService
 
 internal enum ApplicationRestartMode
 {
-    CrystalRelayOnly,
-    VrChatAndCrystalRelay
+    DiamondRelayOnly,
+    VrChatAndDiamondRelay
 }
 
 internal sealed class ApplicationRestartHelperRequest

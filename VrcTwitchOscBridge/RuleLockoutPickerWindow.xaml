@@ -3,8 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:loc="clr-namespace:VrcTwitchOscBridge.Services"
         xmlns:shell="clr-namespace:System.Windows.Shell;assembly=PresentationFramework"
-        Title="{loc:Translate 'Special Rule Pairing | Crystal Relay'}"
-        Icon="Assets/crystal-relay-icon.ico"
+        Title="{loc:Translate 'Special Rule Pairing | DiamondRelay'}"
+        Icon="Assets/diamondrelay-icon.ico"
         Width="820"
         Height="700"
         MinWidth="820"
@@ -224,7 +224,7 @@
                     </Grid.ColumnDefinitions>
 
                     <DockPanel VerticalAlignment="Center">
-                        <Image Source="Assets/crystal-relay-icon.png"
+                        <Image Source="Assets/diamondrelay-icon.png"
                                Width="18"
                                Height="18"
                                Margin="0,0,10,0"
@@ -237,7 +237,7 @@
                                        FontWeight="Bold"
                                        Foreground="{DynamicResource TitleBarTextBrush}" />
                             <TextBlock Margin="8,0,0,0"
-                                       Text="{loc:Translate 'Crystal Relay'}"
+                                       Text="{loc:Translate 'DiamondRelay'}"
                                        Foreground="{DynamicResource TitleBarSubTextBrush}"
                                        VerticalAlignment="Center" />
                         </StackPanel>
@@ -290,7 +290,7 @@
                                 BorderThickness="1"
                                 CornerRadius="16">
                             <TextBlock x:Name="GuidanceTextBlock"
-                                       Text="{loc:Translate 'Choose sibling redeems from this avatar set. While the current redeem is active, Crystal Relay will disable the paired redeems on Twitch and block them in the app until the timer ends.'}"
+                                       Text="{loc:Translate 'Choose sibling redeems from this avatar set. While the current redeem is active, DiamondRelay will disable the paired redeems on Twitch and block them in the app until the timer ends.'}"
                                        Foreground="{DynamicResource TextBrush}"
                                        TextWrapping="Wrap" />
                         </Border>

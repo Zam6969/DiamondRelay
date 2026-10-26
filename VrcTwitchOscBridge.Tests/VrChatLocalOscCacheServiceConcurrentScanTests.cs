@@ -17,7 +17,7 @@ public sealed class VrChatLocalOscCacheServiceConcurrentScanTests : IDisposable
 
     public VrChatLocalOscCacheServiceConcurrentScanTests()
     {
-        _root = Path.Combine(Path.GetTempPath(), "CrystalRelay_ConcurrentScan_" + Guid.NewGuid().ToString("N"));
+        _root = Path.Combine(Path.GetTempPath(), "DiamondRelay_ConcurrentScan_" + Guid.NewGuid().ToString("N"));
         Directory.CreateDirectory(_root);
     }
 

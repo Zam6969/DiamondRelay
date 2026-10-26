@@ -104,7 +104,7 @@ function Test-TagIsAncestor {
 
 $root = Split-Path -Parent $MyInvocation.MyCommand.Path
 $projectPath = Join-Path $root 'VrcTwitchOscBridge\VrcTwitchOscBridge.csproj'
-$updaterProjectPath = Join-Path $root 'CrystalRelayUpdater\CrystalRelayUpdater.csproj'
+$updaterProjectPath = Join-Path $root 'DiamondRelayUpdater\DiamondRelayUpdater.csproj'
 $localizationAuditProject = Join-Path $root 'LocalizationAudit\LocalizationAudit.csproj'
 $localizationRoot = Join-Path $root 'VrcTwitchOscBridge\Resources\Localization'
 $readmePath = Join-Path $root 'README.md'
@@ -120,8 +120,8 @@ if (-not (Test-SemanticVersion -VersionText $Version)) {
 
 $bugFixIdentity = "v$Version-bugfix$BugFix"
 $changelogHeader = "v$Version bug fix $BugFix"
-$releaseName = "CrystalRelayBugFix-v$Version-bugfix$BugFix-$runtime"
-$entryExeName = 'Crystal Relay.exe'
+$releaseName = "DiamondRelayBugFix-v$Version-bugfix$BugFix-$runtime"
+$entryExeName = 'DiamondRelay.exe'
 $stableTag = "v$Version"
 
 # === Validate project versions ===
@@ -166,13 +166,13 @@ if (-not (Test-TagIsAncestor -Tag $stableTag)) {
 # === Output paths ===
 $versionFolderName = "v$Version"
 $versionRoot = Join-Path $releaseRoot $versionFolderName
-$publishDir = Join-Path $versionRoot 'Crystal Relay'
+$publishDir = Join-Path $versionRoot 'DiamondRelay'
 $zipPath = Join-Path $versionRoot "$releaseName.zip"
 
 New-Item -ItemType Directory -Path $releaseRoot -Force | Out-Null
 New-Item -ItemType Directory -Path $versionRoot -Force | Out-Null
 if (Test-Path $publishDir) {
-    Assert-SafeBuildPath -Path $publishDir -RequiredParent $versionRoot -Pattern "Crystal Relay"
+    Assert-SafeBuildPath -Path $publishDir -RequiredParent $versionRoot -Pattern "DiamondRelay"
     Remove-Item -Path $publishDir -Recurse -Force
 }
 
@@ -215,16 +215,16 @@ finally {
 }
 
 # === Rename main executable to static name ===
-$defaultExe = Join-Path $publishDir 'CrystalRelayTwitchOsc.exe'
+$defaultExe = Join-Path $publishDir 'DiamondRelay.exe'
 if (Test-Path $defaultExe) {
     Rename-Item -Path $defaultExe -NewName $entryExeName -Force
 }
 
 # === Publish updater ===
-$updaterPublishDir = Join-Path ([System.IO.Path]::GetTempPath()) ("CrystalRelayUpdater-" + [guid]::NewGuid().ToString("N"))
-Push-Location (Join-Path $root 'CrystalRelayUpdater')
+$updaterPublishDir = Join-Path ([System.IO.Path]::GetTempPath()) ("DiamondRelayUpdater-" + [guid]::NewGuid().ToString("N"))
+Push-Location (Join-Path $root 'DiamondRelayUpdater')
 try {
-    dotnet publish '.\CrystalRelayUpdater.csproj' `
+    dotnet publish '.\DiamondRelayUpdater.csproj' `
         -c $publishConfig `
         -r $runtime `
         --self-contained true `
@@ -239,9 +239,9 @@ finally {
     Pop-Location
 }
 
-Copy-Item -Path (Join-Path $updaterPublishDir 'CrystalRelayUpdater.exe') -Destination (Join-Path $publishDir 'CrystalRelayUpdater.exe') -Force
+Copy-Item -Path (Join-Path $updaterPublishDir 'DiamondRelayUpdater.exe') -Destination (Join-Path $publishDir 'DiamondRelayUpdater.exe') -Force
 try {
-    Assert-SafeBuildPath -Path $updaterPublishDir -RequiredParent ([System.IO.Path]::GetTempPath()) -Pattern "CrystalRelayUpdater-*"
+    Assert-SafeBuildPath -Path $updaterPublishDir -RequiredParent ([System.IO.Path]::GetTempPath()) -Pattern "DiamondRelayUpdater-*"
     Remove-Item -Path $updaterPublishDir -Recurse -Force
 }
 catch {
@@ -267,7 +267,7 @@ Set-Content -Path (Join-Path $publishDir 'bugfix-build.flag') -Value $flagConten
 
 # === Create update manifest ===
 $updateManifest = [ordered]@{
-    productName = 'Crystal Relay'
+    productName = 'DiamondRelay'
     version = "$Version-bugfix$BugFix"
     channel = 'bugfix'
     runtime = $runtime
@@ -275,18 +275,18 @@ $updateManifest = [ordered]@{
 }
 $updateManifest |
     ConvertTo-Json |
-    Set-Content -Path (Join-Path $publishDir 'crystal-relay-update.json') -Encoding UTF8
+    Set-Content -Path (Join-Path $publishDir 'diamondrelay-update.json') -Encoding UTF8
 
 # === Post-build validation ===
 $errors = @()
 
-$manifestPath = Join-Path $publishDir 'crystal-relay-update.json'
+$manifestPath = Join-Path $publishDir 'diamondrelay-update.json'
 if (-not (Test-Path $manifestPath)) {
     $errors += "Manifest file not found at $manifestPath"
 }
 else {
     $manifest = Get-Content $manifestPath -Raw | ConvertFrom-Json
-    if ($manifest.productName -ne 'Crystal Relay') { $errors += "Manifest productName mismatch: '$($manifest.productName)'" }
+    if ($manifest.productName -ne 'DiamondRelay') { $errors += "Manifest productName mismatch: '$($manifest.productName)'" }
     if ($manifest.channel -ne 'bugfix') { $errors += "Manifest channel mismatch: '$($manifest.channel)'" }
     if ($manifest.version -ne "$Version-bugfix$BugFix") { $errors += "Manifest version mismatch: '$($manifest.version)'" }
     if ($manifest.runtime -ne $runtime) { $errors += "Manifest runtime mismatch: '$($manifest.runtime)'" }
@@ -309,12 +309,12 @@ if (-not (Test-Path $entryExePath)) {
     $errors += "Required entry executable not found: $entryExeName"
 }
 
-$versionedAppExecutables = @(Get-ChildItem -Path $publishDir -Filter 'CrystalRelayTwitchOsc-v*.exe' -File -Recurse -ErrorAction SilentlyContinue)
+$versionedAppExecutables = @(Get-ChildItem -Path $publishDir -Filter 'DiamondRelay-v*.exe' -File -Recurse -ErrorAction SilentlyContinue)
 if ($versionedAppExecutables.Count -gt 0) {
-    $errors += "Versioned Crystal Relay app executable(s) must not be packaged: $($versionedAppExecutables.Name -join ', ')"
+    $errors += "Versioned DiamondRelay app executable(s) must not be packaged: $($versionedAppExecutables.Name -join ', ')"
 }
 
-$updaterExePath = Join-Path $publishDir 'CrystalRelayUpdater.exe'
+$updaterExePath = Join-Path $publishDir 'DiamondRelayUpdater.exe'
 if (-not (Test-Path $updaterExePath)) {
     $errors += "Updater executable not found at $updaterExePath"
 }

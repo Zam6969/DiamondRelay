@@ -5,7 +5,7 @@ namespace VrcTwitchOscBridge.Services;
 
 /// <summary>
 /// Reads VRChat's local output log to detect the user's current avatar.
-/// This is used as a lightweight helper when Crystal Relay wants to track avatar changes
+/// This is used as a lightweight helper when DiamondRelay wants to track avatar changes
 /// without depending only on direct VRChat API polling.
 /// </summary>
 internal sealed class VrChatLocalClientStateService
@@ -51,7 +51,7 @@ internal sealed class VrChatLocalClientStateService
         return FindLatestOutputLogPath(rootPath);
     }
 
-    // Reads only the newest part of the latest output log so Crystal Relay can keep
+    // Reads only the newest part of the latest output log so DiamondRelay can keep
     // tracking local avatar switches without re-reading the whole file every time.
     public async Task<VrChatLocalLogReadResult> ReadLatestLocalAvatarSwitchAsync(
         string localPlayerDisplayName,
@@ -104,7 +104,7 @@ internal sealed class VrChatLocalClientStateService
         var latestLogPath = ResolveLatestOutputLogPath(currentLogPath: null);
         if (string.IsNullOrWhiteSpace(latestLogPath) || !File.Exists(latestLogPath))
         {
-            return VrChatLocalInstanceLookupResult.Unavailable("Crystal Relay could not find a VRChat output log to read.");
+            return VrChatLocalInstanceLookupResult.Unavailable("DiamondRelay could not find a VRChat output log to read.");
         }
 
         var fileInfo = new FileInfo(latestLogPath);
@@ -124,7 +124,7 @@ internal sealed class VrChatLocalClientStateService
         if (!TryFindMostRecentJoinedInstance(content, out var worldId, out var instanceId, out var location))
         {
             return VrChatLocalInstanceLookupResult.Unavailable(
-                "Crystal Relay could not find a recent VRChat world instance in the local output log.");
+                "DiamondRelay could not find a recent VRChat world instance in the local output log.");
         }
 
         return VrChatLocalInstanceLookupResult.Available(

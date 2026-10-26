@@ -1,8 +1,8 @@
-# Translating Crystal Relay
+# Translating DiamondRelay
 
-Thank you for helping make Crystal Relay easier to use in more languages.
+Thank you for helping make DiamondRelay easier to use in more languages.
 
-Crystal Relay uses English as the source language and stores app translations as JSON files:
+DiamondRelay uses English as the source language and stores app translations as JSON files:
 
 ```text
 VrcTwitchOscBridge/Resources/Localization/en-US.json
@@ -55,7 +55,7 @@ Translation: improve Spanish wording
   - `{2}`
   - `{0:N0}`
 - Keep product and platform names recognizable:
-  - Crystal Relay
+  - DiamondRelay
   - Twitch
   - VRChat
   - OSC
@@ -101,7 +101,7 @@ Do not translate or rewrite:
 
 ## Quality Checks
 
-Before a translation is released, Crystal Relay runs the localization audit.
+Before a translation is released, DiamondRelay runs the localization audit.
 
 Contributors can run it locally if they build from source:
 
@@ -120,7 +120,7 @@ Good translations should be:
 - natural for the language,
 - clear to streamers who are not technical,
 - short enough to fit inside buttons, dropdowns, and compact cards,
-- consistent with nearby Crystal Relay wording,
+- consistent with nearby DiamondRelay wording,
 - careful with safety warnings and Twitch/VRChat account language.
 
 If a phrase is hard to translate because the English wording is unclear, open an issue or leave a note in the translation pull request.

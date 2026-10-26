@@ -4,8 +4,8 @@
         xmlns:local="clr-namespace:VrcTwitchOscBridge"
         xmlns:loc="clr-namespace:VrcTwitchOscBridge.Services"
         xmlns:shell="clr-namespace:System.Windows.Shell;assembly=PresentationFramework"
-        Title="{loc:Translate 'Built-In Commands | Crystal Relay'}"
-        Icon="Assets/crystal-relay-icon.ico"
+        Title="{loc:Translate 'Built-In Commands | DiamondRelay'}"
+        Icon="Assets/diamondrelay-icon.ico"
         Width="760"
         Height="620"
         MinWidth="760"
@@ -524,7 +524,7 @@
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <DockPanel VerticalAlignment="Center">
-                        <Image Source="Assets/crystal-relay-icon.png"
+                        <Image Source="Assets/diamondrelay-icon.png"
                                Width="18"
                                Height="18"
                                Margin="0,0,10,0"
@@ -537,7 +537,7 @@
                                        FontWeight="Bold"
                                        Foreground="{DynamicResource TitleBarTextBrush}" />
                             <TextBlock Margin="8,0,0,0"
-                                       Text="{loc:Translate 'Crystal Relay'}"
+                                       Text="{loc:Translate 'DiamondRelay'}"
                                        Foreground="{DynamicResource TitleBarSubTextBrush}"
                                        VerticalAlignment="Center" />
                         </StackPanel>
@@ -630,7 +630,7 @@
                                                    FontWeight="Bold"
                                                    TextWrapping="Wrap" />
                                         <TextBlock Margin="0,6,0,14"
-                                                   Text="{loc:Translate 'Viewers can ask where the streamer is in VRChat. Crystal Relay only posts the public world name and world page link, never instance details.'}"
+                                                   Text="{loc:Translate 'Viewers can ask where the streamer is in VRChat. DiamondRelay only posts the public world name and world page link, never instance details.'}"
                                                    Foreground="{DynamicResource MutedBrush}"
                                                    TextWrapping="Wrap" />
                                         <CheckBox Content="{loc:Translate 'Enable command'}"
@@ -684,7 +684,7 @@
                                                     FontWeight="Bold"
                                                     TextWrapping="Wrap" />
                                          <TextBlock Margin="0,6,0,12"
-                                                    Text="{loc:Translate 'Crystal Relay checks a private Cloudflare guard before sharing world links. The guard only returns whether the world is protected.'}"
+                                                    Text="{loc:Translate 'DiamondRelay checks a private Cloudflare guard before sharing world links. The guard only returns whether the world is protected.'}"
                                                     Foreground="{DynamicResource MutedBrush}"
                                                     TextWrapping="Wrap" />
                                          <TextBlock Margin="0,0,0,8"

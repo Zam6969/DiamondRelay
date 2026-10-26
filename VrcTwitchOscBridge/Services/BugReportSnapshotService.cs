@@ -23,7 +23,7 @@ internal static class BugReportSnapshotService
     public static string Build(BugReportSnapshotData data)
     {
         var builder = new StringBuilder();
-        builder.AppendLine("Crystal Relay Status Snapshot");
+        builder.AppendLine("DiamondRelay Status Snapshot");
         builder.AppendLine($"Twitch broadcaster: {FormatBool(data.IsBroadcasterConnected)}");
         builder.AppendLine($"Twitch bot: {FormatBool(data.IsBotConnected)}");
         builder.AppendLine($"VRChat: {FormatBool(data.IsVrChatConnected)}");

@@ -1,4 +1,4 @@
-﻿.vs/
+.vs/
 .vscode/
 .idea/
 .opencode/
@@ -15,7 +15,7 @@ opencode.json
 **/.dev.vars
 
 Backups/
-Backup-Crystal-Relay-Source/
+Backup-DiamondRelay-Source/
 Releases/
 TestBuilds/
 Code Review/
@@ -30,7 +30,7 @@ docs/superpowers/
 \!start-opencode Server.bat
 \!start-server.sh - Shortcut.lnk
 \!stop-server.sh - Shortcut.lnk
-Launch-Crystal-Relay-Debug.bat
+Launch-DiamondRelay-Debug.bat
 *.user
 *.suo
 *.cache

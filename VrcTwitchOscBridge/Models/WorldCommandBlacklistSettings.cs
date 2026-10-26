@@ -5,18 +5,18 @@ namespace VrcTwitchOscBridge.Models;
 public sealed class WorldCommandBlacklistSettings : ObservableObject
 {
     public const string DefaultWorkerCheckEndpoint =
-        "https://crystal-relay-world-guard.screminpal-animation.workers.dev/api/check";
+        "";
 
     public const string DefaultWorkerStatusEndpoint =
-        "https://crystal-relay-world-guard.screminpal-animation.workers.dev/api/status";
+        "";
 
     /// <summary>
-    /// World Guard is always-on and cannot be disabled by the user.
-    /// This property always returns true.
+    /// The hosted guard is disabled in this fork. World disclosure remains blocked.
+    /// This property always returns false.
     /// </summary>
     public bool IsEnabled
     {
-        get => true;
-        set { /* Always-on: ignore attempts to disable. */ }
+        get => false;
+        set { /* Hosted service removed. */ }
     }
 }

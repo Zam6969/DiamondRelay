@@ -1,6 +1,6 @@
 $ErrorActionPreference = 'Stop'
 
-Write-Host 'Crystal Relay dependency vulnerability scan'
+Write-Host 'DiamondRelay dependency vulnerability scan'
 Write-Host "Root: $PSScriptRoot"
 Write-Host ''
 

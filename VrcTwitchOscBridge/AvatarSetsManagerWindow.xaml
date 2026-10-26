@@ -11,7 +11,7 @@
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance Type=vm:AvatarSetsManagerViewModel}"
         Title="{loc:Translate 'Avatar Sets Manager Title'}"
-        Icon="Assets/crystal-relay-icon.ico"
+        Icon="Assets/diamondrelay-icon.ico"
         Width="1100"
         Height="700"
         MinWidth="800"
@@ -961,7 +961,7 @@
                                                     FontWeight="SemiBold"
                                                     FontSize="11"
                                                     Margin="0,0,0,4" />
-                                         <TextBlock Text="Manage and Create: Crystal Relay creates the reward, hides/deletes it when not in use, and recycles to stay under the 50-reward limit. Link to listen only: use an existing reward, listen-only."
+                                         <TextBlock Text="Manage and Create: DiamondRelay creates the reward, hides/deletes it when not in use, and recycles to stay under the 50-reward limit. Link to listen only: use an existing reward, listen-only."
                                                     Foreground="{DynamicResource MutedBrush}"
                                                     FontSize="10"
                                                     TextWrapping="Wrap"
@@ -1033,7 +1033,7 @@
                                                       </Style.Triggers>
                                                   </Style>
                                               </StackPanel.Style>
-                                              <TextBlock Text="Crystal Relay will create this reward in Twitch and name it after the rule. The reward ID is assigned at runtime."
+                                              <TextBlock Text="DiamondRelay will create this reward in Twitch and name it after the rule. The reward ID is assigned at runtime."
                                                          Foreground="{DynamicResource MutedBrush}"
                                                          FontSize="10"
                                                          TextWrapping="Wrap"
@@ -2028,7 +2028,7 @@
                                                    FontWeight="SemiBold"
                                                    FontSize="11"
                                                    Margin="0,4,0,4" />
-                                        <TextBlock Text="Manage and Create: Crystal Relay creates the reward, hides/deletes it when not in use. Link to listen only: use an existing reward, listen-only."
+                                        <TextBlock Text="Manage and Create: DiamondRelay creates the reward, hides/deletes it when not in use. Link to listen only: use an existing reward, listen-only."
                                                    Foreground="{DynamicResource MutedBrush}"
                                                    FontSize="10"
                                                    TextWrapping="Wrap"

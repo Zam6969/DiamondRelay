@@ -7,13 +7,16 @@ internal static class AppDataPaths
     private static readonly string localAppDataFolder =
         Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
     private static readonly string legacyMigrationMarkerPath =
-        Path.Combine(Path.Combine(localAppDataFolder, "CrystalRelay"), ".legacy-migrated");
+        Path.Combine(Path.Combine(localAppDataFolder, "DiamondRelay"), ".legacy-migrated");
 
-    public static string RootFolder => Path.Combine(localAppDataFolder, "CrystalRelay");
+    public static string RootFolder => Path.Combine(localAppDataFolder, "DiamondRelay");
+
+    // Original installation path is retained only as an import source.
+    internal static string PreviousBrandRootFolder => Path.Combine(localAppDataFolder, "CrystalRelay");
 
     public static string LegacyRootFolder => Path.Combine(localAppDataFolder, "VrcTwitchOscBridge");
 
-    public static string PortableSaveFolder => Path.Combine(RootFolder, "Crystal Relay Save Transfer");
+    public static string PortableSaveFolder => Path.Combine(RootFolder, "DiamondRelay Save Transfer");
 
     public static string ThemeAssetsFolder => Path.Combine(PortableSaveFolder, "ThemeAssets");
 
@@ -45,17 +48,24 @@ internal static class AppDataPaths
     {
         EnsureCoreFolders();
 
-        if (!Directory.Exists(LegacyRootFolder))
-        {
-            return;
-        }
-
         if (File.Exists(legacyMigrationMarkerPath))
         {
             return;
         }
 
-        CopyDirectoryContentsIfMissing(LegacyRootFolder, RootFolder);
+        if (Directory.Exists(PreviousBrandRootFolder))
+        {
+            CopyDirectoryContentsIfMissing(PreviousBrandRootFolder, RootFolder);
+            var previousSaveFolder = Path.Combine(PreviousBrandRootFolder, "Crystal Relay Save Transfer");
+            if (Directory.Exists(previousSaveFolder))
+            {
+                CopyDirectoryContentsIfMissing(previousSaveFolder, PortableSaveFolder);
+            }
+        }
+        if (Directory.Exists(LegacyRootFolder))
+        {
+            CopyDirectoryContentsIfMissing(LegacyRootFolder, RootFolder);
+        }
 
         try
         {

@@ -1,12 +1,12 @@
-# Crystal Relay Video Tutorial Script
+# DiamondRelay Video Tutorial Script
 
-Use this as a read-aloud script while recording a visual walkthrough. The script is written for a first-time viewer who needs to understand what Crystal Relay does, how to connect it, and how to test a redeem safely.
+Use this as a read-aloud script while recording a visual walkthrough. The script is written for a first-time viewer who needs to understand what DiamondRelay does, how to connect it, and how to test a redeem safely.
 
 ## Recording Safety Checklist
 
 - Use a test Twitch reward or test scene if possible.
 - Do not show passwords, OAuth approval details, VRChat 2FA codes, browser cookies, or private tokens.
-- If a login page opens, pause recording or blur the screen until you are back inside Crystal Relay.
+- If a login page opens, pause recording or blur the screen until you are back inside DiamondRelay.
 - If your VRChat avatar list shows private avatar names you do not want public, blur that area or use a safe test avatar.
 - If you show GitHub, use the public release page only.
 
@@ -14,7 +14,7 @@ Use this as a read-aloud script while recording a visual walkthrough. The script
 
 By the end of the video, viewers should understand:
 
-- Crystal Relay connects Twitch events to VRChat through OSC and OSCQuery.
+- DiamondRelay connects Twitch events to VRChat through OSC and OSCQuery.
 - Twitch Channel Points, Bits, Subs, and chat commands can trigger VRChat actions.
 - Actions can change avatar parameters, switch avatars, or move the player.
 - Rules can be tested before the Twitch reward or command is fully created.
@@ -24,13 +24,13 @@ By the end of the video, viewers should understand:
 
 ## 0:00 - Intro
 
-**Show on screen:** Crystal Relay main window.
+**Show on screen:** DiamondRelay main window.
 
 **Say:**
 
-Welcome. In this video, I am going to show how Crystal Relay works.
+Welcome. In this video, I am going to show how DiamondRelay works.
 
-Crystal Relay is a Windows app that connects Twitch to VRChat through OSC and OSCQuery. That means channel point redeems, Bits, Subs, and chat commands can trigger avatar parameters, avatar swaps, movement controls, and other stream effects inside VRChat.
+DiamondRelay is a Windows app that connects Twitch to VRChat through OSC and OSCQuery. That means channel point redeems, Bits, Subs, and chat commands can trigger avatar parameters, avatar swaps, movement controls, and other stream effects inside VRChat.
 
 This tutorial will cover the basic setup, how rules are organized, how to test a redeem safely, and where to find the extra tools like the Twitch Chatbox and themes.
 
@@ -42,9 +42,9 @@ This tutorial will cover the basic setup, how rules are organized, how to test a
 
 **Say:**
 
-To get Crystal Relay, go to the public GitHub release page and download the latest Windows release zip.
+To get DiamondRelay, go to the public GitHub release page and download the latest Windows release zip.
 
-After downloading, extract the zip, open the folder, and launch the versioned Crystal Relay executable.
+After downloading, extract the zip, open the folder, and launch the versioned DiamondRelay executable.
 
 If Windows shows a first-run warning, that usually means the app is new and not widely recognized yet. Only continue if you downloaded it from the official public release page.
 
@@ -56,7 +56,7 @@ If Windows shows a first-run warning, that usually means the app is new and not 
 
 **Say:**
 
-This is the main Crystal Relay window.
+This is the main DiamondRelay window.
 
 The app is built around a few main areas. The Home area shows connection status and the main control buttons. Settings is where Twitch, VRChat, theme, language, and chatbox settings live. The rule sections are where you create the Twitch triggers that will control VRChat.
 
@@ -72,11 +72,11 @@ At the top, you can also open the Twitch Chatbox, toggle test tools, and view ap
 
 First, connect your Twitch broadcaster account.
 
-The broadcaster account is the account that owns the channel point rewards. This is required if you want Crystal Relay to listen for channel point redeems, Bits, Subs, and chat events on your channel.
+The broadcaster account is the account that owns the channel point rewards. This is required if you want DiamondRelay to listen for channel point redeems, Bits, Subs, and chat events on your channel.
 
-There is also an optional bot account. The bot account is only needed if you want Crystal Relay to send automatic chat messages, such as paid override info messages. If you do not need bot chat messages, you can leave the bot account disconnected.
+There is also an optional bot account. The bot account is only needed if you want DiamondRelay to send automatic chat messages, such as paid override info messages. If you do not need bot chat messages, you can leave the bot account disconnected.
 
-When a browser login or Twitch device code appears, complete the login privately, then return to Crystal Relay.
+When a browser login or Twitch device code appears, complete the login privately, then return to DiamondRelay.
 
 ---
 
@@ -88,7 +88,7 @@ When a browser login or Twitch device code appears, complete the login privately
 
 Next is VRChat setup.
 
-Crystal Relay talks to VRChat through OSC and OSCQuery. OSC is what sends the actual parameter or movement command. OSCQuery helps Crystal Relay discover avatar parameters and connection details.
+DiamondRelay talks to VRChat through OSC and OSCQuery. OSC is what sends the actual parameter or movement command. OSCQuery helps DiamondRelay discover avatar parameters and connection details.
 
 For the best experience, connect VRChat avatar access. This lets the app load avatar names and parameter information, which makes rule setup much easier.
 
@@ -104,7 +104,7 @@ If OSC is not working, make sure OSC is enabled in VRChat and that VRChat is run
 
 **Say:**
 
-Crystal Relay has a few rule areas.
+DiamondRelay has a few rule areas.
 
 Avatar Sets are rules tied to the avatar you are currently using. These are useful when one avatar has special toggles or parameters that another avatar does not have.
 
@@ -128,7 +128,7 @@ Start by selecting the rule area you want. For a simple avatar toggle, use an Av
 
 The trigger side is where Twitch matching happens. For a live channel point redeem, you normally fill in the reward name or connect it to a managed reward. You can also enable a chat command if you want chat to trigger it.
 
-The action side is what Crystal Relay sends to VRChat. For an avatar parameter, choose the parameter name, type, value, reset behavior, and active time.
+The action side is what DiamondRelay sends to VRChat. For an avatar parameter, choose the parameter name, type, value, reset behavior, and active time.
 
 The important idea is this: Twitch decides when the rule triggers, and the action settings decide what happens in VRChat.
 
@@ -156,11 +156,11 @@ If the action setup is valid, pressing Test Redeem should send the action locall
 
 **Say:**
 
-Crystal Relay can manage Twitch custom rewards for you.
+DiamondRelay can manage Twitch custom rewards for you.
 
 Managed rewards can turn on while you are live, or while Streaming Test Mode is enabled. This lets you check how rewards will behave before your stream starts.
 
-Crystal Relay also tries to clean up managed rewards when it shuts down. If the app or computer closes unexpectedly, it can run recovery cleanup the next time it opens.
+DiamondRelay also tries to clean up managed rewards when it shuts down. If the app or computer closes unexpectedly, it can run recovery cleanup the next time it opens.
 
 Reward availability can change based on cooldowns, avatar matching, disable pairing, and Bits or Subs override rules.
 
@@ -174,7 +174,7 @@ Reward availability can change based on cooldowns, avatar matching, disable pair
 
 Avatar Change rules are for swapping into another avatar.
 
-If you set an active time, Crystal Relay can change to the target avatar and then return after that timer ends.
+If you set an active time, DiamondRelay can change to the target avatar and then return after that timer ends.
 
 If you set the active time to zero, the avatar change is treated as permanent. The new avatar becomes the return avatar, which lets other avatar change redeems work cleanly from that new state.
 
@@ -194,7 +194,7 @@ These are designed for stream events that should take priority over normal chann
 
 You can set separate timing behavior for Bits and Subs, including amount-based time and maximum accumulated time. This lets paid triggers scale without letting one override run forever.
 
-If you connect a bot account, Crystal Relay can also post a compact chat message explaining what paid override ran and how much time was added.
+If you connect a bot account, DiamondRelay can also post a compact chat message explaining what paid override ran and how much time was added.
 
 ---
 
@@ -204,7 +204,7 @@ If you connect a bot account, Crystal Relay can also post a compact chat message
 
 **Say:**
 
-Crystal Relay also includes a Twitch Chatbox.
+DiamondRelay also includes a Twitch Chatbox.
 
 The chatbox can show Twitch chat in its own themed window. You can adjust the font, text size, card opacity, timestamps, overlay mode, always-on-top behavior, and optional viewer message sound.
 
@@ -218,11 +218,11 @@ There is also an option to relay Twitch chat into VRChat chatbox messages. If yo
 
 **Say:**
 
-Crystal Relay has multiple built-in themes, including Void Crystal, Dream Scape, Bubblegum, Cosmic Puppy Girl, Peaches and Cream, Moon Bunny Wink, Dread Night Bar, Baked, MainFrame, Trash Kitty, and Treetender's Arm.
+DiamondRelay has multiple built-in themes, including Void Crystal, Dream Scape, Bubblegum, Cosmic Puppy Girl, Peaches and Cream, Moon Bunny Wink, Dread Night Bar, Baked, MainFrame, Trash Kitty, and Treetender's Arm.
 
 There is also a Custom theme slot. With Custom, you can edit the app colors, body font, heading font, and optionally choose a main-window background image.
 
-The custom background image is copied into Crystal Relay's app data folder, so moving the original file later will not break the theme.
+The custom background image is copied into DiamondRelay's app data folder, so moving the original file later will not break the theme.
 
 ---
 
@@ -232,11 +232,11 @@ The custom background image is copied into Crystal Relay's app data folder, so m
 
 **Say:**
 
-Crystal Relay can check the public GitHub release page on startup. If a newer release is available, it shows a themed popup with the current version and latest version.
+DiamondRelay can check the public GitHub release page on startup. If a newer release is available, it shows a themed popup with the current version and latest version.
 
-Choosing update opens the GitHub release page in your browser. Crystal Relay does not auto-download or self-patch in the background.
+Choosing update opens the GitHub release page in your browser. DiamondRelay does not auto-download or self-patch in the background.
 
-Local app data is stored under AppData Local, inside the CrystalRelay folder. That is where runtime settings, cache files, save-transfer data, theme assets, and crash logs live.
+Local app data is stored under AppData Local, inside the DiamondRelay folder. That is where runtime settings, cache files, save-transfer data, theme assets, and crash logs live.
 
 If something goes wrong, crash logs are stored in the CrashLogs folder.
 
@@ -248,7 +248,7 @@ If something goes wrong, crash logs are stored in the CrashLogs folder.
 
 **Say:**
 
-That is the basic workflow for Crystal Relay.
+That is the basic workflow for DiamondRelay.
 
 Connect Twitch, connect VRChat if you want avatar and parameter tools, create a rule, test the action locally, then connect it to a real Twitch reward or chat command when you are ready.
 
@@ -264,7 +264,7 @@ Thanks for watching.
 
 **Say:**
 
-Crystal Relay is a Windows app that connects Twitch to VRChat through OSC and OSCQuery.
+DiamondRelay is a Windows app that connects Twitch to VRChat through OSC and OSCQuery.
 
 You can use channel points, Bits, Subs, or chat commands to trigger VRChat avatar parameters, avatar changes, movement controls, and paid override effects.
 
@@ -272,6 +272,6 @@ The setup flow is simple: connect your broadcaster Twitch account, enable OSC in
 
 Rules have two parts: the Twitch trigger and the VRChat action. You can test the action with Test Redeem before the reward name or chat command is finished, which makes setup much faster.
 
-Crystal Relay also includes managed Twitch rewards, a themed Twitch Chatbox, built-in themes, a Custom theme editor, startup update checks, and local crash logs.
+DiamondRelay also includes managed Twitch rewards, a themed Twitch Chatbox, built-in themes, a Custom theme editor, startup update checks, and local crash logs.
 
-Download it from the Crystal Relay public GitHub releases page.
+Download it from the DiamondRelay public GitHub releases page.

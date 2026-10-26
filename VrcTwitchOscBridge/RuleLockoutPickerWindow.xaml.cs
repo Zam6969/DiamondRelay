@@ -148,13 +148,13 @@ public partial class RuleLockoutPickerWindow : Window
         if (!allowPairingModeSelection
             || SelectedPairingMode == SpecialRulePairingMode.HidePairedWhileActive)
         {
-            GuidanceTextBlock.Text = LocalizationService.Translate("Choose sibling redeems from this avatar set. While the current redeem is active, Crystal Relay will disable the paired redeems on Twitch and block them in the app until the timer ends.");
+            GuidanceTextBlock.Text = LocalizationService.Translate("Choose sibling redeems from this avatar set. While the current redeem is active, DiamondRelay will disable the paired redeems on Twitch and block them in the app until the timer ends.");
             ConfiguredHeadingTextBlock.Text = LocalizationService.Translate("Currently Turned Off While Active");
             ConfiguredEmptyTextBlock.Text = LocalizationService.Translate("No disable pairings set yet.");
             return;
         }
 
-        GuidanceTextBlock.Text = LocalizationService.Translate("Choose sibling redeems from this avatar set. Crystal Relay will keep the paired redeems hidden by default, then show and allow them after the current redeem triggers.");
+        GuidanceTextBlock.Text = LocalizationService.Translate("Choose sibling redeems from this avatar set. DiamondRelay will keep the paired redeems hidden by default, then show and allow them after the current redeem triggers.");
         ConfiguredHeadingTextBlock.Text = LocalizationService.Translate("Shown Only After This Redeem Triggers");
         ConfiguredEmptyTextBlock.Text = LocalizationService.Translate("No reveal pairings set yet.");
     }

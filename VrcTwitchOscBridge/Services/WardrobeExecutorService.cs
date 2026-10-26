@@ -96,14 +96,14 @@ internal sealed class WardrobeExecutorService : IAsyncDisposable
                 out var fallbackRestorePackets,
                 out var restoreFailure))
         {
-            logWritten($"Safe-canceled Wardrobe outfit '{snapshot.Name}' because Crystal Relay could not build restore packets: {restoreFailure}");
+            logWritten($"Safe-canceled Wardrobe outfit '{snapshot.Name}' because DiamondRelay could not build restore packets: {restoreFailure}");
             return false;
         }
 
         var effectiveActiveSeconds = Math.Max(1d, snapshot.ActiveTimeSeconds);
         if (effectiveActiveSeconds < WardrobeDiffObservationDelay.TotalSeconds)
         {
-            logWritten($"Wardrobe outfit '{snapshot.Name}' active time was extended from {DescribeDuration(effectiveActiveSeconds)} to {DescribeDuration(WardrobeDiffObservationDelay.TotalSeconds)} so Crystal Relay can re-check LocalAvatarData before restoring.");
+            logWritten($"Wardrobe outfit '{snapshot.Name}' active time was extended from {DescribeDuration(effectiveActiveSeconds)} to {DescribeDuration(WardrobeDiffObservationDelay.TotalSeconds)} so DiamondRelay can re-check LocalAvatarData before restoring.");
             effectiveActiveSeconds = WardrobeDiffObservationDelay.TotalSeconds;
         }
 
@@ -211,7 +211,7 @@ internal sealed class WardrobeExecutorService : IAsyncDisposable
             cancellationToken);
         if (!postRestoreSnapshot.Found)
         {
-            logWritten($"Wardrobe outfit '{snapshot.Name}' could not re-check LocalAvatarData after {DescribeDuration(WardrobeDiffObservationDelay.TotalSeconds)}, so Crystal Relay will restore the configured Wardrobe params only. {postRestoreSnapshot.FailureReason}");
+            logWritten($"Wardrobe outfit '{snapshot.Name}' could not re-check LocalAvatarData after {DescribeDuration(WardrobeDiffObservationDelay.TotalSeconds)}, so DiamondRelay will restore the configured Wardrobe params only. {postRestoreSnapshot.FailureReason}");
             return new WardrobeRestoreResolution(fallbackRestorePackets, UsedFallback: true);
         }
 
@@ -243,7 +243,7 @@ internal sealed class WardrobeExecutorService : IAsyncDisposable
                 out var restorePackets,
                 out var restoreFailure))
         {
-            logWritten($"Wardrobe outfit '{snapshot.Name}' could not build diff restore packets ({restoreFailure}), so Crystal Relay will restore the configured Wardrobe params only.");
+            logWritten($"Wardrobe outfit '{snapshot.Name}' could not build diff restore packets ({restoreFailure}), so DiamondRelay will restore the configured Wardrobe params only.");
             return new WardrobeRestoreResolution(fallbackRestorePackets, UsedFallback: true);
         }
 
@@ -262,7 +262,7 @@ internal sealed class WardrobeExecutorService : IAsyncDisposable
 
         if (!localValues.Found)
         {
-            logWritten($"Safe-canceled Wardrobe outfit '{snapshot.Name}' because Crystal Relay could not capture a full LocalAvatarData restore snapshot: {localValues.FailureReason}");
+            logWritten($"Safe-canceled Wardrobe outfit '{snapshot.Name}' because DiamondRelay could not capture a full LocalAvatarData restore snapshot: {localValues.FailureReason}");
             return null;
         }
 

@@ -11,7 +11,7 @@ public sealed class ActivityResumeServiceTests
     [Fact]
     public async Task StaleCleanupAndNewerSameRuleCommitLeaveTheNewActivityOnDisk()
     {
-        var testDirectory = Path.Combine(Path.GetTempPath(), "CrystalRelayActivityResumeTests", Guid.NewGuid().ToString("N"));
+        var testDirectory = Path.Combine(Path.GetTempPath(), "DiamondRelayActivityResumeTests", Guid.NewGuid().ToString("N"));
         Directory.CreateDirectory(testDirectory);
         var snapshotPath = Path.Combine(testDirectory, "activity-resume.json");
         var ruleId = Guid.NewGuid();
@@ -73,7 +73,7 @@ public sealed class ActivityResumeServiceTests
     [Fact]
     public async Task OlderSameRuleCompletionDoesNotRemoveNewerReplacement()
     {
-        var testDirectory = Path.Combine(Path.GetTempPath(), "CrystalRelayActivityResumeTests", Guid.NewGuid().ToString("N"));
+        var testDirectory = Path.Combine(Path.GetTempPath(), "DiamondRelayActivityResumeTests", Guid.NewGuid().ToString("N"));
         Directory.CreateDirectory(testDirectory);
         var snapshotPath = Path.Combine(testDirectory, "activity-resume.json");
         var ruleId = Guid.NewGuid();
@@ -128,7 +128,7 @@ public sealed class ActivityResumeServiceTests
     [Fact]
     public async Task DisposeAsyncIsIdempotentAndRejectsLaterWritesSafely()
     {
-        var testDirectory = Path.Combine(Path.GetTempPath(), "CrystalRelayActivityResumeTests", Guid.NewGuid().ToString("N"));
+        var testDirectory = Path.Combine(Path.GetTempPath(), "DiamondRelayActivityResumeTests", Guid.NewGuid().ToString("N"));
         Directory.CreateDirectory(testDirectory);
         var snapshotPath = Path.Combine(testDirectory, "activity-resume.json");
         var service = new ActivityResumeService(snapshotPath);

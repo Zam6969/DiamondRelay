@@ -4,15 +4,15 @@
     <TargetFramework>net10.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <AssemblyName>CrystalRelayUpdater</AssemblyName>
-    <RootNamespace>CrystalRelayUpdater</RootNamespace>
+    <AssemblyName>DiamondRelayUpdater</AssemblyName>
+    <RootNamespace>DiamondRelayUpdater</RootNamespace>
     <Version>3.2.0</Version>
     <AssemblyVersion>3.2.0.0</AssemblyVersion>
     <FileVersion>3.2.0.0</FileVersion>
     <InformationalVersion>3.2.0</InformationalVersion>
-    <Product>Crystal Relay Updater</Product>
-    <Title>Crystal Relay Updater</Title>
-    <Description>Dedicated updater helper for Crystal Relay</Description>
+    <Product>DiamondRelay Updater</Product>
+    <Title>DiamondRelay Updater</Title>
+    <Description>Dedicated updater helper for DiamondRelay</Description>
     <Authors>ScreminPal</Authors>
     <Company>ScreminPal</Company>
   </PropertyGroup>

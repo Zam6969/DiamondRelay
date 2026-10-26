@@ -3,8 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:loc="clr-namespace:VrcTwitchOscBridge.Services"
         xmlns:shell="clr-namespace:System.Windows.Shell;assembly=PresentationFramework"
-        Title="{loc:Translate 'Preview Bug Report | Crystal Relay'}"
-        Icon="Assets/crystal-relay-icon.ico"
+        Title="{loc:Translate 'Preview Bug Report | DiamondRelay'}"
+        Icon="Assets/diamondrelay-icon.ico"
         Width="640"
         Height="560"
         MinWidth="540"
@@ -270,7 +270,7 @@
                     </Grid.ColumnDefinitions>
 
                     <DockPanel VerticalAlignment="Center">
-                        <Image Source="Assets/crystal-relay-icon.png"
+                        <Image Source="Assets/diamondrelay-icon.png"
                                Width="18"
                                Height="18"
                                Margin="0,0,10,0"
@@ -283,7 +283,7 @@
                                        FontWeight="Bold"
                                        Foreground="{DynamicResource TitleBarTextBrush}" />
                             <TextBlock Margin="8,0,0,0"
-                                       Text="Crystal Relay"
+                                       Text="DiamondRelay"
                                        Foreground="{DynamicResource TitleBarSubTextBrush}"
                                        VerticalAlignment="Center" />
                         </StackPanel>

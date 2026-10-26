@@ -10,7 +10,7 @@ using VrcTwitchOscBridge.Models;
 namespace VrcTwitchOscBridge.Services;
 
 /// <summary>
-/// Saves and loads Crystal Relay data.
+/// Saves and loads DiamondRelay data.
 /// This class handles normal app settings, portable save-transfer files,
 /// secure metadata, VRChat caches, and secrets stored in Windows Credential Manager.
 /// </summary>
@@ -77,12 +77,12 @@ public sealed class SettingsStore
         legacyPortableProfileFolderPath = Path.Combine(baseFolder, "Void Hub Save Transfer");
         legacyPortableProfilePath = Path.Combine(legacyPortableProfileFolderPath, "void-hub.rules.json");
         portableProfileFolderPath = AppDataPaths.PortableSaveFolder;
-        portableProfilePath = Path.Combine(portableProfileFolderPath, "crystal-relay.rules.json");
+        portableProfilePath = Path.Combine(portableProfileFolderPath, "diamondrelay.rules.json");
         portableProfileBackupPath = GetBackupPath(portableProfilePath);
         secureFolderPath = AppDataPaths.SecureFolder;
         legacySecureAccountsPath = Path.Combine(secureFolderPath, "twitch-accounts.json");
         legacySecureSessionPath = Path.Combine(secureFolderPath, "void-hub-session.secure");
-        secureSessionPath = Path.Combine(secureFolderPath, "crystal-relay-session.secure");
+        secureSessionPath = Path.Combine(secureFolderPath, "diamondrelay-session.secure");
         secureSessionBackupPath = GetBackupPath(secureSessionPath);
         secureVrChatAvatarCachePath = Path.Combine(secureFolderPath, "vrchat-avatar-cache.secure");
         secureVrChatAvatarCacheBackupPath = GetBackupPath(secureVrChatAvatarCachePath);
@@ -186,7 +186,7 @@ public sealed class SettingsStore
     }
 
     // OSC parameter cache stores the saved parameter list for a specific avatar.
-    // Crystal Relay uses this to keep avatar-set editing usable even when VRChat is not actively queried.
+    // DiamondRelay uses this to keep avatar-set editing usable even when VRChat is not actively queried.
     public Task ClearVrChatAvatarCacheAsync(CancellationToken cancellationToken = default)
     {
         DeleteSecureFileIfExists(secureVrChatAvatarCachePath);
@@ -324,7 +324,7 @@ public sealed class SettingsStore
 
     public async Task<AppSettings> LoadAsync(CancellationToken cancellationToken = default)
     {
-        // Load is intentionally tolerant of mixed storage generations. Crystal Relay rebuilds
+        // Load is intentionally tolerant of mixed storage generations. DiamondRelay rebuilds
         // the latest settings shape from current files first, then quietly pulls legacy data
         // forward so upgrades do not force manual repair or credential re-entry.
         MigrateLegacyBrandingFilesIfNeeded();
@@ -427,7 +427,7 @@ public sealed class SettingsStore
             settings.EmergencyRedeemStopEnabled = profile.EmergencyRedeemStopEnabled ?? settings.EmergencyRedeemStopEnabled;
             settings.DesktopModeInputLockEnabled = profile.DesktopModeInputLockEnabled ?? settings.DesktopModeInputLockEnabled;
             settings.RestartVrChatInDesktopMode = profile.RestartVrChatInDesktopMode ?? settings.RestartVrChatInDesktopMode;
-            settings.LiveFeedbackHeartbeatEnabled = true;
+            settings.LiveFeedbackHeartbeatEnabled = false;
             settings.BetaApplicationUpdatesEnabled = profile.BetaApplicationUpdatesEnabled ?? settings.BetaApplicationUpdatesEnabled;
             settings.EasterEggsEnabled = profile.EasterEggsEnabled ?? settings.EasterEggsEnabled;
             settings.MainWindowTrayTipShown = profile.MainWindowTrayTipShown ?? settings.MainWindowTrayTipShown;
@@ -823,7 +823,7 @@ public sealed class SettingsStore
 
         if (!string.IsNullOrWhiteSpace(primaryAttempt.ErrorMessage))
         {
-            Debug.WriteLine($"Crystal Relay could not read '{path}': {primaryAttempt.ErrorMessage}");
+            Debug.WriteLine($"DiamondRelay could not read '{path}': {primaryAttempt.ErrorMessage}");
         }
 
         if (string.IsNullOrWhiteSpace(backupPath))
@@ -834,13 +834,13 @@ public sealed class SettingsStore
         var backupAttempt = await TryLoadJsonFileAsync<T>(backupPath, cancellationToken);
         if (backupAttempt.Success)
         {
-            Debug.WriteLine($"Crystal Relay restored settings from backup '{backupPath}'.");
+            Debug.WriteLine($"DiamondRelay restored settings from backup '{backupPath}'.");
             return backupAttempt.Value;
         }
 
         if (!string.IsNullOrWhiteSpace(backupAttempt.ErrorMessage))
         {
-            Debug.WriteLine($"Crystal Relay could not read backup '{backupPath}': {backupAttempt.ErrorMessage}");
+            Debug.WriteLine($"DiamondRelay could not read backup '{backupPath}': {backupAttempt.ErrorMessage}");
         }
 
         return default;
@@ -885,7 +885,7 @@ public sealed class SettingsStore
 
         if (!string.IsNullOrWhiteSpace(primaryAttempt.ErrorMessage))
         {
-            Debug.WriteLine($"Crystal Relay could not read secure file '{path}': {primaryAttempt.ErrorMessage}");
+            Debug.WriteLine($"DiamondRelay could not read secure file '{path}': {primaryAttempt.ErrorMessage}");
         }
 
         if (string.IsNullOrWhiteSpace(backupPath))
@@ -896,13 +896,13 @@ public sealed class SettingsStore
         var backupAttempt = await TryLoadProtectedJsonFileAsync<T>(backupPath, cancellationToken);
         if (backupAttempt.Success)
         {
-            Debug.WriteLine($"Crystal Relay restored secure data from backup '{backupPath}'.");
+            Debug.WriteLine($"DiamondRelay restored secure data from backup '{backupPath}'.");
             return backupAttempt.Value;
         }
 
         if (!string.IsNullOrWhiteSpace(backupAttempt.ErrorMessage))
         {
-            Debug.WriteLine($"Crystal Relay could not read secure backup '{backupPath}': {backupAttempt.ErrorMessage}");
+            Debug.WriteLine($"DiamondRelay could not read secure backup '{backupPath}': {backupAttempt.ErrorMessage}");
         }
 
         return default;

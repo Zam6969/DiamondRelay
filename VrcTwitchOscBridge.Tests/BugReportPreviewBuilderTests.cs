@@ -17,7 +17,7 @@ public sealed class BugReportPreviewBuilderTests
             stepsToReproduce: "Click the button",
             contactName: "tester",
             appVersion: "3.1.9",
-            snapshot: "Crystal Relay Status Snapshot\nVRChat: Connected",
+            snapshot: "DiamondRelay Status Snapshot\nVRChat: Connected",
             activityLogSection: null,
             debugLogSection: null,
             crashLogSection: null);
@@ -34,7 +34,7 @@ public sealed class BugReportPreviewBuilderTests
         Assert.Contains("## Steps to reproduce", result);
         Assert.Contains("Click the button", result);
         Assert.Contains("## Live status snapshot", result);
-        Assert.Contains("Crystal Relay Status Snapshot", result);
+        Assert.Contains("DiamondRelay Status Snapshot", result);
     }
 
     [Fact]
@@ -106,7 +106,7 @@ public sealed class BugReportPreviewBuilderTests
     [Fact]
     public void Build_SanitizesUserEnteredFields()
     {
-        var settingsPath = TestWindowsPaths.From('C', "Users", "secretuser", "crystal-relay", "settings.json");
+        var settingsPath = TestWindowsPaths.From('C', "Users", "secretuser", "diamondrelay", "settings.json");
         var contactPath = TestWindowsPaths.From('C', "Users", "secretuser", "contact.txt");
 
         var result = BugReportPreviewBuilder.Build(

@@ -43,7 +43,7 @@ public partial class ThemedDialogWindow : Window
         ThemeManager.ApplyToResources(Resources, theme);
         ThemeManager.ThemeChanged += OnThemeManagerThemeChanged;
         Closed += OnWindowClosed;
-        Title = LocalizationService.Format("{0} | Crystal Relay", title);
+        Title = LocalizationService.Format("{0} | DiamondRelay", title);
         HeaderTextBlock.Text = title;
         WindowTitleTextBlock.Text = title;
         MessageTextBlock.Text = message;

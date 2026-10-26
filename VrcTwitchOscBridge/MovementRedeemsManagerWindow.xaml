@@ -11,7 +11,7 @@
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance Type=vm:MovementRedeemsManagerViewModel}"
         Title="{loc:Translate 'Movement Redeems'}"
-        Icon="Assets/crystal-relay-icon.ico"
+        Icon="Assets/diamondrelay-icon.ico"
         Width="1000"
         Height="700"
         MinWidth="860"

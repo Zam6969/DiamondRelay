@@ -7,9 +7,9 @@ namespace VrcTwitchOscBridge.Tests;
 public sealed class ApplicationUpdatePackageRulesTests
 {
     [Theory]
-    [InlineData(ApplicationUpdateChannel.Stable, "3.2.0", "CrystalRelayTwitchOsc-v3.2.0-win-x64.zip")]
-    [InlineData(ApplicationUpdateChannel.Beta, "3.2.1-beta1", "CrystalRelayTwitchOsc-v3.2.1-beta1-win-x64.zip")]
-    [InlineData(ApplicationUpdateChannel.BugFix, "3.2.0-bugfix2", "CrystalRelayBugFix-v3.2.0-bugfix2-win-x64.zip")]
+    [InlineData(ApplicationUpdateChannel.Stable, "3.2.0", "DiamondRelay-v3.2.0-win-x64.zip")]
+    [InlineData(ApplicationUpdateChannel.Beta, "3.2.1-beta1", "DiamondRelay-v3.2.1-beta1-win-x64.zip")]
+    [InlineData(ApplicationUpdateChannel.BugFix, "3.2.0-bugfix2", "DiamondRelayBugFix-v3.2.0-bugfix2-win-x64.zip")]
     public void GetExpectedAssetName_UsesChannelSpecificPattern(
         ApplicationUpdateChannel channel,
         string version,
@@ -78,9 +78,9 @@ public sealed class ApplicationUpdatePackageRulesTests
     }
 
     [Theory]
-    [InlineData(ApplicationUpdateChannel.Stable, "3.2.0", "Crystal Relay.exe")]
-    [InlineData(ApplicationUpdateChannel.Beta, "3.2.1-beta1", "Crystal Relay.exe")]
-    [InlineData(ApplicationUpdateChannel.BugFix, "3.2.0-bugfix2", "Crystal Relay.exe")]
+    [InlineData(ApplicationUpdateChannel.Stable, "3.2.0", "DiamondRelay.exe")]
+    [InlineData(ApplicationUpdateChannel.Beta, "3.2.1-beta1", "DiamondRelay.exe")]
+    [InlineData(ApplicationUpdateChannel.BugFix, "3.2.0-bugfix2", "DiamondRelay.exe")]
     public void GetExpectedEntryExecutableName_UsesStaticNameForEveryReleaseChannel(
         ApplicationUpdateChannel channel,
         string version,
@@ -92,10 +92,10 @@ public sealed class ApplicationUpdatePackageRulesTests
     }
 
     [Theory]
-    [InlineData("Crystal Relay.exe", true)]
-    [InlineData("CrystalRelayTwitchOsc-v3.2.0-bugfix1.exe", true)]
-    [InlineData("CrystalRelayUpdater.exe", false)]
-    [InlineData("CrystalRelayTwitchOsc-v3.2.0-bugfix1.dll", false)]
+    [InlineData("DiamondRelay.exe", true)]
+    [InlineData("DiamondRelay-v3.2.0-bugfix1.exe", true)]
+    [InlineData("DiamondRelayUpdater.exe", false)]
+    [InlineData("DiamondRelay-v3.2.0-bugfix1.dll", false)]
     public void IsApplicationExecutableName_AcceptsStaticAndVersionedAppNames(
         string fileName,
         bool expected)
@@ -109,23 +109,23 @@ public sealed class ApplicationUpdatePackageRulesTests
         Assert.True(ApplicationUpdatePackageRules.IsExpectedEntryExecutableName(
             ApplicationUpdateChannel.BugFix,
             "3.2.0-bugfix2",
-            "Crystal Relay.exe"));
+            "DiamondRelay.exe"));
         Assert.False(ApplicationUpdatePackageRules.IsExpectedEntryExecutableName(
             ApplicationUpdateChannel.BugFix,
             "3.2.0-bugfix2",
-            "CrystalRelayTwitchOsc-v3.2.0-bugfix1.exe"));
+            "DiamondRelay-v3.2.0-bugfix1.exe"));
         Assert.True(ApplicationUpdatePackageRules.IsExpectedEntryExecutableName(
             ApplicationUpdateChannel.Stable,
             "3.2.0",
-            "Crystal Relay.exe"));
+            "DiamondRelay.exe"));
         Assert.False(ApplicationUpdatePackageRules.IsExpectedEntryExecutableName(
             ApplicationUpdateChannel.Stable,
             "3.2.0",
-            "CrystalRelayTwitchOsc-v3.2.0.exe"));
+            "DiamondRelay-v3.2.0.exe"));
         Assert.False(ApplicationUpdatePackageRules.IsExpectedEntryExecutableName(
             ApplicationUpdateChannel.Stable,
             "3.2.0",
-            "CrystalRelayTwitchOsc-v3.1.9.exe"));
+            "DiamondRelay-v3.1.9.exe"));
         Assert.Equal(
             "bugfix2",
             ApplicationUpdatePackageRules.GetExpectedBuildMarker(
@@ -142,10 +142,10 @@ public sealed class ApplicationUpdatePackageRulesTests
     }
 
     [Theory]
-    [InlineData(ApplicationUpdateChannel.Stable, "3.2.0", "Crystal Relay.exe")]
-    [InlineData(ApplicationUpdateChannel.Stable, "3.2.0", "CrystalRelayTwitchOsc-v3.2.0.exe")]
-    [InlineData(ApplicationUpdateChannel.Beta, "3.2.1-beta1", "crystalrelaytwitchosc-V3.2.1-BETA1.EXE")]
-    [InlineData(ApplicationUpdateChannel.BugFix, "3.2.0-bugfix1", "CrystalRelayTwitchOsc-v3.2.0-bugfix1.exe")]
+    [InlineData(ApplicationUpdateChannel.Stable, "3.2.0", "DiamondRelay.exe")]
+    [InlineData(ApplicationUpdateChannel.Stable, "3.2.0", "DiamondRelay-v3.2.0.exe")]
+    [InlineData(ApplicationUpdateChannel.Beta, "3.2.1-beta1", "diamondrelaytwitchosc-V3.2.1-BETA1.EXE")]
+    [InlineData(ApplicationUpdateChannel.BugFix, "3.2.0-bugfix1", "DiamondRelay-v3.2.0-bugfix1.exe")]
     public void IsExpectedInstalledPackageEntryExecutableName_AcceptsStaticOrExactLegacyName(
         ApplicationUpdateChannel channel,
         string version,
@@ -158,10 +158,10 @@ public sealed class ApplicationUpdatePackageRulesTests
     }
 
     [Theory]
-    [InlineData(ApplicationUpdateChannel.Stable, "3.2.0", "CrystalRelayTwitchOsc-v3.1.9.exe")]
-    [InlineData(ApplicationUpdateChannel.Beta, "3.2.1-beta1", "CrystalRelayTwitchOsc-v3.2.1-beta2.exe")]
-    [InlineData(ApplicationUpdateChannel.BugFix, "3.2.0-bugfix1", "CrystalRelayTwitchOsc-v3.2.0-bugfix2.exe")]
-    [InlineData(ApplicationUpdateChannel.Stable, "3.2.0", "CrystalRelayUpdater.exe")]
+    [InlineData(ApplicationUpdateChannel.Stable, "3.2.0", "DiamondRelay-v3.1.9.exe")]
+    [InlineData(ApplicationUpdateChannel.Beta, "3.2.1-beta1", "DiamondRelay-v3.2.1-beta2.exe")]
+    [InlineData(ApplicationUpdateChannel.BugFix, "3.2.0-bugfix1", "DiamondRelay-v3.2.0-bugfix2.exe")]
+    [InlineData(ApplicationUpdateChannel.Stable, "3.2.0", "DiamondRelayUpdater.exe")]
     public void IsExpectedInstalledPackageEntryExecutableName_RejectsWrongOrUnrelatedName(
         ApplicationUpdateChannel channel,
         string version,
@@ -174,9 +174,9 @@ public sealed class ApplicationUpdatePackageRulesTests
     }
 
     [Theory]
-    [InlineData(ApplicationUpdateChannel.Stable, "3.2.0", "CrystalRelayTwitchOsc-v3.2.0.exe")]
-    [InlineData(ApplicationUpdateChannel.Beta, "3.2.1-beta1", "CrystalRelayTwitchOsc-v3.2.1-beta1.exe")]
-    [InlineData(ApplicationUpdateChannel.BugFix, "3.2.0-bugfix1", "CrystalRelayTwitchOsc-v3.2.0-bugfix1.exe")]
+    [InlineData(ApplicationUpdateChannel.Stable, "3.2.0", "DiamondRelay-v3.2.0.exe")]
+    [InlineData(ApplicationUpdateChannel.Beta, "3.2.1-beta1", "DiamondRelay-v3.2.1-beta1.exe")]
+    [InlineData(ApplicationUpdateChannel.BugFix, "3.2.0-bugfix1", "DiamondRelay-v3.2.0-bugfix1.exe")]
     public void IsExpectedEntryExecutableName_RejectsVersionedNameForNewManifest(
         ApplicationUpdateChannel channel,
         string version,
@@ -189,10 +189,10 @@ public sealed class ApplicationUpdatePackageRulesTests
     }
 
     [Theory]
-    [InlineData("Crystal Relay")]
-    [InlineData("CrystalRelayTwitchOsc-v3.2.0-win-x64")]
-    [InlineData("CrystalRelayBugFix-v3.2.0-bugfix1-win-x64")]
-    [InlineData("CrystalRelay-v3.1.9-win-x64")]
+    [InlineData("DiamondRelay")]
+    [InlineData("DiamondRelay-v3.2.0-win-x64")]
+    [InlineData("DiamondRelayBugFix-v3.2.0-bugfix1-win-x64")]
+    [InlineData("DiamondRelay-v3.1.9-win-x64")]
     public void IsPackageInstallFolderName_AcceptsSupportedShapes(string folderName)
     {
         Assert.True(ApplicationUpdatePackageRules.IsPackageInstallFolderName(folderName));
@@ -203,8 +203,8 @@ public sealed class ApplicationUpdatePackageRulesTests
     {
         var driveRoot = Path.GetPathRoot(Environment.CurrentDirectory)
             ?? throw new InvalidOperationException("The test environment has no filesystem root.");
-        var source = Path.GetFullPath(Path.Combine(driveRoot, "Apps", "Crystal Relay"));
-        var package = Path.GetFullPath(Path.Combine(driveRoot, "Staging", "CrystalRelayBugFix-v3.2.0-bugfix1-win-x64"));
+        var source = Path.GetFullPath(Path.Combine(driveRoot, "Apps", "DiamondRelay"));
+        var package = Path.GetFullPath(Path.Combine(driveRoot, "Staging", "DiamondRelayBugFix-v3.2.0-bugfix1-win-x64"));
 
         var target = ApplicationUpdatePackageRules.GetInstallTargetDirectory(
             ApplicationUpdateChannel.BugFix,
@@ -219,8 +219,8 @@ public sealed class ApplicationUpdatePackageRulesTests
     {
         var driveRoot = Path.GetPathRoot(Environment.CurrentDirectory)
             ?? throw new InvalidOperationException("The test environment has no filesystem root.");
-        var source = Path.GetFullPath(Path.Combine(driveRoot, "Apps", "CrystalRelayTwitchOsc-v3.1.9-win-x64"));
-        var package = Path.GetFullPath(Path.Combine(driveRoot, "Staging", "CrystalRelayTwitchOsc-v3.2.0-win-x64"));
+        var source = Path.GetFullPath(Path.Combine(driveRoot, "Apps", "DiamondRelay-v3.1.9-win-x64"));
+        var package = Path.GetFullPath(Path.Combine(driveRoot, "Staging", "DiamondRelay-v3.2.0-win-x64"));
 
         var target = ApplicationUpdatePackageRules.GetInstallTargetDirectory(
             ApplicationUpdateChannel.Stable,
@@ -228,7 +228,7 @@ public sealed class ApplicationUpdatePackageRulesTests
             package);
 
         Assert.Equal(
-            Path.GetFullPath(Path.Combine(driveRoot, "Apps", "CrystalRelayTwitchOsc-v3.2.0-win-x64")),
+            Path.GetFullPath(Path.Combine(driveRoot, "Apps", "DiamondRelay-v3.2.0-win-x64")),
             target,
             ignoreCase: true);
     }

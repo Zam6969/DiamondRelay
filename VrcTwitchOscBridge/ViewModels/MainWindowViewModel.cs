@@ -24,7 +24,7 @@ using Color = System.Windows.Media.Color;
 namespace VrcTwitchOscBridge.ViewModels;
 
 /// <summary>
-/// Main UI view model for Crystal Relay.
+/// Main UI view model for DiamondRelay.
 /// This file ties the window to saved settings, Twitch and VRChat setup,
 /// rule editing, managed rewards, chatbox state, and About-page data.
 /// </summary>
@@ -525,7 +525,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
     private decimal testModeCashAmount = 5m;
     private string testModeCashCurrencyCode = "USD";
     private string testModeCashMessage = string.Empty;
-    private string testModeSimulationStatusText = T("Choose a simulated event and Crystal Relay will run it through the same matching path as a real stream event.");
+    private string testModeSimulationStatusText = T("Choose a simulated event and DiamondRelay will run it through the same matching path as a real stream event.");
     private FileSystemWatcher? vrChatLocalOscWatcher;
     private string? inferredLocalLowUserId;
     private readonly List<VrChatAvatarSummary> availableVrChatAvatars = [];
@@ -1365,7 +1365,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
         }
     }
 
-    public string WindowTitle => TF("Crystal Relay v{0} | Twitch to OSC", GetAppVersionDisplay());
+    public string WindowTitle => TF("DiamondRelay v{0} | Twitch to OSC", GetAppVersionDisplay());
 
     public string WindowHeaderSubtitle => TF("Twitch to OSC | v{0}", GetAppVersionDisplay());
 
@@ -1390,7 +1390,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
 
     public bool IsLanguageRestartNoticeVisible => Settings.Language != activeLanguageAtStartup;
 
-    public string LanguageRestartNoticeText => T("Language changes apply after you restart Crystal Relay.");
+    public string LanguageRestartNoticeText => T("Language changes apply after you restart DiamondRelay.");
 
     public bool ShowMigrationNotice =>
         !Settings.AvatarSwapMigrationNoticeShown
@@ -1651,7 +1651,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
             : T("Avatar Redeems");
 
     public string SelectedRuleCollectionHelpText => IsViewingPowerUps
-        ? T("Link Twitch Custom Power-ups paid with Bits, then choose the Crystal Relay action each Power Up should run. Linked Power Ups are listen-only in this beta build.")
+        ? T("Link Twitch Custom Power-ups paid with Bits, then choose the DiamondRelay action each Power Up should run. Linked Power Ups are listen-only in this beta build.")
         : IsViewingAvatarScaling
         ? T("Use Scale Sets to organize VRChat OSC avatar height scaling. Scale redeems send /avatar/eyeheight and stay separate from avatar sets, movement, universal triggers, and paid overrides.")
         : IsViewingMovementRedeems
@@ -1659,7 +1659,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
         : IsViewingMasterAvatar
             ? T("Use this list for avatar-switch rules that belong to Avatar Change Setup. Add Avatar Switch creates a direct Avatar Change rule or an Avatar Roulette rule, Delete Avatar Switch removes the selected one, and Enable All or Disable All controls the full avatar-switch list. These rules only turn on while you are on the shared return avatar unless a timed avatar switch is already active.")
         : SelectedAvatarProfile is null
-            ? T("Use Avatar Sets to build per-avatar rule groups. Add Avatar Set creates another avatar group, Delete Avatar Set removes the selected one, and Delete All Avatar Sets clears the full set list. Each set becomes active only when Crystal Relay detects that exact avatar.")
+            ? T("Use Avatar Sets to build per-avatar rule groups. Add Avatar Set creates another avatar group, Delete Avatar Set removes the selected one, and Delete All Avatar Sets clears the full set list. Each set becomes active only when DiamondRelay detects that exact avatar.")
             : T("This list holds the rules for one avatar set. Pick the avatar once, then add and manage the redeems that should only turn on while you are using that avatar.");
 
     public string RuleLibraryHelpText => IsViewingPowerUps
@@ -1670,7 +1670,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
             ? T("This tab is for organizing global movement redeems like forward, back, left, right, and spin. Movement Sets do not add avatar matching; they only keep the movement library easier to manage.")
             : IsViewingMasterAvatar
                 ? T("This tab is for Avatar Change Setup. Pick the shared return avatar on the right, then build direct avatar swaps or Avatar Roulette rules here. Timed avatar-switch rules return to that shared return avatar when they finish.")
-                : T("This tab is for Avatar Sets. Use it to group redeems by the avatar they belong to, then pick a set below to edit the rules inside it. Crystal Relay uses current-avatar detection so only the set for the avatar you are actually wearing turns on.");
+                : T("This tab is for Avatar Sets. Use it to group redeems by the avatar they belong to, then pick a set below to edit the rules inside it. DiamondRelay uses current-avatar detection so only the set for the avatar you are actually wearing turns on.");
 
     public string AddRuleButtonText => IsViewingPowerUps
         ? T("Add Power Up")
@@ -1708,45 +1708,45 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
         {
             if (!Settings.Broadcaster.IsConnected)
             {
-                return T("Connect your broadcaster account if you want Crystal Relay to create, rename, enable, disable, and cooldown-sync this redeem on Twitch automatically. Without that broadcaster connection, the rule can still use Chat Command Fallback if you turn it on below, but Crystal Relay cannot manage a Twitch channel point redeem for you.");
+                return T("Connect your broadcaster account if you want DiamondRelay to create, rename, enable, disable, and cooldown-sync this redeem on Twitch automatically. Without that broadcaster connection, the rule can still use Chat Command Fallback if you turn it on below, but DiamondRelay cannot manage a Twitch channel point redeem for you.");
             }
 
             if (BroadcasterRewardManagementScopeKnownMissing)
             {
-                return T("Reconnect your broadcaster account once so Crystal Relay gets the Twitch permissions it needs to manage channel point redeems for you. That reconnect lets the app create the redeem, keep its enabled state in sync, and update its cooldown on Twitch.");
+                return T("Reconnect your broadcaster account once so DiamondRelay gets the Twitch permissions it needs to manage channel point redeems for you. That reconnect lets the app create the redeem, keep its enabled state in sync, and update its cooldown on Twitch.");
             }
 
             if (broadcasterManagedRewardsUnavailableForSession)
             {
-                return T("Twitch only allows managed channel point redeems for affiliate or partner broadcasters. If your channel does not have that access, Crystal Relay cannot create this reward on Twitch for you, but the rule can still work through Chat Command Fallback if you enable it below.");
+                return T("Twitch only allows managed channel point redeems for affiliate or partner broadcasters. If your channel does not have that access, DiamondRelay cannot create this reward on Twitch for you, but the rule can still work through Chat Command Fallback if you enable it below.");
             }
 
             if (Settings.EmergencyRedeemStopEnabled)
             {
-                return T("Redeems are paused right now. Crystal Relay is intentionally keeping managed Twitch redeems turned off so viewers cannot fire them until you resume.");
+                return T("Redeems are paused right now. DiamondRelay is intentionally keeping managed Twitch redeems turned off so viewers cannot fire them until you resume.");
             }
 
             if (Settings.ChannelPointRewardTestModeEnabled)
             {
-                return T("Test Mode is on. Crystal Relay still keeps managed redeems in sync for testing, but avatar-based rules continue following your current detected avatar instead of turning every avatar set on at once.");
+                return T("Test Mode is on. DiamondRelay still keeps managed redeems in sync for testing, but avatar-based rules continue following your current detected avatar instead of turning every avatar set on at once.");
             }
 
             if (IsViewingMovementRedeems)
             {
-                return T("Crystal Relay will create this redeem on Twitch as a global movement rule. Movement redeems are not tied to one avatar set, so they stay available across every avatar unless you pause redeems.");
+                return T("DiamondRelay will create this redeem on Twitch as a global movement rule. Movement redeems are not tied to one avatar set, so they stay available across every avatar unless you pause redeems.");
             }
 
             if (IsViewingMasterAvatar)
             {
-                return T("Crystal Relay will create this redeem on Twitch and only turn it on while you are using the shared return avatar. That keeps avatar-switch redeems hidden while you are already on a temporary or different avatar. Timed Avatar Change and Avatar Roulette rules switch back to the shared return avatar when they finish.");
+                return T("DiamondRelay will create this redeem on Twitch and only turn it on while you are using the shared return avatar. That keeps avatar-switch redeems hidden while you are already on a temporary or different avatar. Timed Avatar Change and Avatar Roulette rules switch back to the shared return avatar when they finish.");
             }
 
             if (SelectedAvatarProfile is null || string.IsNullOrWhiteSpace(SelectedAvatarProfile.AvatarId))
             {
-                return T("Pick the avatar for this set first. Crystal Relay only turns this redeem on while you are using that exact avatar, so it needs the set linked before it can manage the Twitch redeem correctly.");
+                return T("Pick the avatar for this set first. DiamondRelay only turns this redeem on while you are using that exact avatar, so it needs the set linked before it can manage the Twitch redeem correctly.");
             }
 
-            return TF("Crystal Relay will create this redeem on Twitch and only turn it on while you are using {0}. When you switch away, Crystal Relay turns the managed Twitch redeem off again so viewers only see rules that belong to the avatar you are actually using.", SelectedAvatarProfile.AvatarDisplayName);
+            return TF("DiamondRelay will create this redeem on Twitch and only turn it on while you are using {0}. When you switch away, DiamondRelay turns the managed Twitch redeem off again so viewers only see rules that belong to the avatar you are actually using.", SelectedAvatarProfile.AvatarDisplayName);
         }
     }
 
@@ -1756,25 +1756,25 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
         {
             if (!Settings.Broadcaster.IsConnected)
             {
-                return "Connect your broadcaster account if you want Crystal Relay to create, adopt, enable, disable, and update this Universal Trigger reward on Twitch automatically.";
+                return "Connect your broadcaster account if you want DiamondRelay to create, adopt, enable, disable, and update this Universal Trigger reward on Twitch automatically.";
             }
 
             if (BroadcasterRewardManagementScopeKnownMissing)
             {
-                return "Reconnect your broadcaster account once so Crystal Relay gets the Twitch permissions it needs to manage Universal Trigger channel point rewards.";
+                return "Reconnect your broadcaster account once so DiamondRelay gets the Twitch permissions it needs to manage Universal Trigger channel point rewards.";
             }
 
             if (broadcasterManagedRewardsUnavailableForSession)
             {
-                return "Twitch only allows managed channel point redeems for affiliate or partner broadcasters. The Universal Trigger can still be configured, but Crystal Relay cannot create this reward on Twitch for this account.";
+                return "Twitch only allows managed channel point redeems for affiliate or partner broadcasters. The Universal Trigger can still be configured, but DiamondRelay cannot create this reward on Twitch for this account.";
             }
 
             if (Settings.EmergencyRedeemStopEnabled)
             {
-                return "Redeems are paused right now. Crystal Relay is intentionally keeping managed Twitch redeems turned off until you resume.";
+                return "Redeems are paused right now. DiamondRelay is intentionally keeping managed Twitch redeems turned off until you resume.";
             }
 
-            return T("Crystal Relay will create or link this Twitch redeem and keep it available in Test Mode or while live when the current avatar local OSC file has at least one matching avatar parameter action.");
+            return T("DiamondRelay will create or link this Twitch redeem and keep it available in Test Mode or while live when the current avatar local OSC file has at least one matching avatar parameter action.");
         }
     }
 
@@ -1819,13 +1819,13 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
                     master.RewardTitle))
             {
                 return master.UsesLinkedExistingReward
-                    ? "Select an existing Twitch reward so Crystal Relay can link the Avatar Scaling master reward."
-                    : "Set a master reward name so Crystal Relay can create or link the Twitch redeem.";
+                    ? "Select an existing Twitch reward so DiamondRelay can link the Avatar Scaling master reward."
+                    : "Set a master reward name so DiamondRelay can create or link the Twitch redeem.";
             }
 
             if (!Settings.Broadcaster.IsConnected)
             {
-                return "Connect the broadcaster account before Crystal Relay can manage the master reward on Twitch.";
+                return "Connect the broadcaster account before DiamondRelay can manage the master reward on Twitch.";
             }
 
             if (BroadcasterRewardManagementScopeKnownMissing)
@@ -1877,7 +1877,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
                 return T("Link an existing Twitch Custom Power-up before this rule can match redemptions.");
             }
 
-            return TF("{0} listens for {1:N0}-Bit Power Up redemptions. Linked Power Ups are never edited by Crystal Relay.", rule.DisplayTitle, Math.Max(1, rule.BitsCost));
+            return TF("{0} listens for {1:N0}-Bit Power Up redemptions. Linked Power Ups are never edited by DiamondRelay.", rule.DisplayTitle, Math.Max(1, rule.BitsCost));
         }
     }
 
@@ -1899,19 +1899,19 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
         {
             if (!Settings.Broadcaster.IsConnected)
             {
-                return T("Connect your broadcaster account first. Crystal Relay reads command fallback from the broadcaster chat listener, so it cannot watch for Twitch chat commands until that connection is active.");
+                return T("Connect your broadcaster account first. DiamondRelay reads command fallback from the broadcaster chat listener, so it cannot watch for Twitch chat commands until that connection is active.");
             }
 
             if (!HasBroadcasterChatScope())
             {
-                return T("Reconnect your broadcaster once so Crystal Relay gets Twitch chat read access. Command fallback uses the same live chat listener as the built-in chat features, and without that scope the rule cannot listen for commands.");
+                return T("Reconnect your broadcaster once so DiamondRelay gets Twitch chat read access. Command fallback uses the same live chat listener as the built-in chat features, and without that scope the rule cannot listen for commands.");
             }
 
-            return T("Turn this on if you want this rule to also work from an exact Twitch chat command, even when channel points are unavailable. Crystal Relay matches the whole message, ignores letter case, adds ! automatically if you leave it out, and then checks the permission setting before firing the same rule.");
+            return T("Turn this on if you want this rule to also work from an exact Twitch chat command, even when channel points are unavailable. DiamondRelay matches the whole message, ignores letter case, adds ! automatically if you leave it out, and then checks the permission setting before firing the same rule.");
         }
     }
 
-    public string ManagedRewardColorsDescriptionText => T("These colors control the Twitch reward background Crystal Relay applies while this redeem is ready and while it is on cooldown.");
+    public string ManagedRewardColorsDescriptionText => T("These colors control the Twitch reward background DiamondRelay applies while this redeem is ready and while it is on cooldown.");
 
     public bool IsSpecialRuleLockoutEditorVisible => IsViewingAvatarTriggers && SelectedRule is not null;
 
@@ -2169,7 +2169,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
     public string RewardTestOverrideHelpText => Settings.EmergencyRedeemStopEnabled
         ? T("Redeems are paused right now. Resume them when you are ready to let Twitch redeems run again.")
         : Settings.ChannelPointRewardTestModeEnabled
-            ? T("Test Mode is on. Crystal Relay is keeping redeems live for testing, but avatar-based redeems still follow your current avatar.")
+            ? T("Test Mode is on. DiamondRelay is keeping redeems live for testing, but avatar-based redeems still follow your current avatar.")
             : T("Turn this on to test Twitch-managed redeems as if you were live.");
 
     public string EmergencyRedeemStopButtonText => Settings.EmergencyRedeemStopEnabled
@@ -2177,8 +2177,8 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
         : T("Pause Redeems");
 
     public string EmergencyRedeemStopHelpText => Settings.EmergencyRedeemStopEnabled
-        ? T("Redeems are paused. Crystal Relay is keeping managed Twitch redeems turned off until you resume them.")
-        : T("Turn this on when you need a serious moment. Crystal Relay will turn off managed Twitch redeems and pause Twitch-triggered actions until you resume.");
+        ? T("Redeems are paused. DiamondRelay is keeping managed Twitch redeems turned off until you resume them.")
+        : T("Turn this on when you need a serious moment. DiamondRelay will turn off managed Twitch redeems and pause Twitch-triggered actions until you resume.");
 
     public bool IsEmergencyRedeemStopEnabled => Settings.EmergencyRedeemStopEnabled;
 
@@ -2460,7 +2460,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
     public string VrChatConnectionStateTooltip => VrChatConnectionState switch
     {
         VrChatConnectionState.LoggedIn => T("Connected to VRChat. Avatar names and current avatar are fetched from the live API."),
-        VrChatConnectionState.Cached => T("VRChat login is unavailable. Crystal Relay is using the cached avatar list and detecting the current avatar via OSC and LocalLow files."),
+        VrChatConnectionState.Cached => T("VRChat login is unavailable. DiamondRelay is using the cached avatar list and detecting the current avatar via OSC and LocalLow files."),
         _ => T("No avatar data is available. Log in to VRChat or visit an avatar in VRChat to build the cache."),
     };
 
@@ -2751,7 +2751,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
 
             if (!HasBroadcasterChatScope())
             {
-                return T("Reconnect your broadcaster account to give Crystal Relay chat access.");
+                return T("Reconnect your broadcaster account to give DiamondRelay chat access.");
             }
 
             if (!bridgeCoordinator.IsOscActive || !bridgeCoordinator.HasDiscoveredVrChat)
@@ -3129,11 +3129,11 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
 
         if (previousSessionNeedsRecovery)
         {
-            AppendLog("Crystal Relay detected the previous session did not shut down cleanly. Running quick reward cleanup recovery.");
+            AppendLog("DiamondRelay detected the previous session did not shut down cleanly. Running quick reward cleanup recovery.");
             var recoveryCleanupCompleted = await DisableManagedRewardsForRecoveryAsync();
             if (!recoveryCleanupCompleted)
             {
-                AppendLog("Recovery cleanup could not finish yet. Crystal Relay will retry reward cleanup on the next launch.");
+                AppendLog("Recovery cleanup could not finish yet. DiamondRelay will retry reward cleanup on the next launch.");
             }
         }
 
@@ -4001,7 +4001,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
 
         try
         {
-            SetAccountStatus(accountRole, "Opening Twitch so you can sign in and approve Crystal Relay...");
+            SetAccountStatus(accountRole, "Opening Twitch so you can sign in and approve DiamondRelay...");
 
             var deviceFlow = await twitchApiClient.StartDeviceAuthorizationAsync(twitchClientId, scopes);
             SetDeviceFlow(accountRole, deviceFlow.UserCode, deviceFlow.VerificationUri);
@@ -4088,7 +4088,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
         }
         catch (Exception ex)
         {
-            AppendLog($"Twitch login succeeded, but Crystal Relay could not refresh the background bridge immediately: {ex.Message}");
+            AppendLog($"Twitch login succeeded, but DiamondRelay could not refresh the background bridge immediately: {ex.Message}");
             QueueBridgeRefresh();
         }
     }
@@ -4343,8 +4343,8 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
             {
                 VrChatStatus = GetFriendlyVrChatError(ex);
                 VrChatAvatarStatus = availableVrChatAvatars.Count == 0
-                    ? T("Crystal Relay could not refresh the VRChat avatar list.")
-                    : TF("Crystal Relay could not refresh VRChat right now. Using {0} saved avatars.", availableVrChatAvatars.Count);
+                    ? T("DiamondRelay could not refresh the VRChat avatar list.")
+                    : TF("DiamondRelay could not refresh VRChat right now. Using {0} saved avatars.", availableVrChatAvatars.Count);
                 AppendLog(VrChatStatus);
             }
         }
@@ -5517,8 +5517,8 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
         QueueSave(0);
         QueueManagedRewardSync(0, ManagedRewardSyncReason.FireSaleChanged);
         AppendLog(expired
-            ? "Reward Fire Sale ended and Crystal Relay queued normal reward prices to restore."
-            : "Reward Fire Sale stopped and Crystal Relay queued normal reward prices to restore.");
+            ? "Reward Fire Sale ended and DiamondRelay queued normal reward prices to restore."
+            : "Reward Fire Sale stopped and DiamondRelay queued normal reward prices to restore.");
     }
 
     private bool ResetRewardFireSaleForStreamEnd()
@@ -5607,7 +5607,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
         QueueSave(0);
         QueueManagedRewardSync(0, ManagedRewardSyncReason.FireSaleChanged);
         AppendLog(
-            $"Dev Fire Sale started by {request.UserDisplayName}: {discountPercent}% off for {durationSeconds:N0}s. Crystal Relay-owned reward prices will restore when it ends.");
+            $"Dev Fire Sale started by {request.UserDisplayName}: {discountPercent}% off for {durationSeconds:N0}s. DiamondRelay-owned reward prices will restore when it ends.");
         return true;
     }
 
@@ -5758,7 +5758,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
         QueueManagedRewardSync(0, ManagedRewardSyncReason.FireSaleChanged);
         AppendLog(saleWasActive
             ? $"Reward Fire Sale upgraded: {reachedTier.DiscountPercent}% off from the {reachedTier.GoalAmount:N0} goal tier."
-            : $"Reward Fire Sale started: {reachedTier.DiscountPercent}% off Crystal Relay-owned VRC rewards.");
+            : $"Reward Fire Sale started: {reachedTier.DiscountPercent}% off DiamondRelay-owned VRC rewards.");
     }
 
     private RewardFireSaleTier? GetReachedRewardFireSaleTier()
@@ -6031,8 +6031,8 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
         RaisePropertyChanged(nameof(IsEmergencyRedeemStopEnabled));
         RaiseRuleSelectionStateProperties();
         AppendLog(Settings.EmergencyRedeemStopEnabled
-            ? "Emergency redeem pause is on. Crystal Relay is turning Twitch redeems off until you resume them."
-            : "Emergency redeem pause is off. Crystal Relay will bring Twitch redeems back when they are allowed again.");
+            ? "Emergency redeem pause is on. DiamondRelay is turning Twitch redeems off until you resume them."
+            : "Emergency redeem pause is off. DiamondRelay will bring Twitch redeems back when they are allowed again.");
     }
 
     private void ToggleRedeemGroupByName(string groupName)
@@ -6191,7 +6191,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
         var currentAvatarId = GetResolvedCurrentVrChatAvatarId();
         if (string.IsNullOrWhiteSpace(currentAvatarId))
         {
-            VrChatAvatarStatus = T("Crystal Relay does not know the current avatar yet. Refresh avatars first.");
+            VrChatAvatarStatus = T("DiamondRelay does not know the current avatar yet. Refresh avatars first.");
             return;
         }
 
@@ -6316,7 +6316,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
         var currentAvatarId = Settings.VrChat.CurrentAvatarId?.Trim() ?? string.Empty;
         if (string.IsNullOrWhiteSpace(currentAvatarId))
         {
-            VrChatAvatarStatus = T("Crystal Relay does not know the current avatar yet. Refresh avatars first.");
+            VrChatAvatarStatus = T("DiamondRelay does not know the current avatar yet. Refresh avatars first.");
             return;
         }
 
@@ -6559,7 +6559,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
         if (string.IsNullOrWhiteSpace(userId))
         {
             // Fall back to scanning OSC folder by avatar ID directly
-            AppendLog("VRChat user ID is not set — signing in to VRChat via the main window's VRChat login enables parameter loading, OR Crystal Relay will scan the avatar OSC file directly.");
+            AppendLog("VRChat user ID is not set — signing in to VRChat via the main window's VRChat login enables parameter loading, OR DiamondRelay will scan the avatar OSC file directly.");
             try
             {
                 var parameters = await vrChatLocalOscCacheService.LoadAvatarParametersByAvatarIdAsync(avatarId, CancellationToken.None);
@@ -9698,8 +9698,8 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
         return result.Status switch
         {
             ApplicationUpdateCheckStatus.UpdateAvailable => result.Update,
-            ApplicationUpdateCheckStatus.ReleaseVersionUnreadable => LogAndReturnNoUpdate(T("Crystal Relay skipped the update check because the latest GitHub release version could not be read.")),
-            ApplicationUpdateCheckStatus.RequestFailed => LogAndReturnNoUpdate(T("Crystal Relay could not check for updates right now.")),
+            ApplicationUpdateCheckStatus.ReleaseVersionUnreadable => LogAndReturnNoUpdate(T("DiamondRelay skipped the update check because the latest GitHub release version could not be read.")),
+            ApplicationUpdateCheckStatus.RequestFailed => LogAndReturnNoUpdate(T("DiamondRelay could not check for updates right now.")),
             _ => null
         };
     }
@@ -9921,7 +9921,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
 
             RunOnUi(() =>
             {
-                AppendLog($"{ex.AccountRole} Twitch login needs reconnecting. Crystal Relay did not reuse the rejected saved refresh token.");
+                AppendLog($"{ex.AccountRole} Twitch login needs reconnecting. DiamondRelay did not reuse the rejected saved refresh token.");
                 RecordSavedLoginRecoverySignal();
                 UpdateAccountStatuses();
 
@@ -9934,7 +9934,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
 
                     if (oscFallbackStarted)
                     {
-                        AppendLog("Crystal Relay kept OSCQuery running so Test Rule can still work.");
+                        AppendLog("DiamondRelay kept OSCQuery running so Test Rule can still work.");
                     }
 
                     return;
@@ -9986,7 +9986,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
 
                     if (oscFallbackStarted)
                     {
-                        AppendLog("Crystal Relay kept OSCQuery running so Test Rule can still work.");
+                        AppendLog("DiamondRelay kept OSCQuery running so Test Rule can still work.");
                     }
 
                     return;
@@ -10011,7 +10011,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
             Application.Current?.MainWindow,
             SelectedTheme,
             T("Refresh OSCQuery"),
-            T("Refreshing OSCQuery can make VRChat show its OSC reading popup again. Do you want Crystal Relay to force a new OSCQuery discovery right now?"),
+            T("Refreshing OSCQuery can make VRChat show its OSC reading popup again. Do you want DiamondRelay to force a new OSCQuery discovery right now?"),
             T("Refresh OSC"),
             T("Cancel"));
 
@@ -10040,7 +10040,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
             BridgeStatus = "OSCQuery refresh sent. Looking for VRChat if needed.";
             OscStatusDetail = bridgeCoordinator.HasDiscoveredVrChat
                 ? T("VRChat is connected through OSCQuery.")
-                : T("OSCQuery refresh sent. Crystal Relay is searching for VRChat.");
+                : T("OSCQuery refresh sent. DiamondRelay is searching for VRChat.");
         }
         catch (Exception ex)
         {
@@ -10450,7 +10450,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
             SetUniversalManagedRewardSyncStatus(status);
             RunOnUi(() => AppendThrottledLog(
                 $"{logKey}:token",
-                $"Twitch reward refresh skipped because Crystal Relay could not verify the broadcaster login yet. {ex.Message}",
+                $"Twitch reward refresh skipped because DiamondRelay could not verify the broadcaster login yet. {ex.Message}",
                 ThrottledRewardSyncLogWindow));
             return ManagedRewardSyncOutcome.BroadcasterTokenRefreshRequired;
         }
@@ -10854,7 +10854,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
                 MarkBroadcasterManagedRewardsUnavailableForSession();
                 RunOnUi(() => AppendThrottledLog(
                     "managed-rewards-unavailable:catalog",
-                    "Crystal Relay cannot load Twitch redeems for this broadcaster because channel point reward management is only available for affiliate or partner accounts.",
+                    "DiamondRelay cannot load Twitch redeems for this broadcaster because channel point reward management is only available for affiliate or partner accounts.",
                     ThrottledRewardSyncLogWindow));
                 return;
             }
@@ -10872,7 +10872,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
             {
                 RunOnUi(() => AppendThrottledLog(
                     "managed-rewards-token-refresh:catalog",
-                    "Crystal Relay could not refresh Twitch redeems yet because the broadcaster login needs to refresh. The app will try again after the broadcaster session updates.",
+                    "DiamondRelay could not refresh Twitch redeems yet because the broadcaster login needs to refresh. The app will try again after the broadcaster session updates.",
                     ThrottledRewardSyncLogWindow));
                 return;
             }
@@ -10933,7 +10933,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
             {
                 RunOnUi(() => AppendThrottledLog(
                     "power-ups-token-refresh",
-                    "Crystal Relay could not refresh Power Ups yet because the broadcaster login needs to refresh.",
+                    "DiamondRelay could not refresh Power Ups yet because the broadcaster login needs to refresh.",
                     ThrottledRewardSyncLogWindow));
                 return;
             }
@@ -11013,14 +11013,14 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
                     {
                         RunOnUi(() => AppendThrottledLog(
                             "managed-rewards-unavailable:sync",
-                            "Crystal Relay cannot manage Twitch redeems for this broadcaster because channel point reward management is only available for affiliate or partner accounts.",
+                            "DiamondRelay cannot manage Twitch redeems for this broadcaster because channel point reward management is only available for affiliate or partner accounts.",
                             ThrottledRewardSyncLogWindow));
                     }
                     else if (syncOutcome == ManagedRewardSyncOutcome.BroadcasterTokenRefreshRequired)
                     {
                         RunOnUi(() => AppendThrottledLog(
                             "managed-rewards-token-refresh:sync",
-                            "Crystal Relay could not manage Twitch redeems yet because the broadcaster login needs to refresh. The app will try again after the broadcaster session updates.",
+                            "DiamondRelay could not manage Twitch redeems yet because the broadcaster login needs to refresh. The app will try again after the broadcaster session updates.",
                             ThrottledRewardSyncLogWindow));
                     }
                     else if (syncOutcome == ManagedRewardSyncOutcome.BroadcasterRewardManagementScopeMissing)
@@ -11116,7 +11116,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
 
         RunOnUi(() => AppendThrottledLog(
             "managed-rewards-api-backoff",
-            $"{operation} skipped because Twitch asked Crystal Relay to slow reward API calls until {retryAfterUtc.Value.LocalDateTime:t}.",
+            $"{operation} skipped because Twitch asked DiamondRelay to slow reward API calls until {retryAfterUtc.Value.LocalDateTime:t}.",
             ThrottledRewardSyncLogWindow));
         return true;
     }
@@ -11152,7 +11152,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
 
         RunOnUi(() => AppendThrottledLog(
             "managed-rewards-api-rate-limited",
-            $"{operation} hit Twitch's reward API rate limit. Crystal Relay will pause reward API calls until {effectiveRetryAfterUtc.LocalDateTime:t}.",
+            $"{operation} hit Twitch's reward API rate limit. DiamondRelay will pause reward API calls until {effectiveRetryAfterUtc.LocalDateTime:t}.",
             ThrottledRewardSyncLogWindow));
         return true;
     }
@@ -11279,7 +11279,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
             RaisePropertyChanged(nameof(UniversalManagedChannelPointRewardHelpText));
             AppendThrottledLog(
                 logKey,
-                "Reconnect the broadcaster account once so Crystal Relay can manage Twitch channel point rewards. The saved Twitch login is missing channel-point reward management permission.",
+                "Reconnect the broadcaster account once so DiamondRelay can manage Twitch channel point rewards. The saved Twitch login is missing channel-point reward management permission.",
                 ThrottledRewardSyncLogWindow);
         });
     }
@@ -11397,7 +11397,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
             {
                 RunOnUi(() => AppendThrottledLog(
                     "managed-reward-current-avatar-local-cache-refresh",
-                    $"Crystal Relay could not read the cached VRChat avatar state before reward sync: {ex.Message}",
+                    $"DiamondRelay could not read the cached VRChat avatar state before reward sync: {ex.Message}",
                     ThrottledRewardSyncLogWindow));
             }
 
@@ -11406,7 +11406,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
             {
                 RunOnUi(() => AppendThrottledLog(
                     "managed-reward-current-avatar-unknown",
-                    "Crystal Relay does not know the current VRChat avatar yet. Avatar Set and Avatar Change rewards will stay hidden until the avatar refresh succeeds.",
+                    "DiamondRelay does not know the current VRChat avatar yet. Avatar Set and Avatar Change rewards will stay hidden until the avatar refresh succeeds.",
                     ThrottledRewardSyncLogWindow));
             }
 
@@ -11426,7 +11426,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
         {
             RunOnUi(() => AppendThrottledLog(
                 "managed-reward-current-avatar-api-refresh",
-                $"Crystal Relay could not refresh the current avatar from VRChat before reward sync: {GetFriendlyVrChatError(ex)}",
+                $"DiamondRelay could not refresh the current avatar from VRChat before reward sync: {GetFriendlyVrChatError(ex)}",
                 ThrottledRewardSyncLogWindow));
         }
 
@@ -11442,7 +11442,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
             {
                 RunOnUi(() => AppendThrottledLog(
                     "managed-reward-current-avatar-local-refresh",
-                    $"Crystal Relay could not read the local VRChat avatar state before reward sync: {ex.Message}",
+                    $"DiamondRelay could not read the local VRChat avatar state before reward sync: {ex.Message}",
                     ThrottledRewardSyncLogWindow));
             }
         }
@@ -11464,7 +11464,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
         {
             RunOnUi(() => AppendThrottledLog(
                 "managed-reward-current-avatar-unknown",
-                "Crystal Relay does not know the current VRChat avatar yet. Avatar Set and Avatar Change rewards will stay hidden until the avatar refresh succeeds.",
+                "DiamondRelay does not know the current VRChat avatar yet. Avatar Set and Avatar Change rewards will stay hidden until the avatar refresh succeeds.",
                 ThrottledRewardSyncLogWindow));
         }
     }
@@ -11497,7 +11497,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
             QueueSave(0);
             AppendThrottledLog(
                 "managed-reward-current-avatar-runtime-recovered",
-                $"Crystal Relay recovered the current VRChat avatar from the live bridge state before syncing Twitch rewards: {ResolveVrChatAvatarName(runtimeAvatarId)}.",
+                $"DiamondRelay recovered the current VRChat avatar from the live bridge state before syncing Twitch rewards: {ResolveVrChatAvatarName(runtimeAvatarId)}.",
                 ThrottledRewardSyncLogWindow);
         }, DispatcherPriority.Normal, cancellationToken).Task;
     }
@@ -12980,7 +12980,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
     {
         var configuredDescription = description?.Trim() ?? string.Empty;
         return string.IsNullOrWhiteSpace(configuredDescription)
-            ? T("Managed by Crystal Relay.")
+            ? T("Managed by DiamondRelay.")
             : configuredDescription;
     }
 
@@ -13359,7 +13359,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
 
             RunOnUi(() => AppendThrottledLog(
                 $"universal-avatar-osc-file-missing:{normalizedAvatarId}",
-                "Crystal Relay could not find the current avatar's local OSC parameter file. Universal Twitch rewards that need avatar parameters will stay hidden until VRChat writes that file.",
+                "DiamondRelay could not find the current avatar's local OSC parameter file. Universal Twitch rewards that need avatar parameters will stay hidden until VRChat writes that file.",
                 ThrottledRewardSyncLogWindow));
             return;
         }
@@ -13378,12 +13378,12 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
 
         RunOnUi(() => AppendThrottledLog(
             $"universal-avatar-osc-folder-missing:{normalizedAvatarId}",
-            "Crystal Relay could not find VRChat's local OSC avatar folder. Universal Twitch rewards that need avatar parameters will stay hidden until VRChat writes the current avatar JSON.",
+            "DiamondRelay could not find VRChat's local OSC avatar folder. Universal Twitch rewards that need avatar parameters will stay hidden until VRChat writes the current avatar JSON.",
             ThrottledRewardSyncLogWindow));
     }
 
     // Full managed-reward reconciliation pass.
-    // Crystal Relay compares local rules against Twitch custom rewards and then creates,
+    // DiamondRelay compares local rules against Twitch custom rewards and then creates,
     // updates, disables, or removes rewards so Twitch matches the current rule state.
     private async Task<ManagedRewardSyncOutcome> SynchronizeManagedChannelPointRewardsAsync(
         CancellationToken cancellationToken,
@@ -13714,7 +13714,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
             {
                 RunOnUi(() => AppendThrottledLog(
                     $"managed-rewards-skip-uninitialized-passive:{reason}",
-                    $"Skipped Twitch reward API sync for {DescribeManagedRewardSyncReason(reason)} because rewards are not visible and Crystal Relay has not completed a deliberate reward sync baseline yet.",
+                    $"Skipped Twitch reward API sync for {DescribeManagedRewardSyncReason(reason)} because rewards are not visible and DiamondRelay has not completed a deliberate reward sync baseline yet.",
                     ThrottledRewardSyncLogWindow));
                 return ManagedRewardSyncOutcome.Completed;
             }
@@ -13856,7 +13856,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
                 pendingSkippedDeleteSuppressedCount = 0;
                 RunOnUi(() => AppendThrottledLog(
                     $"managed-reward-delete-suppressed-summary:{reason}",
-                    $"Skipped deleting {suppressedCount} inactive Twitch reward(s) during {DescribeManagedRewardSyncReason(reason)} to avoid reward API churn. Crystal Relay only deletes opted-in inactive rewards during explicit cleanup/maintenance or direct rule removal.",
+                    $"Skipped deleting {suppressedCount} inactive Twitch reward(s) during {DescribeManagedRewardSyncReason(reason)} to avoid reward API churn. DiamondRelay only deletes opted-in inactive rewards during explicit cleanup/maintenance or direct rule removal.",
                     ThrottledRewardSyncLogWindow));
             }
 
@@ -13875,7 +13875,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
             {
                 RunOnUi(() => AppendThrottledLog(
                     $"managed-rewards-partial-failure:{reason}",
-                    $"Twitch reward sync for {DescribeManagedRewardSyncReason(reason)} completed with {apiCalls.Failures} failed reward operation(s). Crystal Relay will retry instead of marking this desired state as synchronized.",
+                    $"Twitch reward sync for {DescribeManagedRewardSyncReason(reason)} completed with {apiCalls.Failures} failed reward operation(s). DiamondRelay will retry instead of marking this desired state as synchronized.",
                     ThrottledRewardSyncLogWindow));
             }
             RunOnUi(() => AppendThrottledLog(
@@ -13951,9 +13951,9 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
         return await DisableManagedRewardsForMaintenanceAsync(
             timeout: TimeSpan.FromSeconds(6),
             successMessage: "Disabled managed channel point rewards during shutdown.",
-            timeoutMessage: "Timed out while disabling managed rewards during shutdown. Crystal Relay will retry on next launch.",
+            timeoutMessage: "Timed out while disabling managed rewards during shutdown. DiamondRelay will retry on next launch.",
             unsupportedLogKey: "managed-rewards-unavailable:shutdown",
-            unsupportedMessage: "Crystal Relay skipped shutdown reward cleanup because this broadcaster account cannot use Twitch channel point rewards.");
+            unsupportedMessage: "DiamondRelay skipped shutdown reward cleanup because this broadcaster account cannot use Twitch channel point rewards.");
     }
 
     private async Task<bool> DisableManagedRewardsForRecoveryAsync()
@@ -13963,7 +13963,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
             successMessage: "Recovery cleanup disabled managed channel point rewards from the previous session.",
             timeoutMessage: "Recovery reward cleanup timed out.",
             unsupportedLogKey: "managed-rewards-unavailable:recovery",
-            unsupportedMessage: "Crystal Relay could not run reward cleanup because this broadcaster account cannot use Twitch channel point rewards.");
+            unsupportedMessage: "DiamondRelay could not run reward cleanup because this broadcaster account cannot use Twitch channel point rewards.");
     }
 
     private async Task<bool> DisableManagedRewardsForMaintenanceAsync(
@@ -14009,7 +14009,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
             {
                 AppendThrottledLog(
                     $"{unsupportedLogKey}:missing-scope",
-                    "Crystal Relay skipped reward cleanup because the broadcaster login is missing channel-point reward management permission. Reconnect the broadcaster account once.",
+                    "DiamondRelay skipped reward cleanup because the broadcaster login is missing channel-point reward management permission. Reconnect the broadcaster account once.",
                     ThrottledRewardSyncLogWindow);
                 return true;
             }
@@ -14017,7 +14017,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
             {
                 AppendThrottledLog(
                     $"{unsupportedLogKey}:token-refresh",
-                    "Crystal Relay skipped reward cleanup because the broadcaster login needs to refresh first. The app will keep launching normally and try again after the broadcaster session updates.",
+                    "DiamondRelay skipped reward cleanup because the broadcaster login needs to refresh first. The app will keep launching normally and try again after the broadcaster session updates.",
                     ThrottledRewardSyncLogWindow);
                 return true;
             }
@@ -14076,7 +14076,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
             changed = SetManagedRewardTargetId(target, string.Empty, ownershipIndex);
             RunOnUi(() => AppendThrottledLog(
                 $"managed-reward-exact-id-conflict:{target.Id}:{rewardId}",
-                $"Reward sync cleared the saved Twitch reward link for '{target.DisplayTitle}' because another configured reward already owns that Twitch reward ID. Crystal Relay left the existing reward untouched.",
+                $"Reward sync cleared the saved Twitch reward link for '{target.DisplayTitle}' because another configured reward already owns that Twitch reward ID. DiamondRelay left the existing reward untouched.",
                 ThrottledRewardSyncLogWindow));
             return changed;
         }
@@ -14096,7 +14096,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
             RunOnUi(() => AppendThrottledLog(
                 $"managed-reward-id-missing:{target.Id}:{rewardId}",
                 target.UsesLinkedExistingReward
-                    ? $"Linked Twitch reward for '{target.DisplayTitle}' no longer exists or could not be loaded. Crystal Relay will not create a replacement; choose a Twitch reward again."
+                    ? $"Linked Twitch reward for '{target.DisplayTitle}' no longer exists or could not be loaded. DiamondRelay will not create a replacement; choose a Twitch reward again."
                     : $"Reward sync could not find saved Twitch reward ID for '{target.DisplayTitle}', so it will try normalized title matching before creating anything.",
                 ThrottledRewardSyncLogWindow));
         }
@@ -14145,7 +14145,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
             && !allowTargetDeletionDuringSettingsEdit)
         {
             pendingSkippedDeleteSuppressedCount++;
-            DebugLogService.Write($"Skipped deleting inactive Twitch reward for '{target.DisplayTitle}' (ID: {target.Id}) during {DescribeManagedRewardSyncReason(reason)} to avoid reward API churn. Crystal Relay only deletes opted-in inactive rewards during explicit cleanup/maintenance or direct rule removal.");
+            DebugLogService.Write($"Skipped deleting inactive Twitch reward for '{target.DisplayTitle}' (ID: {target.Id}) during {DescribeManagedRewardSyncReason(reason)} to avoid reward API churn. DiamondRelay only deletes opted-in inactive rewards during explicit cleanup/maintenance or direct rule removal.");
             if (existingReward is null || string.IsNullOrWhiteSpace(rewardTitle))
             {
                 return changed;
@@ -14196,7 +14196,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
         {
             RunOnUi(() => AppendThrottledLog(
                 $"managed-reward-materialize-suppressed:{reason}:{target.Id}",
-                $"Skipped creating or adopting Twitch reward for '{target.DisplayTitle}' during {DescribeManagedRewardSyncReason(reason)} because rewards are currently hidden. Crystal Relay will create or adopt it during an intentional settings sync, Test Mode, or live stream sync.",
+                $"Skipped creating or adopting Twitch reward for '{target.DisplayTitle}' during {DescribeManagedRewardSyncReason(reason)} because rewards are currently hidden. DiamondRelay will create or adopt it during an intentional settings sync, Test Mode, or live stream sync.",
                 ThrottledRewardSyncLogWindow));
             return changed;
         }
@@ -14335,7 +14335,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
                     ClearManagedRewardCreateBackoff(managedRewardTitle);
                     RunOnUi(() => AppendThrottledLog(
                         $"managed-reward-adopted:{managedRewardTitle}",
-                        $"Crystal Relay found the existing Twitch redeem '{rewardTitle}' and linked '{target.DisplayTitle}' to it.",
+                        $"DiamondRelay found the existing Twitch redeem '{rewardTitle}' and linked '{target.DisplayTitle}' to it.",
                         ThrottledRewardSyncLogWindow));
                 }
             }
@@ -14574,7 +14574,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
         {
             RunOnUi(() => AppendThrottledLog(
                 $"linked-reward-not-found:{target.Id}:{rewardId}",
-                $"Linked Twitch reward for '{target.DisplayTitle}' was not found. Crystal Relay will not create, rename, or replace it automatically.",
+                $"Linked Twitch reward for '{target.DisplayTitle}' was not found. DiamondRelay will not create, rename, or replace it automatically.",
                 ThrottledRewardSyncLogWindow));
             return Task.FromResult(false);
         }
@@ -14583,7 +14583,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
 
         RunOnUi(() => AppendThrottledLog(
             $"linked-reward-listen-only:{existingReward.Id}:{target.Id}",
-            $"Linked Twitch reward '{existingReward.Title}' is listen-only for '{target.DisplayTitle}'. Crystal Relay will run its action when redeemed, but will not edit Twitch visibility, name, cost, prompt, color, input setting, deletion, or cooldown.",
+            $"Linked Twitch reward '{existingReward.Title}' is listen-only for '{target.DisplayTitle}'. DiamondRelay will run its action when redeemed, but will not edit Twitch visibility, name, cost, prompt, color, input setting, deletion, or cooldown.",
             ThrottledRewardSyncLogWindow));
         return Task.FromResult(false);
     }
@@ -14957,7 +14957,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
                 ApplyRewardCatalog(rewardCatalog.Rewards);
                 AppendThrottledLog(
                     $"managed-reward-duplicate-adopted:{managedRewardTitle}",
-                    $"Crystal Relay found the existing Twitch redeem '{rewardTitle}' and linked '{target.DisplayTitle}' to it instead of creating a duplicate.",
+                    $"DiamondRelay found the existing Twitch redeem '{rewardTitle}' and linked '{target.DisplayTitle}' to it instead of creating a duplicate.",
                     ThrottledRewardSyncLogWindow);
             });
             return (true, true);
@@ -14967,7 +14967,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
         apiCalls.Failures++;
         RunOnUi(() => AppendThrottledLog(
             $"managed-reward-duplicate:{managedRewardTitle}",
-            $"Twitch already has a redeem named '{rewardTitle}', so Crystal Relay will not create another one. Use a different reward name or connect this rule to the existing redeem.",
+            $"Twitch already has a redeem named '{rewardTitle}', so DiamondRelay will not create another one. Use a different reward name or connect this rule to the existing redeem.",
             ThrottledRewardSyncLogWindow));
         return (true, false);
     }
@@ -15023,7 +15023,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
         foreach (var reward in rewardCatalog.FindByTitleVariants(rewardTitle))
         {
             // A same-title reward is only a migration candidate when its stable ID
-            // is already known to belong to Crystal Relay. Presentation text is not
+            // is already known to belong to DiamondRelay. Presentation text is not
             // ownership proof because broadcasters can create or rename rewards.
             if (knownManagedRewardIds.Contains(reward.Id)
                 && !ownershipIndex.IsOwnedByAnotherRule(currentOwnerId, reward))
@@ -15060,7 +15060,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
             MarkManagedRewardCreateBackoff(managedRewardTitle);
             RunOnUi(() =>
             {
-                var message = $"Twitch is full on custom rewards, so Crystal Relay skipped creating inactive off-avatar reward '{ManagedRewardPresentation.StripPrefix(managedRewardTitle)}'. It will make room only for rewards needed by the current avatar.";
+                var message = $"Twitch is full on custom rewards, so DiamondRelay skipped creating inactive off-avatar reward '{ManagedRewardPresentation.StripPrefix(managedRewardTitle)}'. It will make room only for rewards needed by the current avatar.";
                 AppendThrottledLog(
                     $"managed-reward-capacity-inactive:{managedRewardTitle}",
                     message,
@@ -15088,7 +15088,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
             apiCalls.Failures++;
             RunOnUi(() =>
             {
-                var message = $"Twitch is full on custom rewards, and Crystal Relay found no disabled app-owned off-avatar VRC reward it can safely recycle for '{target.DisplayTitle}'. Linked and user-created rewards were left untouched.";
+                var message = $"Twitch is full on custom rewards, and DiamondRelay found no disabled app-owned off-avatar VRC reward it can safely recycle for '{target.DisplayTitle}'. Linked and user-created rewards were left untouched.";
                 AppendThrottledLog(
                     $"managed-reward-capacity-no-reclaim:{managedRewardTitle}",
                     message,
@@ -15138,7 +15138,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
         ClearManagedRewardCreateBackoff(managedRewardTitle);
         RunOnUi(() => AppendThrottledLog(
             $"managed-reward-capacity-recycled:{reclaimCandidate.Id}:{target.Id}",
-            $"Twitch was full, so Crystal Relay recycled disabled app-owned reward '{previousRewardTitle}' into '{managedRewardTitle}' for '{target.DisplayTitle}'. Cleared {clearedOwnerCount} old off-avatar saved link(s) and {clearedSyncTargetCount} in-pass sync target(s).",
+            $"Twitch was full, so DiamondRelay recycled disabled app-owned reward '{previousRewardTitle}' into '{managedRewardTitle}' for '{target.DisplayTitle}'. Cleared {clearedOwnerCount} old off-avatar saved link(s) and {clearedSyncTargetCount} in-pass sync target(s).",
             ThrottledRewardSyncLogWindow));
         return (true, true);
     }
@@ -15389,7 +15389,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
         MarkManagedRewardCreateBackoff(managedRewardTitle);
         RunOnUi(() =>
         {
-            var message = $"Twitch is full on custom rewards, so Crystal Relay could not add '{rewardTitle}' yet. Remove old rewards or wait for cleanup, then it will try again.";
+            var message = $"Twitch is full on custom rewards, so DiamondRelay could not add '{rewardTitle}' yet. Remove old rewards or wait for cleanup, then it will try again.";
             AppendThrottledLog(
                 $"managed-reward-capacity:{managedRewardTitle}",
                 message,
@@ -17043,7 +17043,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
 
             if (!HasBroadcasterChatWriteScope())
             {
-                return T("Reconnect your broadcaster once so Crystal Relay can send Twitch chat messages from the broadcaster account.");
+                return T("Reconnect your broadcaster once so DiamondRelay can send Twitch chat messages from the broadcaster account.");
             }
 
             var displayName = string.IsNullOrWhiteSpace(Settings.Broadcaster.DisplayName)
@@ -17190,7 +17190,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
 
         if (message.Contains("lost the OSCQuery connection to VRChat", StringComparison.OrdinalIgnoreCase))
         {
-            OscStatusDetail = T("Crystal Relay lost the OSCQuery connection to VRChat and is waiting for it to come back.");
+            OscStatusDetail = T("DiamondRelay lost the OSCQuery connection to VRChat and is waiting for it to come back.");
             OscBridgeSummary = T("OSC is waiting for VRChat.");
             RaisePropertyChanged(nameof(ChatboxOscRelayStatusText));
             return;
@@ -17697,7 +17697,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
                 account.UserId,
                 target.UserId,
                 durationSeconds,
-                "Crystal Relay quick timeout",
+                "DiamondRelay quick timeout",
                 CancellationToken.None);
             var message = TF("Timed out {0} for {1}.", target.DisplayName, FormatModerationDuration(durationSeconds));
             ChatboxModerationStatusText = message;
@@ -17728,7 +17728,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
                 account.UserId,
                 target.UserId,
                 null,
-                "Crystal Relay quick ban",
+                "DiamondRelay quick ban",
                 CancellationToken.None);
             var message = TF("Banned {0}.", target.DisplayName);
             ChatboxModerationStatusText = message;
@@ -17759,7 +17759,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
                 account.UserId,
                 target.UserId,
                 1,
-                "Crystal Relay purge",
+                "DiamondRelay purge",
                 CancellationToken.None);
             var message = TF("Purged recent chat from {0}.", target.DisplayName);
             ChatboxModerationStatusText = message;
@@ -18217,7 +18217,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
                 Application.Current?.MainWindow,
                 SelectedTheme,
                 T("Repair Saved Login State"),
-                T("Crystal Relay will back up your redeem setup and custom theme assets, clear saved login/session files and stored tokens, restore the redeems, then restart. You will need to reconnect Twitch, VRChat, and payment providers."),
+                T("DiamondRelay will back up your redeem setup and custom theme assets, clear saved login/session files and stored tokens, restore the redeems, then restart. You will need to reconnect Twitch, VRChat, and payment providers."),
                 T("Start Repair"),
                 T("Cancel"));
             if (!confirmed)
@@ -18234,7 +18234,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
             await settingsStore.SaveAsync(Settings, CancellationToken.None);
             var preparation = await SavedLoginStateRecoveryService.PrepareRecoveryBackupAsync(CancellationToken.None);
             SavedLoginStateRecoveryService.StartRecoveryHelper(preparation);
-            AppendLog(T("Starting saved login repair. Crystal Relay will restart after the backup is restored."));
+            AppendLog(T("Starting saved login repair. DiamondRelay will restart after the backup is restored."));
             Application.Current?.MainWindow?.Close();
         }
         catch (Exception ex)
@@ -18278,7 +18278,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
             Application.Current?.MainWindow,
             SelectedTheme,
             T("Repair Saved Login State"),
-            T("Crystal Relay noticed saved login/session failures more than once this run. The repair flow can back up your redeems, clear saved login state, restore your redeems, and restart Crystal Relay."),
+            T("DiamondRelay noticed saved login/session failures more than once this run. The repair flow can back up your redeems, clear saved login state, restore your redeems, and restart DiamondRelay."),
             T("Repair and Restart"),
             T("Open Settings"),
             T("Not Now"));
@@ -18345,8 +18345,8 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
         var shouldOpenKoFi = ThemedDialogWindow.ShowYesNo(
             Application.Current?.MainWindow,
             SelectedTheme,
-            T("Support Crystal Relay on Ko-fi"),
-            T("Crystal Relay is completely free for everyone. If it helps your stream and you want to support development, you can leave a tip on Ko-fi. Every contribution helps keep the program free and growing."),
+            T("Support DiamondRelay on Ko-fi"),
+            T("DiamondRelay is completely free for everyone. If it helps your stream and you want to support development, you can leave a tip on Ko-fi. Every contribution helps keep the program free and growing."),
             T("Open Ko-fi"),
             T("Close"));
 
@@ -18366,8 +18366,8 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
         var shouldOpenDiscord = ThemedDialogWindow.ShowYesNo(
             Application.Current?.MainWindow,
             SelectedTheme,
-            T("Join the Crystal Relay Discord"),
-            T("Get live update pings, sneak peeks, dev-related information, and meet other Crystal Relay users."),
+            T("Join the DiamondRelay Discord"),
+            T("Get live update pings, sneak peeks, dev-related information, and meet other DiamondRelay users."),
             T("Open Discord"),
             T("Close"));
 
@@ -18437,7 +18437,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
             debugLog,
             crashLog);
 
-        AppendLog("Sending bug report to Crystal Relay's bug report service.");
+        AppendLog("Sending bug report to DiamondRelay's bug report service.");
         var result = await bugReportService.SubmitAsync(submission);
         if (result.Succeeded && !string.IsNullOrWhiteSpace(result.IssueUrl))
         {
@@ -18446,7 +18446,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
                 Application.Current?.MainWindow,
                 SelectedTheme,
                 T("Bug report sent"),
-                $"{T("Crystal Relay created a GitHub issue for this report.")}{Environment.NewLine}{Environment.NewLine}{result.IssueUrl}",
+                $"{T("DiamondRelay created a GitHub issue for this report.")}{Environment.NewLine}{Environment.NewLine}{result.IssueUrl}",
                 T("Open Issue"),
                 T("Close"));
             if (shouldOpenIssue)
@@ -18532,8 +18532,8 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
         var shouldReport = ThemedDialogWindow.ShowYesNo(
             Application.Current?.MainWindow,
             SelectedTheme,
-            T("Crystal Relay crashed last time"),
-            T("Crystal Relay closed unexpectedly during your last session. Send a bug report with the crash log attached?"),
+            T("DiamondRelay crashed last time"),
+            T("DiamondRelay closed unexpectedly during your last session. Send a bug report with the crash log attached?"),
             T("Send crash report"),
             T("Not Now"));
 
@@ -18645,7 +18645,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
         {
             if (apiException.ApiMessage.Contains("invalid client", StringComparison.OrdinalIgnoreCase))
             {
-                return "Twitch rejected Crystal Relay's built-in Twitch app ID. Make sure you're on the latest Crystal Relay release and try again.";
+                return "Twitch rejected DiamondRelay's built-in Twitch app ID. Make sure you're on the latest DiamondRelay release and try again.";
             }
 
             if (apiException.ApiMessage.Contains("invalid scope", StringComparison.OrdinalIgnoreCase))
@@ -18702,15 +18702,15 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
                     ? T("Refreshing Twitch session...")
                     : TF("Refreshing Twitch session... {0}", renewalText)
                 : string.IsNullOrWhiteSpace(renewalText)
-                    ? T("Twitch session needs to refresh the next time Crystal Relay starts listening.")
-                    : TF("Twitch session needs to refresh the next time Crystal Relay starts listening. {0}", renewalText);
+                    ? T("Twitch session needs to refresh the next time DiamondRelay starts listening.")
+                    : TF("Twitch session needs to refresh the next time DiamondRelay starts listening. {0}", renewalText);
         }
 
         var remainingText = DescribeRemainingTime(remaining);
         return bridgeCoordinator.IsRunning
             ? string.IsNullOrWhiteSpace(renewalText)
-                ? TF("Current Twitch token expires in about {0}. Crystal Relay refreshes it automatically while running.", remainingText)
-                : TF("Current Twitch token expires in about {0}. Crystal Relay refreshes it automatically while running. {1}", remainingText, renewalText)
+                ? TF("Current Twitch token expires in about {0}. DiamondRelay refreshes it automatically while running.", remainingText)
+                : TF("Current Twitch token expires in about {0}. DiamondRelay refreshes it automatically while running. {1}", remainingText, renewalText)
             : string.IsNullOrWhiteSpace(renewalText)
                 ? TF("Current Twitch token expires in about {0}.", remainingText)
                 : TF("Current Twitch token expires in about {0}. {1}", remainingText, renewalText);
@@ -19441,7 +19441,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
             GetOwningMovementRedeemSet(rule)?.MovementRules.Remove(rule);
         }
 
-        AppendLog($"Removed {unsupportedRules.Length} old stop-input movement redeem{(unsupportedRules.Length == 1 ? string.Empty : "s")} because Crystal Relay now supports directional movement redeems only.");
+        AppendLog($"Removed {unsupportedRules.Length} old stop-input movement redeem{(unsupportedRules.Length == 1 ? string.Empty : "s")} because DiamondRelay now supports directional movement redeems only.");
         QueueSave(0);
     }
 
@@ -20262,7 +20262,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
         }
         else if (string.IsNullOrWhiteSpace(selectedAvatarId))
         {
-            VrChatOscParameterStatus = T("Pick the avatar first, then Crystal Relay can use its saved OSC parameters.");
+            VrChatOscParameterStatus = T("Pick the avatar first, then DiamondRelay can use its saved OSC parameters.");
         }
         else if (cachedVrChatParametersByAvatarId.TryGetValue(selectedAvatarId, out var avatarParameters) && avatarParameters.Count > 0)
         {
@@ -21577,7 +21577,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
         ThemedDialogWindow.ShowOk(
             Application.Current?.MainWindow,
             SelectedTheme,
-            T("Crystal Relay"),
+            T("DiamondRelay"),
             T("What do you think that button is for? free food? NOPE!"),
             T("OK"));
     }
@@ -22094,7 +22094,7 @@ public enum TwitchChatRoleCardKind
 
 public sealed class TwitchChatMessageEntry : ObservableObject
 {
-    private const string CrystalRelayDeveloperLogin = "Screminpal_";
+    private const string DiamondRelayDeveloperLogin = "Screminpal_";
     private const string KaiBloodwolfLogin = "kai_bloodwolf";
     private const string HypercraftiingLogin = "hypercraftiing";
     private const string KyouZakiraLogin = "kyou_zakira";
@@ -22102,7 +22102,7 @@ public sealed class TwitchChatMessageEntry : ObservableObject
     private const string FalxPlaysLogin = "falxplays";
     private static readonly SolidColorBrush DefaultNameBrush = CreateFrozenBrush("#F5EEFF");
     private static readonly SolidColorBrush BubblegumNameBrush = CreateFrozenBrush("#5A426B");
-    private static readonly LinearGradientBrush CrystalRelayDeveloperNameBrush = CreateFrozenDeveloperNameBrush();
+    private static readonly LinearGradientBrush DiamondRelayDeveloperNameBrush = CreateFrozenDeveloperNameBrush();
     private static readonly LinearGradientBrush KaiBloodwolfNameBrush = CreateFrozenKaiBloodwolfNameBrush();
     private static readonly LinearGradientBrush HypercraftiingNameBrush = CreateFrozenHypercraftiingNameBrush();
     private static readonly LinearGradientBrush KyouZakiraNameBrush = CreateFrozenKyouZakiraNameBrush();
@@ -22147,7 +22147,7 @@ public sealed class TwitchChatMessageEntry : ObservableObject
         UserDisplayName = string.IsNullOrWhiteSpace(userDisplayName) ? "Viewer" : userDisplayName.Trim();
         UserLogin = userLogin?.Trim() ?? string.Empty;
         UserId = userId?.Trim() ?? string.Empty;
-        IsCrystalRelayDeveloper = IsCrystalRelayDeveloperAccount(UserDisplayName, UserLogin);
+        IsDiamondRelayDeveloper = IsDiamondRelayDeveloperAccount(UserDisplayName, UserLogin);
         IsKaiBloodwolf = IsKaiBloodwolfAccount(UserDisplayName, UserLogin);
         IsHypercraftiing = IsHypercraftiingAccount(UserDisplayName, UserLogin);
         IsKyouZakira = IsKyouZakiraAccount(UserDisplayName, UserLogin);
@@ -22156,7 +22156,7 @@ public sealed class TwitchChatMessageEntry : ObservableObject
         MessageText = messageText;
         BadgeImageUrls = badgeImageUrls;
         BadgeSetIds = badgeSetIds;
-        RoleCardKind = IsCrystalRelayDeveloper
+        RoleCardKind = IsDiamondRelayDeveloper
             ? TwitchChatRoleCardKind.None
             : IsKaiBloodwolf
             ? TwitchChatRoleCardKind.KaiBloodwolf
@@ -22175,8 +22175,8 @@ public sealed class TwitchChatMessageEntry : ObservableObject
         ShouldPlayViewerSound = shouldPlayViewerSound;
         ReceivedAt = receivedAt;
         RawUserColor = userColor;
-        NameBrush = IsCrystalRelayDeveloper
-            ? CrystalRelayDeveloperNameBrush
+        NameBrush = IsDiamondRelayDeveloper
+            ? DiamondRelayDeveloperNameBrush
             : IsKaiBloodwolf
             ? KaiBloodwolfNameBrush
             : IsHypercraftiing
@@ -22223,7 +22223,7 @@ public sealed class TwitchChatMessageEntry : ObservableObject
 
     public string UserId { get; }
 
-    public bool IsCrystalRelayDeveloper { get; }
+    public bool IsDiamondRelayDeveloper { get; }
 
     public bool IsKaiBloodwolf { get; }
 
@@ -22673,13 +22673,13 @@ public sealed class TwitchChatMessageEntry : ObservableObject
         return brush;
     }
 
-    private static bool IsCrystalRelayDeveloperAccount(string displayName, string login) =>
-        IsCrystalRelayDeveloperName(displayName) || IsCrystalRelayDeveloperName(login);
+    private static bool IsDiamondRelayDeveloperAccount(string displayName, string login) =>
+        false; // Upstream accounts do not receive this fork's developer badge.
 
-    private static bool IsCrystalRelayDeveloperName(string value)
+    private static bool IsDiamondRelayDeveloperName(string value)
     {
         var normalized = NormalizeTwitchName(value);
-        return string.Equals(normalized, CrystalRelayDeveloperLogin, StringComparison.OrdinalIgnoreCase);
+        return string.Equals(normalized, DiamondRelayDeveloperLogin, StringComparison.OrdinalIgnoreCase);
     }
 
     private static bool IsKaiBloodwolfAccount(string displayName, string login) =>

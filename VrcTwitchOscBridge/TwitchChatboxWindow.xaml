@@ -5,8 +5,8 @@
         xmlns:loc="clr-namespace:VrcTwitchOscBridge.Services"
         xmlns:shell="clr-namespace:System.Windows.Shell;assembly=PresentationFramework"
         xmlns:vm="clr-namespace:VrcTwitchOscBridge.ViewModels"
-        Title="{loc:Translate 'Twitch Chatbox | Crystal Relay'}"
-        Icon="Assets/crystal-relay-icon.ico"
+        Title="{loc:Translate 'Twitch Chatbox | DiamondRelay'}"
+        Icon="Assets/diamondrelay-icon.ico"
         Width="620"
         Height="760"
         MinWidth="460"
@@ -61,12 +61,12 @@
         <SolidColorBrush x:Key="TitleBarCloseHoverBrush" Color="#B43D62" />
         <SolidColorBrush x:Key="TitleBarClosePressedBrush" Color="#8C2648" />
         <SolidColorBrush x:Key="RuleCardHoverBrush" Color="#8D56E8" />
-        <SolidColorBrush x:Key="CrystalRelayDevTextBrush" Color="#FFF8FF" />
-        <SolidColorBrush x:Key="CrystalRelayDevMutedBrush" Color="#D8C8FF" />
-        <SolidColorBrush x:Key="CrystalRelayDevInsetBrush" Color="#70130B24" />
-        <SolidColorBrush x:Key="CrystalRelayDevInsetBorderBrush" Color="#80B388FF" />
-        <SolidColorBrush x:Key="CrystalRelayDevBadgeTextBrush" Color="#16071F" />
-        <LinearGradientBrush x:Key="CrystalRelayDevCardBrush"
+        <SolidColorBrush x:Key="DiamondRelayDevTextBrush" Color="#FFF8FF" />
+        <SolidColorBrush x:Key="DiamondRelayDevMutedBrush" Color="#D8C8FF" />
+        <SolidColorBrush x:Key="DiamondRelayDevInsetBrush" Color="#70130B24" />
+        <SolidColorBrush x:Key="DiamondRelayDevInsetBorderBrush" Color="#80B388FF" />
+        <SolidColorBrush x:Key="DiamondRelayDevBadgeTextBrush" Color="#16071F" />
+        <LinearGradientBrush x:Key="DiamondRelayDevCardBrush"
                              StartPoint="0,0"
                              EndPoint="1,1">
             <GradientStop Color="#F5090612" Offset="0" />
@@ -74,7 +74,7 @@
             <GradientStop Color="#E9082038" Offset="0.72" />
             <GradientStop Color="#EC2B0B36" Offset="1" />
         </LinearGradientBrush>
-        <LinearGradientBrush x:Key="CrystalRelayDevBorderBrush"
+        <LinearGradientBrush x:Key="DiamondRelayDevBorderBrush"
                              StartPoint="0,0"
                              EndPoint="1,1">
             <GradientStop Color="#C47DF9FF" Offset="0" />
@@ -82,21 +82,21 @@
             <GradientStop Color="#F0FF78D8" Offset="0.68" />
             <GradientStop Color="#D957F7C7" Offset="1" />
         </LinearGradientBrush>
-        <LinearGradientBrush x:Key="CrystalRelayDevRailBrush"
+        <LinearGradientBrush x:Key="DiamondRelayDevRailBrush"
                              StartPoint="0,0"
                              EndPoint="0,1">
             <GradientStop Color="#7DF9FF" Offset="0" />
             <GradientStop Color="#B388FF" Offset="0.48" />
             <GradientStop Color="#FF78D8" Offset="1" />
         </LinearGradientBrush>
-        <LinearGradientBrush x:Key="CrystalRelayDevBadgeBrush"
+        <LinearGradientBrush x:Key="DiamondRelayDevBadgeBrush"
                              StartPoint="0,0"
                              EndPoint="1,1">
             <GradientStop Color="#F6FAFF" Offset="0" />
             <GradientStop Color="#BFF8FF" Offset="0.46" />
             <GradientStop Color="#FBB9FF" Offset="1" />
         </LinearGradientBrush>
-        <DropShadowEffect x:Key="CrystalRelayDevGlowEffect"
+        <DropShadowEffect x:Key="DiamondRelayDevGlowEffect"
                           BlurRadius="18"
                           ShadowDepth="0"
                           Opacity="0.45"
@@ -1084,11 +1084,11 @@
                     <Setter Property="BorderThickness" Value="1.5" />
                     <Setter Property="Effect" Value="{StaticResource FalxPlaysGlowEffect}" />
                 </DataTrigger>
-                <DataTrigger Binding="{Binding IsCrystalRelayDeveloper}" Value="True">
-                    <Setter Property="Background" Value="{StaticResource CrystalRelayDevCardBrush}" />
-                    <Setter Property="BorderBrush" Value="{StaticResource CrystalRelayDevBorderBrush}" />
+                <DataTrigger Binding="{Binding IsDiamondRelayDeveloper}" Value="True">
+                    <Setter Property="Background" Value="{StaticResource DiamondRelayDevCardBrush}" />
+                    <Setter Property="BorderBrush" Value="{StaticResource DiamondRelayDevBorderBrush}" />
                     <Setter Property="BorderThickness" Value="1.5" />
-                    <Setter Property="Effect" Value="{StaticResource CrystalRelayDevGlowEffect}" />
+                    <Setter Property="Effect" Value="{StaticResource DiamondRelayDevGlowEffect}" />
                 </DataTrigger>
             </Style.Triggers>
         </Style>
@@ -1171,11 +1171,11 @@
                     <Setter Property="BorderThickness" Value="1.5" />
                     <Setter Property="Effect" Value="{StaticResource FalxPlaysGlowEffect}" />
                 </DataTrigger>
-                <DataTrigger Binding="{Binding IsCrystalRelayDeveloper}" Value="True">
-                    <Setter Property="Background" Value="{StaticResource CrystalRelayDevCardBrush}" />
-                    <Setter Property="BorderBrush" Value="{StaticResource CrystalRelayDevBorderBrush}" />
+                <DataTrigger Binding="{Binding IsDiamondRelayDeveloper}" Value="True">
+                    <Setter Property="Background" Value="{StaticResource DiamondRelayDevCardBrush}" />
+                    <Setter Property="BorderBrush" Value="{StaticResource DiamondRelayDevBorderBrush}" />
                     <Setter Property="BorderThickness" Value="1.5" />
-                    <Setter Property="Effect" Value="{StaticResource CrystalRelayDevGlowEffect}" />
+                    <Setter Property="Effect" Value="{StaticResource DiamondRelayDevGlowEffect}" />
                 </DataTrigger>
             </Style.Triggers>
         </Style>
@@ -1257,11 +1257,11 @@
                     <Setter Property="BorderThickness" Value="1.5" />
                     <Setter Property="Effect" Value="{StaticResource FalxPlaysGlowEffect}" />
                 </DataTrigger>
-                <DataTrigger Binding="{Binding IsCrystalRelayDeveloper}" Value="True">
-                    <Setter Property="Background" Value="{StaticResource CrystalRelayDevCardBrush}" />
-                    <Setter Property="BorderBrush" Value="{StaticResource CrystalRelayDevBorderBrush}" />
+                <DataTrigger Binding="{Binding IsDiamondRelayDeveloper}" Value="True">
+                    <Setter Property="Background" Value="{StaticResource DiamondRelayDevCardBrush}" />
+                    <Setter Property="BorderBrush" Value="{StaticResource DiamondRelayDevBorderBrush}" />
                     <Setter Property="BorderThickness" Value="1.5" />
-                    <Setter Property="Effect" Value="{StaticResource CrystalRelayDevGlowEffect}" />
+                    <Setter Property="Effect" Value="{StaticResource DiamondRelayDevGlowEffect}" />
                 </DataTrigger>
             </Style.Triggers>
         </Style>
@@ -1272,7 +1272,7 @@
                 <DataTrigger Binding="{Binding HasBadgeRoleCard}" Value="True">
                     <Setter Property="Margin" Value="12,0,0,0" />
                 </DataTrigger>
-                <DataTrigger Binding="{Binding IsCrystalRelayDeveloper}" Value="True">
+                <DataTrigger Binding="{Binding IsDiamondRelayDeveloper}" Value="True">
                     <Setter Property="Margin" Value="12,0,0,0" />
                 </DataTrigger>
             </Style.Triggers>
@@ -1300,8 +1300,8 @@
                 <DataTrigger Binding="{Binding IsFalxPlaysRoleCard}" Value="True">
                     <Setter Property="Foreground" Value="{StaticResource FalxPlaysMutedBrush}" />
                 </DataTrigger>
-                <DataTrigger Binding="{Binding IsCrystalRelayDeveloper}" Value="True">
-                    <Setter Property="Foreground" Value="{StaticResource CrystalRelayDevMutedBrush}" />
+                <DataTrigger Binding="{Binding IsDiamondRelayDeveloper}" Value="True">
+                    <Setter Property="Foreground" Value="{StaticResource DiamondRelayDevMutedBrush}" />
                 </DataTrigger>
             </Style.Triggers>
         </Style>
@@ -1327,8 +1327,8 @@
                 <DataTrigger Binding="{Binding IsFalxPlaysRoleCard}" Value="True">
                     <Setter Property="Foreground" Value="{StaticResource FalxPlaysTextBrush}" />
                 </DataTrigger>
-                <DataTrigger Binding="{Binding IsCrystalRelayDeveloper}" Value="True">
-                    <Setter Property="Foreground" Value="{StaticResource CrystalRelayDevTextBrush}" />
+                <DataTrigger Binding="{Binding IsDiamondRelayDeveloper}" Value="True">
+                    <Setter Property="Foreground" Value="{StaticResource DiamondRelayDevTextBrush}" />
                 </DataTrigger>
             </Style.Triggers>
         </Style>
@@ -1354,8 +1354,8 @@
                 <DataTrigger Binding="{Binding IsFalxPlaysRoleCard}" Value="True">
                     <Setter Property="Foreground" Value="{StaticResource FalxPlaysTextBrush}" />
                 </DataTrigger>
-                <DataTrigger Binding="{Binding IsCrystalRelayDeveloper}" Value="True">
-                    <Setter Property="Foreground" Value="{StaticResource CrystalRelayDevTextBrush}" />
+                <DataTrigger Binding="{Binding IsDiamondRelayDeveloper}" Value="True">
+                    <Setter Property="Foreground" Value="{StaticResource DiamondRelayDevTextBrush}" />
                 </DataTrigger>
             </Style.Triggers>
         </Style>
@@ -1381,8 +1381,8 @@
                 <DataTrigger Binding="{Binding IsFalxPlaysRoleCard}" Value="True">
                     <Setter Property="Foreground" Value="{StaticResource FalxPlaysMutedBrush}" />
                 </DataTrigger>
-                <DataTrigger Binding="{Binding IsCrystalRelayDeveloper}" Value="True">
-                    <Setter Property="Foreground" Value="{StaticResource CrystalRelayDevMutedBrush}" />
+                <DataTrigger Binding="{Binding IsDiamondRelayDeveloper}" Value="True">
+                    <Setter Property="Foreground" Value="{StaticResource DiamondRelayDevMutedBrush}" />
                 </DataTrigger>
             </Style.Triggers>
         </Style>
@@ -1415,9 +1415,9 @@
                     <Setter Property="Background" Value="{StaticResource FalxPlaysInsetBrush}" />
                     <Setter Property="BorderBrush" Value="{StaticResource FalxPlaysInsetBorderBrush}" />
                 </DataTrigger>
-                <DataTrigger Binding="{Binding IsCrystalRelayDeveloper}" Value="True">
-                    <Setter Property="Background" Value="{StaticResource CrystalRelayDevInsetBrush}" />
-                    <Setter Property="BorderBrush" Value="{StaticResource CrystalRelayDevInsetBorderBrush}" />
+                <DataTrigger Binding="{Binding IsDiamondRelayDeveloper}" Value="True">
+                    <Setter Property="Background" Value="{StaticResource DiamondRelayDevInsetBrush}" />
+                    <Setter Property="BorderBrush" Value="{StaticResource DiamondRelayDevInsetBorderBrush}" />
                 </DataTrigger>
             </Style.Triggers>
         </Style>
@@ -1450,9 +1450,9 @@
                     <Setter Property="Background" Value="{StaticResource FalxPlaysInsetBrush}" />
                     <Setter Property="BorderBrush" Value="{StaticResource FalxPlaysInsetBorderBrush}" />
                 </DataTrigger>
-                <DataTrigger Binding="{Binding IsCrystalRelayDeveloper}" Value="True">
-                    <Setter Property="Background" Value="{StaticResource CrystalRelayDevInsetBrush}" />
-                    <Setter Property="BorderBrush" Value="{StaticResource CrystalRelayDevInsetBorderBrush}" />
+                <DataTrigger Binding="{Binding IsDiamondRelayDeveloper}" Value="True">
+                    <Setter Property="Background" Value="{StaticResource DiamondRelayDevInsetBrush}" />
+                    <Setter Property="BorderBrush" Value="{StaticResource DiamondRelayDevInsetBorderBrush}" />
                 </DataTrigger>
             </Style.Triggers>
         </Style>
@@ -1502,8 +1502,8 @@
                 <DataTrigger Binding="{Binding IsFalxPlaysRoleCard}" Value="True">
                     <Setter Property="Background" Value="{StaticResource FalxPlaysRailBrush}" />
                 </DataTrigger>
-                <DataTrigger Binding="{Binding IsCrystalRelayDeveloper}" Value="True">
-                    <Setter Property="Background" Value="{StaticResource CrystalRelayDevRailBrush}" />
+                <DataTrigger Binding="{Binding IsDiamondRelayDeveloper}" Value="True">
+                    <Setter Property="Background" Value="{StaticResource DiamondRelayDevRailBrush}" />
                 </DataTrigger>
             </Style.Triggers>
         </Style>
@@ -1568,9 +1568,9 @@
                     <Setter Property="Visibility" Value="Visible" />
                     <Setter Property="Background" Value="{StaticResource FalxPlaysRailBrush}" />
                 </DataTrigger>
-                <DataTrigger Binding="{Binding IsCrystalRelayDeveloper}" Value="True">
+                <DataTrigger Binding="{Binding IsDiamondRelayDeveloper}" Value="True">
                     <Setter Property="Visibility" Value="Visible" />
-                    <Setter Property="Background" Value="{StaticResource CrystalRelayDevRailBrush}" />
+                    <Setter Property="Background" Value="{StaticResource DiamondRelayDevRailBrush}" />
                 </DataTrigger>
             </Style.Triggers>
         </Style>
@@ -1749,15 +1749,15 @@
                                 <Border Margin="8,0,0,0"
                                         Padding="7,2"
                                         VerticalAlignment="Center"
-                                        Background="{StaticResource CrystalRelayDevBadgeBrush}"
-                                        BorderBrush="{StaticResource CrystalRelayDevBorderBrush}"
+                                        Background="{StaticResource DiamondRelayDevBadgeBrush}"
+                                        BorderBrush="{StaticResource DiamondRelayDevBorderBrush}"
                                         BorderThickness="1"
                                         CornerRadius="8"
-                                        Visibility="{Binding IsCrystalRelayDeveloper, Converter={StaticResource BooleanToVisibilityConverter}}">
-                                    <TextBlock Text="{loc:Translate 'CRYSTAL RELAY DEV'}"
+                                        Visibility="{Binding IsDiamondRelayDeveloper, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                    <TextBlock Text="{loc:Translate 'DIAMONDRELAY DEV'}"
                                                FontSize="9"
                                                FontWeight="Bold"
-                                               Foreground="{StaticResource CrystalRelayDevBadgeTextBrush}" />
+                                               Foreground="{StaticResource DiamondRelayDevBadgeTextBrush}" />
                                 </Border>
 
                                 <Border Style="{StaticResource ChatboxRoleBadgeBorderStyle}"
@@ -1829,15 +1829,15 @@
                                     <Border Margin="8,0,0,0"
                                             Padding="7,2"
                                             VerticalAlignment="Center"
-                                            Background="{StaticResource CrystalRelayDevBadgeBrush}"
-                                            BorderBrush="{StaticResource CrystalRelayDevBorderBrush}"
+                                            Background="{StaticResource DiamondRelayDevBadgeBrush}"
+                                            BorderBrush="{StaticResource DiamondRelayDevBorderBrush}"
                                             BorderThickness="1"
                                             CornerRadius="8"
-                                            Visibility="{Binding IsCrystalRelayDeveloper, Converter={StaticResource BooleanToVisibilityConverter}}">
-                                        <TextBlock Text="{loc:Translate 'CRYSTAL RELAY DEV'}"
+                                            Visibility="{Binding IsDiamondRelayDeveloper, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                        <TextBlock Text="{loc:Translate 'DIAMONDRELAY DEV'}"
                                                    FontSize="9"
                                                    FontWeight="Bold"
-                                                   Foreground="{StaticResource CrystalRelayDevBadgeTextBrush}" />
+                                                   Foreground="{StaticResource DiamondRelayDevBadgeTextBrush}" />
                                     </Border>
 
                                     <Border Style="{StaticResource ChatboxRoleBadgeBorderStyle}"
@@ -1938,15 +1938,15 @@
                                     <Border Margin="8,0,0,0"
                                             Padding="7,2"
                                             VerticalAlignment="Center"
-                                            Background="{StaticResource CrystalRelayDevBadgeBrush}"
-                                            BorderBrush="{StaticResource CrystalRelayDevBorderBrush}"
+                                            Background="{StaticResource DiamondRelayDevBadgeBrush}"
+                                            BorderBrush="{StaticResource DiamondRelayDevBorderBrush}"
                                             BorderThickness="1"
                                             CornerRadius="8"
-                                            Visibility="{Binding IsCrystalRelayDeveloper, Converter={StaticResource BooleanToVisibilityConverter}}">
-                                        <TextBlock Text="{loc:Translate 'CRYSTAL RELAY DEV'}"
+                                            Visibility="{Binding IsDiamondRelayDeveloper, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                        <TextBlock Text="{loc:Translate 'DIAMONDRELAY DEV'}"
                                                    FontSize="9"
                                                    FontWeight="Bold"
-                                                   Foreground="{StaticResource CrystalRelayDevBadgeTextBrush}" />
+                                                   Foreground="{StaticResource DiamondRelayDevBadgeTextBrush}" />
                                     </Border>
 
                                     <Border Style="{StaticResource ChatboxRoleBadgeBorderStyle}"
@@ -2031,7 +2031,7 @@
                 </Grid.ColumnDefinitions>
 
                 <DockPanel VerticalAlignment="Center">
-                    <Image Source="Assets/crystal-relay-icon.png"
+                    <Image Source="Assets/diamondrelay-icon.png"
                            Width="18"
                            Height="18"
                            Margin="0,0,8,0" />
@@ -2043,7 +2043,7 @@
                                    Foreground="{DynamicResource TitleBarTextBrush}" />
                         <TextBlock Margin="8,0,0,0"
                                    VerticalAlignment="Center"
-                                   Text="Crystal Relay"
+                                   Text="DiamondRelay"
                                    Foreground="{DynamicResource TitleBarSubTextBrush}" />
                     </StackPanel>
                 </DockPanel>

@@ -25,7 +25,7 @@ public sealed class RuntimeConfigStore
 
     public string ConfigPath => configPath;
 
-    // Runtime config is best-effort. If the file is missing or bad, Crystal Relay falls back to defaults.
+    // Runtime config is best-effort. If the file is missing or bad, DiamondRelay falls back to defaults.
     public async Task<RuntimeConfig> LoadAsync(CancellationToken cancellationToken = default)
     {
         if (!File.Exists(configPath))

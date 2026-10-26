@@ -13,7 +13,7 @@ internal sealed class ApplicationUpdateRollbackException : Exception
         Exception originalException,
         IReadOnlyList<Exception> recoveryExceptions)
         : base(
-            "Crystal Relay could not complete update rollback because one or more recovery steps failed.",
+            "DiamondRelay could not complete update rollback because one or more recovery steps failed.",
             new AggregateException(
                 "The update recovery operations failed.",
                 new[] { originalException }.Concat(recoveryExceptions)))
@@ -228,7 +228,7 @@ internal static class ApplicationUpdatePathSafety
             if (timeout != Timeout.InfiniteTimeSpan && stopwatch.Elapsed >= timeout)
             {
                 throw new TimeoutException(
-                    "Crystal Relay could not confirm termination of the failed replacement process tree.");
+                    "DiamondRelay could not confirm termination of the failed replacement process tree.");
             }
 
             var waitMilliseconds = 50;
@@ -491,14 +491,14 @@ internal static class ApplicationUpdateRollback
                 File.Delete(acknowledgementPath);
                 if (GetEntryKind(acknowledgementPath) != EntryKind.Missing)
                 {
-                    throw new IOException("The stale Crystal Relay startup acknowledgement could not be removed.");
+                    throw new IOException("The stale DiamondRelay startup acknowledgement could not be removed.");
                 }
 
                 return;
             case EntryKind.ReparsePoint:
-                throw new IOException("The stale Crystal Relay startup acknowledgement is a reparse point.");
+                throw new IOException("The stale DiamondRelay startup acknowledgement is a reparse point.");
             default:
-                throw new IOException("The stale Crystal Relay startup acknowledgement path is not a file.");
+                throw new IOException("The stale DiamondRelay startup acknowledgement path is not a file.");
         }
     }
 
@@ -784,7 +784,7 @@ internal static class ApplicationUpdateRollback
 
             if (hasTimeout && stopwatch.Elapsed >= timeout)
             {
-                throw new TimeoutException("The Crystal Relay startup acknowledgement was not received.");
+                throw new TimeoutException("The DiamondRelay startup acknowledgement was not received.");
             }
 
             var delay = AcknowledgementPollInterval;
@@ -793,7 +793,7 @@ internal static class ApplicationUpdateRollback
                 var remaining = timeout - stopwatch.Elapsed;
                 if (remaining <= TimeSpan.Zero)
                 {
-                    throw new TimeoutException("The Crystal Relay startup acknowledgement was not received.");
+                    throw new TimeoutException("The DiamondRelay startup acknowledgement was not received.");
                 }
 
                 if (remaining < delay)

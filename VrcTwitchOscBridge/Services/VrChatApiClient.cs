@@ -50,14 +50,14 @@ public sealed class VrChatApiClient : IDisposable
         foreach (var product in this.httpClient.DefaultRequestHeaders.UserAgent
                      .Where(product => string.Equals(
                          product.Product?.Name,
-                         "CrystalRelayTwitchOsc",
+                         "DiamondRelay",
                          StringComparison.OrdinalIgnoreCase))
                      .ToArray())
         {
             this.httpClient.DefaultRequestHeaders.UserAgent.Remove(product);
         }
 
-        this.httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("CrystalRelayTwitchOsc/desktop");
+        this.httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("DiamondRelay/desktop");
 
         foreach (var mediaType in this.httpClient.DefaultRequestHeaders.Accept
                      .Where(mediaType => string.Equals(
@@ -309,7 +309,7 @@ public sealed class VrChatApiClient : IDisposable
             || !TryExtractInstanceId(location, worldId, out var instanceId))
         {
             return VrChatCurrentLocationLookupResult.Unavailable(
-                "Crystal Relay could not read a current VRChat world instance to rejoin.");
+                "DiamondRelay could not read a current VRChat world instance to rejoin.");
         }
 
         var normalizedLocation = $"{worldId}:{instanceId}";

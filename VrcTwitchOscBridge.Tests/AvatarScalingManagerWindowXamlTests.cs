@@ -76,7 +76,7 @@ public sealed class AvatarScalingManagerWindowXamlTests
             "{0} rewards",
             "Pay System Rewards",
             "Supporter Growth, Cash Payments & Power Ups",
-            "Advanced range is on. Crystal Relay accepts 0.01m to 10000m technically; extreme values can be uncomfortable or world-blocked.",
+            "Advanced range is on. DiamondRelay accepts 0.01m to 10000m technically; extreme values can be uncomfortable or world-blocked.",
             "Safe range is 0.1m to 100m.",
             "VRChat world min/max will be bypassed for this redeem."
         };

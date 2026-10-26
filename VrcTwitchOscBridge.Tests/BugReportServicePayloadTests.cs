@@ -10,7 +10,7 @@ public sealed class BugReportServicePayloadTests
     [Fact]
     public void PreparePayloadJson_SanitizesUserEnteredFieldsBeforeTransport()
     {
-        var settingsPath = TestWindowsPaths.From('C', "Users", "secretuser", "crystal-relay", "settings.json");
+        var settingsPath = TestWindowsPaths.From('C', "Users", "secretuser", "diamondrelay", "settings.json");
         var contactPath = TestWindowsPaths.From('C', "Users", "secretuser", "contact.txt");
 
         var json = BugReportService.PreparePayloadJson(new BugReportSubmission(
@@ -41,7 +41,7 @@ public sealed class BugReportServicePayloadTests
     [Fact]
     public void PreparePayloadJson_KeepsSanitizedRequiredFieldsLongEnoughForWorkerValidation()
     {
-        var pathOnlyReportText = TestWindowsPaths.From('D', "StreamTools", "CrystalRelay", "secret.json");
+        var pathOnlyReportText = TestWindowsPaths.From('D', "StreamTools", "DiamondRelay", "secret.json");
 
         var json = BugReportService.PreparePayloadJson(new BugReportSubmission(
             Title: "Path-only report title",

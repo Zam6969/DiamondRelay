@@ -363,7 +363,7 @@
             <Button Style="{StaticResource HelpIconButtonStyle}"
                     Click="OnHelpButtonClicked"
                     CommandParameter="Redeem Editor"
-                    Tag="Use this editor to build the selected rule from top to bottom. Start with the Twitch trigger details, then choose the action Crystal Relay should send, then set how long it stays active, its cooldown, and any optional bot reply. The fields shown change based on the rule type, so avatar changes, Avatar Roulette, movement rules, and parameter rules only show the options they actually use." />
+                    Tag="Use this editor to build the selected rule from top to bottom. Start with the Twitch trigger details, then choose the action DiamondRelay should send, then set how long it stays active, its cooldown, and any optional bot reply. The fields shown change based on the rule type, so avatar changes, Avatar Roulette, movement rules, and parameter rules only show the options they actually use." />
         </DockPanel>
         <WrapPanel Margin="0,14,0,0">
             <WrapPanel.Style>
@@ -616,7 +616,7 @@
                                     CommandParameter="{Binding}" />
                         </DockPanel>
                         <TextBlock Margin="0,6,0,0"
-                                   Text="{loc:Translate 'Linked rewards are configured on Twitch. Crystal Relay only listens for this reward being redeemed and will not edit its name, cost, prompt, color, input settings, visibility, or cooldown.'}"
+                                   Text="{loc:Translate 'Linked rewards are configured on Twitch. DiamondRelay only listens for this reward being redeemed and will not edit its name, cost, prompt, color, input settings, visibility, or cooldown.'}"
                                    Foreground="{DynamicResource MutedBrush}"
                                    TextWrapping="Wrap" />
                     </StackPanel>
@@ -670,7 +670,7 @@
                                  Height="70"
                                  TextWrapping="Wrap" />
                         <TextBlock Margin="0,6,0,0"
-                                   Text="{loc:Translate 'Shown on Twitch as the reward description. Leave blank to use the Crystal Relay default.'}"
+                                   Text="{loc:Translate 'Shown on Twitch as the reward description. Leave blank to use the DiamondRelay default.'}"
                                    Foreground="{DynamicResource MutedBrush}"
                                    TextWrapping="Wrap" />
                     </StackPanel>
@@ -695,7 +695,7 @@
                                  HorizontalAlignment="Left"
                                  Text="{Binding CooldownSeconds, UpdateSourceTrigger=PropertyChanged}" />
                         <TextBlock Margin="0,6,0,0"
-                                   Text="{loc:Translate 'Movement reward cooldown only controls the Twitch channel-point reward cooldown. Active Time still controls how long Crystal Relay holds the movement input.'}"
+                                   Text="{loc:Translate 'Movement reward cooldown only controls the Twitch channel-point reward cooldown. Active Time still controls how long DiamondRelay holds the movement input.'}"
                                    Foreground="{DynamicResource MutedBrush}"
                                    TextWrapping="Wrap" />
                     </StackPanel>
@@ -768,7 +768,7 @@
                                 <TextBlock Margin="0,6,0,0"
                                            Foreground="{DynamicResource MutedBrush}"
                                            TextWrapping="Wrap"
-                                           Text="{loc:Translate 'Shared mode uses this outfit number in the master reward input. Separate mode keeps the number for organization. Crystal Relay snapshots safe outfit values before changing parameters and restores them after Active Time.'}" />
+                                           Text="{loc:Translate 'Shared mode uses this outfit number in the master reward input. Separate mode keeps the number for organization. DiamondRelay snapshots safe outfit values before changing parameters and restores them after Active Time.'}" />
                                 <UniformGrid Columns="2"
                                              Margin="0,12,0,0">
                                     <StackPanel Margin="0,0,14,0">
@@ -814,7 +814,7 @@
                             <TextBlock Margin="26,6,0,0"
                                        Foreground="{DynamicResource MutedBrush}"
                                        TextWrapping="Wrap"
-                                       Text="{loc:Translate 'Frees Twitch reward slots. Crystal Relay will recreate or relink this reward when it becomes active again.'}" />
+                                       Text="{loc:Translate 'Frees Twitch reward slots. DiamondRelay will recreate or relink this reward when it becomes active again.'}" />
                         </StackPanel>
                     </Border>
                     <StackPanel Margin="0,12,0,0">
@@ -993,7 +993,7 @@
                                 MinHeight="24"
                                 Click="OnHelpButtonClicked"
                                 CommandParameter="Minimum Amount"
-                                Tag="This setting is only for bits and subscriptions overrides. For bits, it is the minimum number of bits needed in one cheer event. For subs, it is the minimum number of subscriptions or gift subs the event must include before Crystal Relay runs the rule. Paid overrides ignore avatar matching and can fire no matter which avatar you are using." />
+                                Tag="This setting is only for bits and subscriptions overrides. For bits, it is the minimum number of bits needed in one cheer event. For subs, it is the minimum number of subscriptions or gift subs the event must include before DiamondRelay runs the rule. Paid overrides ignore avatar matching and can fire no matter which avatar you are using." />
                     </DockPanel>
                     <TextBox Text="{Binding MinimumAmount, UpdateSourceTrigger=PropertyChanged}" />
                 </StackPanel>
@@ -1069,7 +1069,7 @@
                     <TextBlock Margin="0,6,0,0"
                                Foreground="{DynamicResource MutedBrush}"
                                TextWrapping="Wrap"
-                               Text="{loc:Translate 'When enabled, Crystal Relay starts this paid override with Active Time, then adds time from separate Bits and Subs ratios. Bits use the bit count, normal subs count as 1, and gift subs use the gift total. Later same-rule events extend the running timer by the amount only.'}" />
+                               Text="{loc:Translate 'When enabled, DiamondRelay starts this paid override with Active Time, then adds time from separate Bits and Subs ratios. Bits use the bit count, normal subs count as 1, and gift subs use the gift total. Later same-rule events extend the running timer by the amount only.'}" />
                     <Button Margin="0,10,0,0"
                             HorizontalAlignment="Left"
                             Style="{StaticResource SecondaryButtonStyle}"
@@ -1130,7 +1130,7 @@
                         <TextBlock Margin="0,10,0,0"
                                    Foreground="{DynamicResource MutedBrush}"
                                    TextWrapping="Wrap"
-                                   Text="{loc:Translate 'Crystal Relay matches the whole chat message exactly. Example: !wave'}" />
+                                   Text="{loc:Translate 'DiamondRelay matches the whole chat message exactly. Example: !wave'}" />
                     </StackPanel>
                 </StackPanel>
 
@@ -1249,7 +1249,7 @@
                                 MinHeight="24"
                                 Click="OnHelpButtonClicked"
                                 CommandParameter="Movement Action"
-                                Tag="{loc:Translate 'Choose which VRChat movement input Crystal Relay should send for this rule. Random Movement rolls one direction per use. Glitchy Movement keeps rolling random directions until Active Time ends.'}" />
+                                Tag="{loc:Translate 'Choose which VRChat movement input DiamondRelay should send for this rule. Random Movement rolls one direction per use. Glitchy Movement keeps rolling random directions until Active Time ends.'}" />
                     </DockPanel>
                     <ComboBox ItemsSource="{Binding DataContext.MovementDirections, RelativeSource={RelativeSource AncestorType=Window}, FallbackValue={x:Null}}"
                               DisplayMemberPath="Label"
@@ -1270,7 +1270,7 @@
                                 MinHeight="24"
                                 Click="OnHelpButtonClicked"
                                 CommandParameter="Value Type"
-                                Tag="Pick the kind of VRChat parameter value this redeem should send. Bool means simple on or off values like True and False. Int means whole numbers only, like 0, 1, or 2. Float means decimal numbers, like 0.0, 0.5, or 1.0. When you switch this type, Crystal Relay resets the value boxes so they match the type you chose." />
+                                Tag="Pick the kind of VRChat parameter value this redeem should send. Bool means simple on or off values like True and False. Int means whole numbers only, like 0, 1, or 2. Float means decimal numbers, like 0.0, 0.5, or 1.0. When you switch this type, DiamondRelay resets the value boxes so they match the type you chose." />
                     </DockPanel>
                     <ComboBox ItemsSource="{Binding DataContext.ParameterTypes, RelativeSource={RelativeSource AncestorType=Window}, FallbackValue={x:Null}}"
                               SelectedItem="{Binding ParameterType, UpdateSourceTrigger=PropertyChanged}" />
@@ -1454,7 +1454,7 @@
                                         MinHeight="24"
                                         Click="OnHelpButtonClicked"
                                         CommandParameter="Instant Bool Toggle"
-                                        Tag="When Active Time is 0, this bool rule becomes a toggle instead of a timed hold. Each use flips the current VRChat bool parameter from off to on or from on to off. Use a timed Active Time above 0 when you want Crystal Relay to turn it on first and reset it later." />
+                                        Tag="When Active Time is 0, this bool rule becomes a toggle instead of a timed hold. Each use flips the current VRChat bool parameter from off to on or from on to off. Use a timed Active Time above 0 when you want DiamondRelay to turn it on first and reset it later." />
                             </DockPanel>
                         </StackPanel>
                         <StackPanel Visibility="{Binding UsesBoolTimedValues, Converter={StaticResource BoolToVisibilityConverter}}">
@@ -1663,7 +1663,7 @@
                                Foreground="{DynamicResource TextBrush}"
                                FontWeight="SemiBold" />
                     <TextBlock Margin="0,6,0,0"
-                               Text="{loc:Translate 'Add bool, int, or float parameters that should change together. Crystal Relay snapshots safe LocalAvatarData values before sending, waits 70 seconds when needed to learn what changed, then restores changed parameters from the copied pre-trigger snapshot after Active Time.'}"
+                               Text="{loc:Translate 'Add bool, int, or float parameters that should change together. DiamondRelay snapshots safe LocalAvatarData values before sending, waits 70 seconds when needed to learn what changed, then restores changed parameters from the copied pre-trigger snapshot after Active Time.'}"
                                Foreground="{DynamicResource MutedBrush}"
                                TextWrapping="Wrap" />
                     <Border Margin="0,10,0,0"
@@ -1678,7 +1678,7 @@
                                        FontWeight="Bold"
                                        TextWrapping="Wrap" />
                             <TextBlock Margin="0,4,0,0"
-                                       Text="{loc:Translate 'After manually changing outfit toggles or parameters in VRChat, wait at least 70 seconds before testing or redeeming a Set Trigger. Crystal Relay uses LocalAvatarData snapshots and diffs for safe restore, and triggering before VRChat updates that file can restore the wrong outfit values.'}"
+                                       Text="{loc:Translate 'After manually changing outfit toggles or parameters in VRChat, wait at least 70 seconds before testing or redeeming a Set Trigger. DiamondRelay uses LocalAvatarData snapshots and diffs for safe restore, and triggering before VRChat updates that file can restore the wrong outfit values.'}"
                                        Foreground="#FFFFEEF4"
                                        TextWrapping="Wrap" />
                         </StackPanel>
@@ -1847,7 +1847,7 @@
                                 MinHeight="24"
                                 Click="OnHelpButtonClicked"
                                 CommandParameter="Avatar Roulette Pool"
-                                Tag="Choose the pool of avatars this Avatar Roulette rule is allowed to roll from. When the rule fires, Crystal Relay randomly picks one avatar from this pool, switches to it as a temporary avatar, then returns to the shared return avatar when the Active Time ends. The roulette rule does not rewrite your shared return avatar." />
+                                Tag="Choose the pool of avatars this Avatar Roulette rule is allowed to roll from. When the rule fires, DiamondRelay randomly picks one avatar from this pool, switches to it as a temporary avatar, then returns to the shared return avatar when the Active Time ends. The roulette rule does not rewrite your shared return avatar." />
                     </DockPanel>
                     <Button Margin="0,8,0,0"
                             Content="{loc:Translate 'Pick Avatar Roulette Pool'}"
@@ -1929,7 +1929,7 @@
                             MinHeight="24"
                             Click="OnHelpButtonClicked"
                             CommandParameter="Cooldown"
-                            Tag="Cooldown is the wait time before the same rule can trigger again. Crystal Relay uses it locally to block repeats, and for managed channel point redeems it also syncs the same cooldown back to Twitch. Avatar Roulette also keeps avatar-switch redeems disabled for its cooldown window." />
+                            Tag="Cooldown is the wait time before the same rule can trigger again. DiamondRelay uses it locally to block repeats, and for managed channel point redeems it also syncs the same cooldown back to Twitch. Avatar Roulette also keeps avatar-switch redeems disabled for its cooldown window." />
                 </DockPanel>
                 <TextBox Text="{Binding CooldownSeconds, UpdateSourceTrigger=PropertyChanged}" />
             </StackPanel>

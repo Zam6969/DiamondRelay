@@ -207,7 +207,7 @@ public sealed class UniversalTriggerRewardPickerXamlTests
     }
 
     [Fact]
-    public void CrystalRelayTheme_UsesConditionalDarkPurpleComboPalette()
+    public void DiamondRelayTheme_UsesConditionalDarkPurpleComboPalette()
     {
         var xaml = File.ReadAllText(FindSourceFile(
             "VrcTwitchOscBridge",

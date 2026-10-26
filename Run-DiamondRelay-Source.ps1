@@ -35,8 +35,8 @@ $versionRoot = Join-Path $runRoot "v$versionText"
 $sessionName = Get-Date -Format 'yyyyMMdd-HHmmss'
 $sessionRoot = Join-Path $versionRoot $sessionName
 $publishRoot = Join-Path $sessionRoot 'publish'
-$exePath = Join-Path $publishRoot 'CrystalRelayTwitchOsc.exe'
-$dllPath = Join-Path $publishRoot 'CrystalRelayTwitchOsc.dll'
+$exePath = Join-Path $publishRoot 'DiamondRelay.exe'
+$dllPath = Join-Path $publishRoot 'DiamondRelay.dll'
 
 New-Item -ItemType Directory -Path $versionRoot -Force | Out-Null
 
@@ -73,7 +73,7 @@ try {
 
     & dotnet @buildArguments
     if ($LASTEXITCODE -ne 0) {
-        throw "Crystal Relay source publish failed."
+        throw "DiamondRelay source publish failed."
     }
 }
 finally {
@@ -93,7 +93,7 @@ elseif (Test-Path $dllPath) {
     Start-Process -FilePath 'dotnet' -ArgumentList @($dllPath) -WorkingDirectory (Split-Path -Path $dllPath -Parent)
 }
 else {
-    throw "The source build finished, but Crystal Relay could not find the app output."
+    throw "The source build finished, but DiamondRelay could not find the app output."
 }
 
 $oldSessions = Get-ChildItem -Path $versionRoot -Directory -Force |

@@ -11,7 +11,7 @@
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance Type=vm:RewardFireSaleManagerViewModel}"
         Title="{loc:Translate 'Reward Fire Sale'}"
-        Icon="Assets/crystal-relay-icon.ico"
+        Icon="Assets/diamondrelay-icon.ico"
         Width="720"
         Height="680"
         MinWidth="540"

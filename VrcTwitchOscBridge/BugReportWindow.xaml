@@ -3,8 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:loc="clr-namespace:VrcTwitchOscBridge.Services"
         xmlns:shell="clr-namespace:System.Windows.Shell;assembly=PresentationFramework"
-        Title="{loc:Translate 'Report Bug | Crystal Relay'}"
-        Icon="Assets/crystal-relay-icon.ico"
+        Title="{loc:Translate 'Report Bug | DiamondRelay'}"
+        Icon="Assets/diamondrelay-icon.ico"
         Width="720"
         Height="860"
         MinWidth="620"
@@ -632,7 +632,7 @@
                     </Grid.ColumnDefinitions>
 
                     <DockPanel VerticalAlignment="Center">
-                        <Image Source="Assets/crystal-relay-icon.png"
+                        <Image Source="Assets/diamondrelay-icon.png"
                                Width="18"
                                Height="18"
                                Margin="0,0,10,0"
@@ -645,7 +645,7 @@
                                        FontWeight="Bold"
                                        Foreground="{DynamicResource TitleBarTextBrush}" />
                             <TextBlock Margin="8,0,0,0"
-                                       Text="Crystal Relay"
+                                       Text="DiamondRelay"
                                        Foreground="{DynamicResource TitleBarSubTextBrush}"
                                        VerticalAlignment="Center" />
                         </StackPanel>
@@ -679,7 +679,7 @@
                                        FontWeight="Bold" />
 
                             <TextBlock Margin="0,10,0,0"
-                                       Text="{loc:Translate 'Send a bug report to the Crystal Relay GitHub issues page without needing a GitHub account.'}"
+                                       Text="{loc:Translate 'Send a bug report to the DiamondRelay GitHub issues page without needing a GitHub account.'}"
                                        Foreground="{DynamicResource MutedBrush}"
                                        TextWrapping="Wrap" />
 

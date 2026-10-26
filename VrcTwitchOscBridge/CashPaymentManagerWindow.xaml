@@ -9,7 +9,7 @@
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance Type=local:CashPaymentManagerWindow}"
         Title="{loc:Translate 'Cash Payment Connections'}"
-        Icon="Assets/crystal-relay-icon.ico"
+        Icon="Assets/diamondrelay-icon.ico"
         Width="700"
         Height="600"
         MinWidth="540"
@@ -286,7 +286,7 @@
                         BorderThickness="1"
                         CornerRadius="14"
                         Margin="0,0,0,16">
-                    <TextBlock Text="{loc:Translate 'Cash Payments listen for StreamElements tips, Streamlabs donations, and Ko-fi payments. Ko-fi uses the Crystal Relay hosted relay by default, with a local webhook fallback for advanced setups. Tokens, client secrets, and webhook verification secrets are stored in Windows Credential Manager.'}"
+                    <TextBlock Text="{loc:Translate 'Cash Payments listen for StreamElements tips, Streamlabs donations, and Ko-fi payments. Ko-fi uses the DiamondRelay hosted relay by default, with a local webhook fallback for advanced setups. Tokens, client secrets, and webhook verification secrets are stored in Windows Credential Manager.'}"
                                Foreground="{DynamicResource MutedBrush}"
                                TextWrapping="Wrap" />
                 </Border>
@@ -360,7 +360,7 @@
                                   Content="{loc:Translate 'Enable Ko-fi'}"
                                   IsChecked="{Binding CashPayments.KoFiEnabled, UpdateSourceTrigger=PropertyChanged}" />
                         <CheckBox Margin="0,8,0,0"
-                                  Content="{loc:Translate 'Use Crystal Relay hosted Ko-fi relay'}"
+                                  Content="{loc:Translate 'Use DiamondRelay hosted Ko-fi relay'}"
                                   IsChecked="{Binding CashPayments.KoFiUseHostedRelay, UpdateSourceTrigger=PropertyChanged}" />
 
                         <!-- Hosted relay section -->
@@ -385,7 +385,7 @@
                                     Content="{loc:Translate 'Regenerate Ko-fi Relay Link'}"
                                     Command="{Binding RegenerateKoFiRelayIdentityCommand}" />
                             <TextBlock Margin="0,8,0,0"
-                                       Text="{loc:Translate 'Paste this webhook URL into Ko-fi. Crystal Relay connects outward to the hosted relay, so streamers do not need Cloudflare, ngrok, port forwarding, or a public local URL.'}"
+                                       Text="{loc:Translate 'Paste this webhook URL into Ko-fi. DiamondRelay connects outward to the hosted relay, so streamers do not need Cloudflare, ngrok, port forwarding, or a public local URL.'}"
                                        Foreground="{DynamicResource MutedBrush}"
                                        TextWrapping="Wrap" />
                             <Button Margin="0,8,0,0"

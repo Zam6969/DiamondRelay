@@ -8,19 +8,19 @@ public sealed class SensitiveTextSanitizerTests
     [Fact]
     public void Sanitize_RedactsWindowsSourcePathsInStackTraces()
     {
-        var sourcePath = TestWindowsPaths.From('D', "ExampleWorkspace", "CrystalRelay", "VrcTwitchOscBridge", "ViewModels", "MainWindowViewModel.cs");
+        var sourcePath = TestWindowsPaths.From('D', "ExampleWorkspace", "DiamondRelay", "VrcTwitchOscBridge", "ViewModels", "MainWindowViewModel.cs");
         var input = $"   at VrcTwitchOscBridge.ViewModels.MainWindowViewModel.InitializeAsync() in {sourcePath}:line 3373";
 
         var result = SensitiveTextSanitizer.Sanitize(input);
 
-        Assert.DoesNotContain(TestWindowsPaths.From('D', "ExampleWorkspace", "CrystalRelay"), result);
+        Assert.DoesNotContain(TestWindowsPaths.From('D', "ExampleWorkspace", "DiamondRelay"), result);
         Assert.Contains("in <local path>\\MainWindowViewModel.cs:line 3373", result);
     }
 
     [Fact]
     public void Sanitize_RedactsAbsoluteWindowsPathsOutsideUserProfile()
     {
-        var sourcePath = TestWindowsPaths.From('D', "StreamTools", "CrystalRelay", "secret.json");
+        var sourcePath = TestWindowsPaths.From('D', "StreamTools", "DiamondRelay", "secret.json");
         var input = $"Config file was loaded from {sourcePath}";
 
         var result = SensitiveTextSanitizer.Sanitize(input);
@@ -45,7 +45,7 @@ public sealed class SensitiveTextSanitizerTests
     [Fact]
     public void Sanitize_RedactsAbsoluteWindowsPathsWithSpacesInFinalSegment()
     {
-        var sourcePath = TestWindowsPaths.From('D', "StreamTools", "CrystalRelay", "secret file.json");
+        var sourcePath = TestWindowsPaths.From('D', "StreamTools", "DiamondRelay", "secret file.json");
         var input = $"Config file was loaded from {sourcePath}";
 
         var result = SensitiveTextSanitizer.Sanitize(input);

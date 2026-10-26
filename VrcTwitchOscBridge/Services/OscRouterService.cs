@@ -156,10 +156,10 @@ public sealed class OscRouterService : IAsyncDisposable
                         tcpPort = VRC.OSCQuery.Extensions.GetAvailableTcpPort();
                         listener = CreateListener(
                             udpPort,
-                            "Crystal Relay OSCQuery receiver",
-                            "Close the other app using that UDP port and relaunch Crystal Relay.");
+                            "DiamondRelay OSCQuery receiver",
+                            "Close the other app using that UDP port and relaunch DiamondRelay.");
 
-                        serviceName = $"Crystal Relay Twitch to OSC ({Environment.ProcessId})";
+                        serviceName = $"DiamondRelay Twitch to OSC ({Environment.ProcessId})";
                         service = new OSCQueryServiceBuilder()
                             .WithServiceName(serviceName)
                             .WithHostIP(IPAddress.Loopback)
@@ -203,7 +203,7 @@ public sealed class OscRouterService : IAsyncDisposable
 
                 if (listener is null || service is null)
                 {
-                    throw startupException ?? new InvalidOperationException("Crystal Relay could not start its OSCQuery receiver.");
+                    throw startupException ?? new InvalidOperationException("DiamondRelay could not start its OSCQuery receiver.");
                 }
 
                 cancellationToken.ThrowIfCancellationRequested();
@@ -215,7 +215,7 @@ public sealed class OscRouterService : IAsyncDisposable
 
                 if (stagedAdvertisedEndpoints is null)
                 {
-                    throw new InvalidOperationException("Crystal Relay could not prepare its OSCQuery endpoints.");
+                    throw new InvalidOperationException("DiamondRelay could not prepare its OSCQuery endpoints.");
                 }
 
                 var sessionToken = cancellation.Token;
@@ -267,7 +267,7 @@ public sealed class OscRouterService : IAsyncDisposable
                     runtimeTasks = [.. runtimeTasks, .. startedTasks];
                 }
 
-                startupLog = $"OSCQuery service '{serviceName}' is live. Crystal Relay is listening for VRChat values on UDP {udpPort} and serving OSCQuery on TCP {tcpPort}.";
+                startupLog = $"OSCQuery service '{serviceName}' is live. DiamondRelay is listening for VRChat values on UDP {udpPort} and serving OSCQuery on TCP {tcpPort}.";
                 startupWarnings = stagedStartupWarnings?.ToArray() ?? [];
             }
             catch
@@ -388,7 +388,7 @@ public sealed class OscRouterService : IAsyncDisposable
         {
             if (!IsCurrentRuntimeSessionLocked(service, sessionCancellation, sessionCancellation.Token))
             {
-                throw new InvalidOperationException("The OSCQuery session changed while Crystal Relay was preparing a refresh.");
+                throw new InvalidOperationException("The OSCQuery session changed while DiamondRelay was preparing a refresh.");
             }
 
             sessionToken = sessionCancellation.Token;
@@ -401,7 +401,7 @@ public sealed class OscRouterService : IAsyncDisposable
         using var operationCancellation = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, sessionToken);
         var operationToken = operationCancellation.Token;
         operationToken.ThrowIfCancellationRequested();
-        PublishSessionLog(service, sessionCancellation, operationToken, "Forcing an OSCQuery refresh so Crystal Relay can reconnect to VRChat.");
+        PublishSessionLog(service, sessionCancellation, operationToken, "Forcing an OSCQuery refresh so DiamondRelay can reconnect to VRChat.");
         await RefreshDiscoveredServicesAsync(
             service,
             sessionCancellation,
@@ -436,7 +436,7 @@ public sealed class OscRouterService : IAsyncDisposable
         {
             if (!IsCurrentRuntimeSessionLocked(service, sessionCancellation, sessionCancellation.Token))
             {
-                throw new InvalidOperationException("The OSCQuery session changed while Crystal Relay was preparing an avatar read.");
+                throw new InvalidOperationException("The OSCQuery session changed while DiamondRelay was preparing an avatar read.");
             }
 
             sessionToken = sessionCancellation.Token;
@@ -460,7 +460,7 @@ public sealed class OscRouterService : IAsyncDisposable
             service,
             sessionCancellation,
             operationToken,
-            "Crystal Relay could not find VRChat through OSCQuery yet. Open VRChat with OSC enabled, then try refreshing again.");
+            "DiamondRelay could not find VRChat through OSCQuery yet. Open VRChat with OSC enabled, then try refreshing again.");
 
         OSCQueryRootNode? tree;
         try
@@ -530,7 +530,7 @@ public sealed class OscRouterService : IAsyncDisposable
         {
             if (!IsCurrentRuntimeSessionLocked(service, sessionCancellation, sessionCancellation.Token))
             {
-                throw new InvalidOperationException("The OSCQuery session changed while Crystal Relay was preparing an OSC read.");
+                throw new InvalidOperationException("The OSCQuery session changed while DiamondRelay was preparing an OSC read.");
             }
 
             sessionToken = sessionCancellation.Token;
@@ -554,7 +554,7 @@ public sealed class OscRouterService : IAsyncDisposable
             service,
             sessionCancellation,
             operationToken,
-            "Crystal Relay could not find VRChat through OSCQuery yet. Open VRChat with OSC enabled, then try again.");
+            "DiamondRelay could not find VRChat through OSCQuery yet. Open VRChat with OSC enabled, then try again.");
 
         var normalizedAddress = VrChatOscClient.NormalizeOscAddress(address);
         OSCQueryRootNode? tree;
@@ -776,11 +776,11 @@ public sealed class OscRouterService : IAsyncDisposable
             {
                 if (!IsCurrentRuntimeSessionLocked(service, sessionCancellation, sessionToken))
                 {
-                    throw new InvalidOperationException("The OSCQuery session changed while Crystal Relay was preparing to send an OSC action.");
+                    throw new InvalidOperationException("The OSCQuery session changed while DiamondRelay was preparing to send an OSC action.");
                 }
 
                 var target = activeVrChatTarget
-                    ?? throw new InvalidOperationException("Crystal Relay has not discovered VRChat through OSCQuery yet. Start VRChat with OSC enabled and leave it open so Crystal Relay can find it.");
+                    ?? throw new InvalidOperationException("DiamondRelay has not discovered VRChat through OSCQuery yet. Start VRChat with OSC enabled and leave it open so DiamondRelay can find it.");
                 client = sendClient ?? throw new InvalidOperationException("OSC sender is not available.");
 
                 if (cachedVrChatEndPoint is null
@@ -1451,7 +1451,7 @@ public sealed class OscRouterService : IAsyncDisposable
             service,
             sessionCancellation,
             operationToken,
-            $"Discovered VRChat through OSCQuery: {match.Name}. Crystal Relay will send actions to {match.Address}:{match.OscPort} and receive values on 127.0.0.1:{receivePort}.");
+            $"Discovered VRChat through OSCQuery: {match.Name}. DiamondRelay will send actions to {match.Address}:{match.OscPort} and receive values on 127.0.0.1:{receivePort}.");
     }
 
     private bool IsCurrentRuntimeSession(
@@ -1525,7 +1525,7 @@ public sealed class OscRouterService : IAsyncDisposable
                     service,
                     sessionCancellation,
                     cancellationToken,
-                    $"Crystal Relay found VRChat's OSCQuery service '{profile.name}', but it is not ready to use yet: {ex.Message}");
+                    $"DiamondRelay found VRChat's OSCQuery service '{profile.name}', but it is not ready to use yet: {ex.Message}");
             }
 
             return null;
@@ -1675,7 +1675,7 @@ public sealed class OscRouterService : IAsyncDisposable
     private static void AddAdvertisedEndpoint(OSCQueryService service, string path, OscParameterType parameterType)
     {
         const Attributes.AccessValues access = Attributes.AccessValues.WriteOnly;
-        const string description = "Crystal Relay listens for this OSC value so Twitch rules can react without fixed VRChat ports.";
+        const string description = "DiamondRelay listens for this OSC value so Twitch rules can react without fixed VRChat ports.";
 
         switch (parameterType)
         {
@@ -1719,7 +1719,7 @@ public sealed class OscRouterService : IAsyncDisposable
             }
 
             nextDiscoveryLogAt = now.Add(DiscoveryLogThrottle);
-            message = "Searching for VRChat through OSCQuery. Leave VRChat open with OSC enabled so Crystal Relay can discover it automatically.";
+            message = "Searching for VRChat through OSCQuery. Leave VRChat open with OSC enabled so DiamondRelay can discover it automatically.";
         }
 
         if (message is not null)
@@ -1739,9 +1739,9 @@ public sealed class OscRouterService : IAsyncDisposable
             service,
             sessionCancellation,
             operationToken,
-            $"Crystal Relay lost the OSCQuery connection to VRChat while {operation}. It will wait for VRChat to come back automatically.");
+            $"DiamondRelay lost the OSCQuery connection to VRChat while {operation}. It will wait for VRChat to come back automatically.");
         return new InvalidOperationException(
-            $"Crystal Relay lost the OSCQuery connection to VRChat while {operation}. Wait a moment for VRChat to finish loading.",
+            $"DiamondRelay lost the OSCQuery connection to VRChat while {operation}. Wait a moment for VRChat to finish loading.",
             ex);
     }
 
@@ -1846,7 +1846,7 @@ public sealed class OscRouterService : IAsyncDisposable
         {
             if (!IsCurrentRuntimeSessionLocked(service, sessionCancellation, operationToken))
             {
-                throw new InvalidOperationException("The OSCQuery session was stopped or replaced while Crystal Relay was reading VRChat data.");
+                throw new InvalidOperationException("The OSCQuery session was stopped or replaced while DiamondRelay was reading VRChat data.");
             }
         }
     }

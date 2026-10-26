@@ -4,7 +4,7 @@
         xmlns:shell="clr-namespace:System.Windows.Shell;assembly=PresentationFramework"
         xmlns:loc="clr-namespace:VrcTwitchOscBridge.Services"
         Title="{loc:Translate 'Test Mode'}"
-        Icon="Assets/crystal-relay-icon.ico"
+        Icon="Assets/diamondrelay-icon.ico"
         SizeToContent="Height"
         Width="680"
         MinWidth="620"
@@ -517,7 +517,7 @@
                     </Grid.ColumnDefinitions>
 
                     <DockPanel VerticalAlignment="Center">
-                        <Image Source="Assets/crystal-relay-icon.png"
+                        <Image Source="Assets/diamondrelay-icon.png"
                                Width="18"
                                Height="18"
                                Margin="0,0,10,0"
@@ -530,7 +530,7 @@
                                        FontWeight="Bold"
                                        Foreground="{DynamicResource TitleBarTextBrush}" />
                             <TextBlock Margin="8,0,0,0"
-                                       Text="Crystal Relay"
+                                       Text="DiamondRelay"
                                        Foreground="{DynamicResource TitleBarSubTextBrush}"
                                        VerticalAlignment="Center" />
                         </StackPanel>
@@ -573,7 +573,7 @@
                                            Style="{StaticResource HeadingTextStyle}"
                                            FontSize="17" />
                                 <TextBlock Margin="0,6,0,0"
-                                           Text="{loc:Translate 'Turn this on when you want Crystal Relay-owned Twitch rewards to stay visible for offline testing. Avatar-based rules still follow the current avatar checks.'}"
+                                           Text="{loc:Translate 'Turn this on when you want DiamondRelay-owned Twitch rewards to stay visible for offline testing. Avatar-based rules still follow the current avatar checks.'}"
                                            Foreground="{DynamicResource MutedBrush}"
                                            FontSize="12"
                                            TextWrapping="Wrap" />

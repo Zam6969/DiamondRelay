@@ -4,7 +4,7 @@ using VrcTwitchOscBridge.Models;
 namespace VrcTwitchOscBridge.Services;
 
 /// <summary>
-/// Shared naming and color rules for Crystal Relay-managed Twitch rewards.
+/// Shared naming and color rules for DiamondRelay-managed Twitch rewards.
 /// Keeping this in one helper makes reward matching more predictable across sync paths.
 /// </summary>
 public static class ManagedRewardPresentation
@@ -13,7 +13,7 @@ public static class ManagedRewardPresentation
     public const string ReadyBackgroundColor = "#22C55E";
     public const string InUseBackgroundColor = "#EF4444";
 
-    // Managed rewards are identified by a stable title prefix so Crystal Relay can
+    // Managed rewards are identified by a stable title prefix so DiamondRelay can
     // tell its own rewards apart from normal broadcaster-created rewards.
     public static bool IsManagedTitle(string? title)
     {

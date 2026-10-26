@@ -1,7 +1,4 @@
 param(
-    [ValidateSet("major", "minor", "patch", "mid", "small")]
-    [string]$Bump,
-
     [string]$Version
 )
 
@@ -35,31 +32,6 @@ function Set-VersionText {
     $propertyGroup.AssemblyVersion = $assemblyVersion
     $propertyGroup.FileVersion = $assemblyVersion
     $propertyGroup.InformationalVersion = $VersionText
-}
-
-function Get-BumpedVersion {
-    param(
-        [string]$CurrentVersion,
-        [string]$BumpType
-    )
-
-    $parts = $CurrentVersion.Split('.')
-    if ($parts.Length -ne 3) {
-        throw "Expected a semantic version like 1.2.3, but found '$CurrentVersion'."
-    }
-
-    $major = [int]$parts[0]
-    $minor = [int]$parts[1]
-    $patch = [int]$parts[2]
-
-    switch ($BumpType.ToLowerInvariant()) {
-        "major" { return Normalize-VersionText -VersionText ("{0}.0.0" -f ($major + 1)) }
-        "minor" { return Normalize-VersionText -VersionText ("{0}.{1}.0" -f $major, ($minor + 1)) }
-        "mid" { return Normalize-VersionText -VersionText ("{0}.{1}.0" -f $major, ($minor + 1)) }
-        "patch" { return Normalize-VersionText -VersionText ("{0}.{1}.{2}" -f $major, $minor, ($patch + 1)) }
-        "small" { return Normalize-VersionText -VersionText ("{0}.{1}.{2}" -f $major, $minor, ($patch + 1)) }
-        default { throw "Unsupported bump type '$BumpType'." }
-    }
 }
 
 function Test-SemanticVersion {
@@ -136,6 +108,20 @@ function Test-ChangelogHasSection {
     return [bool]([regex]::IsMatch($text, $pattern, [System.Text.RegularExpressions.RegexOptions]::Multiline))
 }
 
+function Test-ChangelogHasSectionForVersion {
+    param(
+        [Parameter(Mandatory = $true)]
+        [string]$VersionText
+    )
+
+    if (-not (Test-Path -LiteralPath $changelogPath)) { return $false }
+    $text = Get-Content -LiteralPath $changelogPath -Raw
+    $opts = [System.Text.RegularExpressions.RegexOptions]::Multiline
+    $stablePattern = '^v' + [regex]::Escape($VersionText) + '\s*$'
+    $betaPattern = '^v' + [regex]::Escape($VersionText) + ' beta \d+\s*$'
+    return ([regex]::IsMatch($text, $stablePattern, $opts) -or [regex]::IsMatch($text, $betaPattern, $opts))
+}
+
 function Test-RecordBaselineMatches {
     param(
         [Parameter(Mandatory = $true)]
@@ -159,32 +145,23 @@ function Test-WorkingTreeClean {
 
 $root = Split-Path -Parent $MyInvocation.MyCommand.Path
 $projectPath = Join-Path $root 'VrcTwitchOscBridge\VrcTwitchOscBridge.csproj'
-$updaterProjectPath = Join-Path $root 'CrystalRelayUpdater\CrystalRelayUpdater.csproj'
+$updaterProjectPath = Join-Path $root 'DiamondRelayUpdater\DiamondRelayUpdater.csproj'
 $localizationAuditProject = Join-Path $root 'LocalizationAudit\LocalizationAudit.csproj'
 $localizationRoot = Join-Path $root 'VrcTwitchOscBridge\Resources\Localization'
 $readmePath = Join-Path $root 'README.md'
 $changelogPath = Join-Path $root 'CHANGELOG.txt'
 $docsPath = Join-Path $root 'docs'
-$releaseRoot = Join-Path $root 'Releases'
-$publishConfig = 'Release'
+$testRoot = Join-Path $root 'TestBuilds'
 $runtime = 'win-x64'
 
 [xml]$projectXml = Get-Content -Path $projectPath
 [xml]$updaterProjectXml = Get-Content -Path $updaterProjectPath
 $currentVersion = Get-VersionText -ProjectXml $projectXml
-
-if (-not [string]::IsNullOrWhiteSpace($Version)) {
-    if (-not (Test-SemanticVersion -VersionText $Version)) {
-        throw "Version must use major.minor.patch format, like 1.2.3."
-    }
-
-    $targetVersion = Normalize-VersionText -VersionText $Version
-}
-elseif (-not [string]::IsNullOrWhiteSpace($Bump)) {
-    $targetVersion = Get-BumpedVersion -CurrentVersion $currentVersion -BumpType $Bump
+$targetVersion = if ([string]::IsNullOrWhiteSpace($Version)) {
+    Normalize-VersionText -VersionText $currentVersion
 }
 else {
-    $targetVersion = Normalize-VersionText -VersionText $currentVersion
+    Normalize-VersionText -VersionText $Version.Trim()
 }
 
 if ($targetVersion -ne $currentVersion) {
@@ -199,34 +176,35 @@ if ($targetVersion -ne $updaterCurrentVersion) {
 }
 
 # Pre-flight: catch repeated mistakes before publishing.
-# CHANGELOG gate: a stable release needs an exact 'v<version>' section.
-$releaseHeader = "v$targetVersion"
-if (-not (Test-ChangelogHasSection -Header $releaseHeader)) {
-    throw "CHANGELOG.txt is missing section '$releaseHeader'. Add it before shipping a release."
+# CHANGELOG gate: a test build needs either the v<version> section or a v<version> beta N section.
+if (-not (Test-ChangelogHasSectionForVersion -VersionText $targetVersion)) {
+    throw "CHANGELOG.txt is missing section 'v$targetVersion' or 'v$targetVersion beta N'. Add it before packaging."
 }
 
-# RELEASE-CHANGE-RECORD baseline drift: throw on release, since the release is the moment to update it.
+# RELEASE-CHANGE-RECORD baseline drift: warn so the next release pass catches it.
 if (-not (Test-RecordBaselineMatches -VersionText $targetVersion)) {
-    throw "RELEASE-CHANGE-RECORD.txt 'Current working source version' does not match $targetVersion. Update it before shipping a release."
+    Write-Warning "RELEASE-CHANGE-RECORD.txt 'Current working source version' does not match $targetVersion. Update it before the next release build."
 }
 
 # Working tree cleanliness (opt-out with $env:CR_SKIP_GIT_CHECK = '1').
 if ($env:CR_SKIP_GIT_CHECK -ne '1' -and -not (Test-WorkingTreeClean)) {
-    throw "Refusing to ship a release with a dirty working tree. Commit, stash, or set CR_SKIP_GIT_CHECK=1."
+    throw "Refusing to build with a dirty working tree. Commit, stash, or set CR_SKIP_GIT_CHECK=1."
 }
 
-$versionFolderName = "v$targetVersion"
-$releaseName = "CrystalRelayTwitchOsc-v$targetVersion-$runtime"
-$versionRoot = Join-Path $releaseRoot $versionFolderName
-$publishDir = Join-Path $versionRoot 'Crystal Relay'
-$zipPath = Join-Path $versionRoot "$releaseName.zip"
+$versionRoot = Join-Path $testRoot "v$targetVersion"
+$packageDir = Join-Path $versionRoot "DiamondRelay-v$targetVersion-test"
+$appDir = Join-Path $packageDir 'App'
+$shortcutPath = Join-Path $packageDir 'DiamondRelay Test.lnk'
+$testMarkerPath = Join-Path $appDir 'test-build.flag'
 
-New-Item -ItemType Directory -Path $releaseRoot -Force | Out-Null
 New-Item -ItemType Directory -Path $versionRoot -Force | Out-Null
-if (Test-Path $publishDir) {
-    Assert-SafeBuildPath -Path $publishDir -RequiredParent $versionRoot -Pattern "Crystal Relay"
-    Remove-Item -Path $publishDir -Recurse -Force
+
+if (Test-Path $packageDir) {
+    Assert-SafeBuildPath -Path $packageDir -RequiredParent $versionRoot -Pattern "DiamondRelay-v$targetVersion-test"
+    Remove-Item -Path $packageDir -Recurse -Force
 }
+
+New-Item -ItemType Directory -Path $appDir -Force | Out-Null
 
 $env:DOTNET_CLI_HOME = Join-Path $root '.dotnet'
 $env:DOTNET_SKIP_FIRST_TIME_EXPERIENCE = '1'
@@ -250,35 +228,21 @@ finally {
 Push-Location (Join-Path $root 'VrcTwitchOscBridge')
 try {
     dotnet publish '.\VrcTwitchOscBridge.csproj' `
-        -c $publishConfig `
+        -c Release `
         -r $runtime `
         --self-contained true `
-        -p:PublishSingleFile=true `
-        -p:DebugType=None `
-        -p:DebugSymbols=false `
-        -p:PublishTrimmed=false `
-        -o $publishDir `
+        -o $appDir `
         --configfile (Join-Path $root 'NuGet.Config')
 }
 finally {
     Pop-Location
 }
 
-$defaultExe = Join-Path $publishDir 'CrystalRelayTwitchOsc.exe'
-$targetExeName = 'Crystal Relay.exe'
-if (Test-Path $defaultExe) {
-    Rename-Item -Path $defaultExe -NewName $targetExeName -Force
-}
-
-# Create version indicator file (empty, filename = version)
-$versionFilePath = Join-Path $publishDir "$targetVersion.txt"
-New-Item -Path $versionFilePath -ItemType File -Force | Out-Null
-
-$updaterPublishDir = Join-Path ([System.IO.Path]::GetTempPath()) ("CrystalRelayUpdater-" + [guid]::NewGuid().ToString("N"))
-Push-Location (Join-Path $root 'CrystalRelayUpdater')
+$updaterPublishDir = Join-Path ([System.IO.Path]::GetTempPath()) ("DiamondRelayUpdater-" + [guid]::NewGuid().ToString("N"))
+Push-Location (Join-Path $root 'DiamondRelayUpdater')
 try {
-    dotnet publish '.\CrystalRelayUpdater.csproj' `
-        -c $publishConfig `
+    dotnet publish '.\DiamondRelayUpdater.csproj' `
+        -c Release `
         -r $runtime `
         --self-contained true `
         -p:PublishSingleFile=true `
@@ -292,19 +256,20 @@ finally {
     Pop-Location
 }
 
-Copy-Item -Path (Join-Path $updaterPublishDir 'CrystalRelayUpdater.exe') -Destination (Join-Path $publishDir 'CrystalRelayUpdater.exe') -Force
+Copy-Item -Path (Join-Path $updaterPublishDir 'DiamondRelayUpdater.exe') -Destination (Join-Path $appDir 'DiamondRelayUpdater.exe') -Force
 try {
-    Assert-SafeBuildPath -Path $updaterPublishDir -RequiredParent ([System.IO.Path]::GetTempPath()) -Pattern "CrystalRelayUpdater-*"
+    Assert-SafeBuildPath -Path $updaterPublishDir -RequiredParent ([System.IO.Path]::GetTempPath()) -Pattern "DiamondRelayUpdater-*"
     Remove-Item -Path $updaterPublishDir -Recurse -Force
 }
 catch {
+    # Temp cleanup failure should not abort the build. The temp folder will be cleaned by the OS eventually.
     Write-Warning "Could not clean up updater temp folder: $_"
 }
 
-Copy-Item -Path $readmePath -Destination (Join-Path $publishDir 'README.md') -Force
-Copy-Item -Path $changelogPath -Destination (Join-Path $publishDir 'CHANGELOG.txt') -Force
+Copy-Item -Path $readmePath -Destination (Join-Path $packageDir 'README.md') -Force
+Copy-Item -Path $changelogPath -Destination (Join-Path $packageDir 'CHANGELOG.txt') -Force
 if (Test-Path $docsPath) {
-    $packagedDocsPath = Join-Path $publishDir 'docs'
+    $packagedDocsPath = Join-Path $packageDir 'docs'
     Copy-Item -Path $docsPath -Destination $packagedDocsPath -Recurse -Force
     $internalDocsPath = Join-Path $packagedDocsPath 'superpowers'
     if (Test-Path $internalDocsPath) {
@@ -314,23 +279,26 @@ if (Test-Path $docsPath) {
 }
 
 $updateManifest = [ordered]@{
-    productName = 'Crystal Relay'
+    productName = 'DiamondRelay'
     version = $targetVersion
-    channel = 'stable'
+    channel = 'test'
     runtime = $runtime
-    entryExecutableName = 'Crystal Relay.exe'
+    entryExecutableName = 'DiamondRelay.exe'
 }
 $updateManifest |
     ConvertTo-Json |
-    Set-Content -Path (Join-Path $publishDir 'crystal-relay-update.json') -Encoding UTF8
+    Set-Content -Path (Join-Path $appDir 'diamondrelay-update.json') -Encoding UTF8
 
-if (Test-Path $zipPath) {
-    Remove-Item -Path $zipPath -Force
-}
+Set-Content -Path $testMarkerPath -Value 'test-build' -Encoding ASCII
 
-Compress-Archive -Path $publishDir -DestinationPath $zipPath -CompressionLevel Optimal
+$wshShell = New-Object -ComObject WScript.Shell
+$shortcut = $wshShell.CreateShortcut($shortcutPath)
+$shortcut.TargetPath = Join-Path $appDir 'DiamondRelay.exe'
+$shortcut.WorkingDirectory = $appDir
+$shortcut.IconLocation = Join-Path $appDir 'DiamondRelay.exe'
+$shortcut.Description = "Launch DiamondRelay test build"
+$shortcut.Save()
 
 Write-Host "Version: $targetVersion"
-Write-Host "Version Folder: $versionRoot"
-Write-Host "Folder:  $publishDir"
-Write-Host "Zip:     $zipPath"
+Write-Host "Test Build Folder: $packageDir"
+Write-Host "Shortcut: $shortcutPath"

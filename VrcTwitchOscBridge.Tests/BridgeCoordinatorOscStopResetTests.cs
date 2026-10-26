@@ -327,7 +327,7 @@ public sealed class BridgeCoordinatorOscStopResetTests
         var fixtureRoot = Path.Combine(
             Path.GetPathRoot(Environment.CurrentDirectory)
                 ?? throw new InvalidOperationException("The test environment has no filesystem root."),
-            "CrystalRelayFixture");
+            "DiamondRelayFixture");
 
         var accepted = Assert.IsType<bool>(startWorker!.Invoke(
             coordinator,

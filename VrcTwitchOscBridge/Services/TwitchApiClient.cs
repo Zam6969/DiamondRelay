@@ -9,7 +9,7 @@ using System.Text.RegularExpressions;
 namespace VrcTwitchOscBridge.Services;
 
 /// <summary>
-/// Small Twitch HTTP wrapper used by Crystal Relay.
+/// Small Twitch HTTP wrapper used by DiamondRelay.
 /// It handles OAuth/device flow, Helix lookups, EventSub management, reward management,
 /// chat sends, and optional About-page profile lookups.
 /// </summary>
@@ -44,7 +44,7 @@ public sealed class TwitchApiClient : IDisposable
     private bool? cachedRewardCatalogOnlyManageable;
     private readonly SemaphoreSlim rewardCatalogGate = new(1, 1);
 
-    // Twitch device flow used for the broadcaster and bot login buttons inside Crystal Relay.
+    // Twitch device flow used for the broadcaster and bot login buttons inside DiamondRelay.
     public async Task<DeviceCodeResponse> StartDeviceAuthorizationAsync(
         string clientId,
         IEnumerable<string> scopes,
@@ -259,7 +259,7 @@ public sealed class TwitchApiClient : IDisposable
             .ToHashSet(StringComparer.Ordinal);
     }
 
-    // Custom reward helpers are used by Crystal Relay's managed-reward system.
+    // Custom reward helpers are used by DiamondRelay's managed-reward system.
     // They let the app mirror redeem state to Twitch instead of relying only on internal rule checks.
     public async Task<IReadOnlyList<CustomRewardResponse>> GetCustomRewardsAsync(
         string accessToken,
@@ -831,7 +831,7 @@ public sealed class TwitchApiClient : IDisposable
         using var request = new HttpRequestMessage(
             HttpMethod.Get,
             $"https://www.twitch.tv/{Uri.EscapeDataString(twitchLogin.Trim())}");
-        request.Headers.UserAgent.ParseAdd("CrystalRelayTwitchOsc/desktop");
+        request.Headers.UserAgent.ParseAdd("DiamondRelay/desktop");
 
         using var response = await SendAsync(request, cancellationToken);
         await EnsureSuccessAsync(response, cancellationToken);
@@ -860,7 +860,7 @@ public sealed class TwitchApiClient : IDisposable
         }
 
         using var request = new HttpRequestMessage(HttpMethod.Get, relayUri);
-        request.Headers.UserAgent.ParseAdd("CrystalRelayTwitchOsc/desktop");
+        request.Headers.UserAgent.ParseAdd("DiamondRelay/desktop");
         if (!string.IsNullOrWhiteSpace(supplementalAboutProfilesHeaderName)
             && !string.IsNullOrWhiteSpace(supplementalAboutProfilesHeaderValue))
         {

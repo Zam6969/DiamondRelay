@@ -38,7 +38,7 @@ public sealed record ApplicationUpdateCheckResult(
 public sealed class ApplicationUpdateService : IDisposable
 {
     private static readonly Uri ReleasesEndpoint = new(
-        "https://api.github.com/repos/seluvia/crystal-relay-public/releases?per_page=100");
+        "https://api.github.com/repos/Zam6969/DiamondRelay/releases?per_page=100");
     private static readonly TimeSpan DefaultRequestTimeout = TimeSpan.FromSeconds(6);
 
     private readonly HttpClient httpClient;
@@ -53,7 +53,7 @@ public sealed class ApplicationUpdateService : IDisposable
         this.httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
         this.httpClient.DefaultRequestHeaders.Accept.Add(
             new MediaTypeWithQualityHeaderValue("application/vnd.github+json"));
-        this.httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("CrystalRelay-DesktopApp");
+        this.httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("DiamondRelay-DesktopApp");
     }
 
     public async Task<ApplicationUpdateCheckResult> CheckForUpdateAsync(

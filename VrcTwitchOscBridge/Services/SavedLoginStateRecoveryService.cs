@@ -24,14 +24,14 @@ public sealed record SavedLoginRecoveryResult(
 /// </summary>
 public static class SavedLoginStateRecoveryService
 {
-    private const string HelperArgument = "--crystal-relay-recovery-helper";
+    private const string HelperArgument = "--diamondrelay-recovery-helper";
     private const string ParentProcessIdArgument = "--parent-pid";
     private const string BackupFolderArgument = "--backup-folder";
     private const string RelaunchPathArgument = "--relaunch-path";
-    private const string PortableSaveFolderName = "Crystal Relay Save Transfer";
+    private const string PortableSaveFolderName = "DiamondRelay Save Transfer";
     private const string ThemeAssetsFolderName = "ThemeAssets";
-    private const string PortableProfileFileName = "crystal-relay.rules.json";
-    private const string PortableProfileBackupFileName = "crystal-relay.rules.json.bak";
+    private const string PortableProfileFileName = "diamondrelay.rules.json";
+    private const string PortableProfileBackupFileName = "diamondrelay.rules.json.bak";
     private const string PreservedFolderName = "Preserved";
     private const string ManifestFileName = "recovery-manifest.json";
     private const string RecoveryResultFileName = "saved-login-recovery-result.json";
@@ -43,7 +43,7 @@ public static class SavedLoginStateRecoveryService
 
     private static string RecoveryBackupRoot => Path.Combine(
         Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-        "CrystalRelay-RecoveryBackups");
+        "DiamondRelay-RecoveryBackups");
 
     private static string RecoveryResultPath => Path.Combine(AppDataPaths.RootFolder, RecoveryResultFileName);
 
@@ -105,7 +105,7 @@ public static class SavedLoginStateRecoveryService
     {
         var executablePath = Environment.ProcessPath
             ?? Process.GetCurrentProcess().MainModule?.FileName
-            ?? throw new InvalidOperationException("Crystal Relay could not find its executable path.");
+            ?? throw new InvalidOperationException("DiamondRelay could not find its executable path.");
 
         var startInfo = new ProcessStartInfo
         {
@@ -124,7 +124,7 @@ public static class SavedLoginStateRecoveryService
 
         if (Process.Start(startInfo) is null)
         {
-            throw new InvalidOperationException("Crystal Relay could not start the recovery helper.");
+            throw new InvalidOperationException("DiamondRelay could not start the recovery helper.");
         }
     }
 
@@ -196,7 +196,7 @@ public static class SavedLoginStateRecoveryService
 
             if (Directory.Exists(AppDataPaths.RootFolder))
             {
-                quarantineFolderPath = Path.Combine(request.BackupFolderPath, "Quarantined-CrystalRelay");
+                quarantineFolderPath = Path.Combine(request.BackupFolderPath, "Quarantined-DiamondRelay");
                 MoveDirectoryWithRetry(AppDataPaths.RootFolder, quarantineFolderPath, cancellationToken);
             }
 
@@ -248,7 +248,7 @@ public static class SavedLoginStateRecoveryService
             var completedTask = await Task.WhenAny(exitedTask, Task.Delay(ParentExitWaitMilliseconds, cancellationToken));
             if (completedTask != exitedTask)
             {
-                throw new TimeoutException("Crystal Relay did not exit in time for recovery to continue.");
+                throw new TimeoutException("DiamondRelay did not exit in time for recovery to continue.");
             }
 
             await exitedTask;
@@ -353,7 +353,7 @@ public static class SavedLoginStateRecoveryService
             Thread.Sleep(500);
         }
 
-        throw new IOException("Crystal Relay app data could not be moved into quarantine.", lastException);
+        throw new IOException("DiamondRelay app data could not be moved into quarantine.", lastException);
     }
 
     private static void CopyDirectory(string sourceFolderPath, string destinationFolderPath)

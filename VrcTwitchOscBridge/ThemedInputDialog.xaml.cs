@@ -21,7 +21,7 @@ public partial class ThemedInputDialog : Window
         ThemeManager.ThemeChanged += OnThemeManagerThemeChanged;
         Closed += OnWindowClosed;
 
-        Title = LocalizationService.Format("{0} | Crystal Relay", title);
+        Title = LocalizationService.Format("{0} | DiamondRelay", title);
         WindowTitleTextBlock.Text = title;
         HeaderLabel.Text = label;
         PrimaryButton.Content = primaryButtonText;

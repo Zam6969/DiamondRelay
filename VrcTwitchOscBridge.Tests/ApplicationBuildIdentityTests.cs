@@ -93,7 +93,7 @@ public sealed class ApplicationBuildIdentityTests
 
         public static TemporaryFolder Create()
         {
-            var path = System.IO.Path.Combine(System.IO.Path.GetTempPath(), $"CrystalRelayIdentity-{Guid.NewGuid():N}");
+            var path = System.IO.Path.Combine(System.IO.Path.GetTempPath(), $"DiamondRelayIdentity-{Guid.NewGuid():N}");
             Directory.CreateDirectory(path);
             return new TemporaryFolder(path);
         }

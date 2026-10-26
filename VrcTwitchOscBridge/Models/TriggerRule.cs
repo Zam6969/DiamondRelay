@@ -1932,13 +1932,13 @@ public sealed class TriggerRule : ObservableObject, IJsonOnDeserialized
             if (!UsesActiveFloatBoostReward)
             {
                 return UsesLinkedExistingReward
-                    ? T("Active boost rewards need a Crystal Relay-managed parent reward.")
+                    ? T("Active boost rewards need a DiamondRelay-managed parent reward.")
                     : T("Enable this only on timed float Avatar Parameter redeems.");
             }
 
             if (UsesLinkedExistingReward)
             {
-                return T("Active boost reward is configured, but parent hide/show requires a Crystal Relay-managed parent reward.");
+                return T("Active boost reward is configured, but parent hide/show requires a DiamondRelay-managed parent reward.");
             }
 
             var title = string.IsNullOrWhiteSpace(ActiveFloatBoostRewardTitle)
@@ -2006,16 +2006,16 @@ public sealed class TriggerRule : ObservableObject, IJsonOnDeserialized
     }
 
     public string DurationHelpText => UsesForceMovementBitsTrigger
-        ? T("Use whole seconds. Crystal Relay holds the selected VRChat movement input for the full Active Time after a matching Bits cheer word, then releases it automatically.")
+        ? T("Use whole seconds. DiamondRelay holds the selected VRChat movement input for the full Active Time after a matching Bits cheer word, then releases it automatically.")
         : UsesPlayerMovement
-        ? T("Use whole seconds. Crystal Relay holds the selected VRChat movement input for the full Active Time, then releases it automatically. Movement redeems do not use 0-second instant mode.")
+        ? T("Use whole seconds. DiamondRelay holds the selected VRChat movement input for the full Active Time, then releases it automatically. Movement redeems do not use 0-second instant mode.")
         : UsesAvatarRoulet
-            ? T("Use whole seconds. Avatar Roulette is always a timed temporary switch, so 0 is not used here. Crystal Relay stays on the rolled avatar for this long, then returns to the shared return avatar.")
+            ? T("Use whole seconds. Avatar Roulette is always a timed temporary switch, so 0 is not used here. DiamondRelay stays on the rolled avatar for this long, then returns to the shared return avatar.")
             : UsesAmountScaledDuration
                 ? T("Active time and amount both add on top. Each matching trigger extends the current timer by Active Time + the scaled amount.")
                 : UsesAvatarChange
                     ? T("Use whole seconds. Set this to 0 if you want the avatar change to stay active and become the new shared return avatar. Any value above 0 makes it a temporary switch that returns to the shared return avatar when the timer ends.")
-                    : T("Use whole seconds. Set this to 0 for an instant one-shot action, or use a higher value when you want Crystal Relay to hold the parameter active for a timed redeem.");
+                    : T("Use whole seconds. Set this to 0 for an instant one-shot action, or use a higher value when you want DiamondRelay to hold the parameter active for a timed redeem.");
 
     public string IntModeHelpText => IntZeroDurationMode switch
     {

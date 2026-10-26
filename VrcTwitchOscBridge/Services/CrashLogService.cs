@@ -6,7 +6,7 @@ namespace VrcTwitchOscBridge.Services;
 
 internal static class CrashLogService
 {
-    private const string AppFolderName = "CrystalRelay";
+    private const string AppFolderName = "DiamondRelay";
     private const string CrashLogFilePrefix = "crash-";
     private const string CrashLogFileExtension = ".txt";
     private const string LatestCrashFileName = "latest-crash.txt";
@@ -46,7 +46,7 @@ internal static class CrashLogService
             null,
             null,
             failureMessages.Count == 0
-                ? "Crystal Relay could not find a writable crash log folder."
+                ? "DiamondRelay could not find a writable crash log folder."
                 : string.Join(Environment.NewLine, failureMessages));
     }
 
@@ -55,7 +55,7 @@ internal static class CrashLogService
         var builder = new StringBuilder();
         var assembly = Assembly.GetExecutingAssembly().GetName();
 
-        builder.AppendLine("Crystal Relay Crash Log");
+        builder.AppendLine("DiamondRelay Crash Log");
         builder.AppendLine($"Timestamp: {DateTime.Now:yyyy-MM-dd HH:mm:ss}");
         builder.AppendLine($"TimestampUtc: {DateTime.UtcNow:yyyy-MM-dd HH:mm:ss}");
         builder.AppendLine($"App Version: {assembly.Version?.ToString() ?? "Unknown"}");

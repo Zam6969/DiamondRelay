@@ -4,8 +4,8 @@
         xmlns:local="clr-namespace:VrcTwitchOscBridge"
         xmlns:loc="clr-namespace:VrcTwitchOscBridge.Services"
         xmlns:shell="clr-namespace:System.Windows.Shell;assembly=PresentationFramework"
-        Title="{loc:Translate 'VRChat 2FA | Crystal Relay'}"
-        Icon="Assets/crystal-relay-icon.ico"
+        Title="{loc:Translate 'VRChat 2FA | DiamondRelay'}"
+        Icon="Assets/diamondrelay-icon.ico"
         Width="510"
         MinHeight="485"
         MinWidth="510"
@@ -217,7 +217,7 @@
 
                             <TextBlock Grid.Row="1"
                                        Margin="0,10,0,0"
-                                       Text="{loc:Translate 'Enter the code VRChat is asking for so Crystal Relay can finish loading your avatar list.'}"
+                                       Text="{loc:Translate 'Enter the code VRChat is asking for so DiamondRelay can finish loading your avatar list.'}"
                                        Foreground="{DynamicResource MutedBrush}"
                                        TextWrapping="Wrap" />
 

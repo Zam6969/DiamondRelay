@@ -9,7 +9,7 @@ namespace VrcTwitchOscBridge.Services;
 
 /// <summary>
 /// Reads VRChat's local OSC avatar JSON files.
-/// Crystal Relay uses this to learn avatar names and saved OSC parameters directly from the local client cache.
+/// DiamondRelay uses this to learn avatar names and saved OSC parameters directly from the local client cache.
 /// </summary>
 internal sealed class VrChatLocalOscCacheService
 {
@@ -112,7 +112,7 @@ internal sealed class VrChatLocalOscCacheService
     }
 
     // Loads one avatar's OSC parameter list from VRChat's local cache file and maps it
-    // into the parameter shapes Crystal Relay uses in the editor.
+    // into the parameter shapes DiamondRelay uses in the editor.
     public async Task<IReadOnlyList<VrChatOscParameterSummary>> LoadAvatarParametersAsync(
         string vrChatUserId,
         string avatarId,
@@ -338,7 +338,7 @@ internal sealed class VrChatLocalOscCacheService
         return Task.FromResult(TryInferUserIdFromLocalLowInRoot(root));
     }
 
-    // Resolves the userId Crystal Relay should use for VRChat cache and LocalLow
+    // Resolves the userId DiamondRelay should use for VRChat cache and LocalLow
     // operations. Prefers the live Settings.VrChat.UserId, then a previously
     // inferred LocalLow userId, and finally asks the LocalLow scanner. This is
     // what lets the app keep reading LocalLow data after the user disconnects
@@ -371,7 +371,7 @@ internal sealed class VrChatLocalOscCacheService
     }
 
     // VRChat parameter files can contain separate input/output endpoints.
-    // Crystal Relay prefers output when available because that is what it sends back into VRChat.
+    // DiamondRelay prefers output when available because that is what it sends back into VRChat.
     private static LocalOscEndpoint? SelectBestEndpoint(LocalOscParameter parameter)
     {
         if (!string.IsNullOrWhiteSpace(parameter.Output?.Address))
@@ -387,7 +387,7 @@ internal sealed class VrChatLocalOscCacheService
         return null;
     }
 
-    // Converts raw OSC type strings from the local file into Crystal Relay's parameter enum.
+    // Converts raw OSC type strings from the local file into DiamondRelay's parameter enum.
     private static bool TryMapParameterType(string? oscType, out OscParameterType parameterType)
     {
         parameterType = OscParameterType.Int;

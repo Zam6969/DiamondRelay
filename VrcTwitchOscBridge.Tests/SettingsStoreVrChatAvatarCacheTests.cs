@@ -10,7 +10,7 @@ public sealed class SettingsStoreVrChatAvatarCacheTests
 {
     // The SettingsStore constructor is parameterless and resolves all paths through
     // the internal static AppDataPaths class, which hardcodes
-    // %LOCALAPPDATA%\CrystalRelay\Secure\. A real save/load cycle from this test
+    // %LOCALAPPDATA%\DiamondRelay\Secure\. A real save/load cycle from this test
     // would write to and read from the user's actual secure folder, which is
     // unsafe. Refactoring the constructor is out of scope for this task; the
     // end-to-end round-trip is verified by the manual smoke test, and the

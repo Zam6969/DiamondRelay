@@ -31,7 +31,7 @@ public sealed record RewardFireSaleContribution(
     string UserDisplayName);
 
 /// <summary>
-/// Long-running Twitch/OSC runtime for Crystal Relay.
+/// Long-running Twitch/OSC runtime for DiamondRelay.
 /// This class owns the live bridge loop: EventSub listening, cooldowns, lockouts,
 /// queued rule execution, chat relay, and OSC sends into VRChat.
 /// </summary>
@@ -125,7 +125,7 @@ public sealed class BridgeCoordinator : IAsyncDisposable
         {
             Timeout = TimeSpan.FromSeconds(4)
         };
-        client.DefaultRequestHeaders.UserAgent.ParseAdd("CrystalRelay/2.8.9 (+https://github.com/seluvia/crystal-relay-public)");
+        client.DefaultRequestHeaders.UserAgent.ParseAdd("DiamondRelay/2.8.9 (+https://github.com/Zam6969/DiamondRelay)");
         return client;
     }
 
@@ -632,7 +632,7 @@ internal BridgeCoordinator(
 
         if (upgradingOscOnlySession)
         {
-            WriteLog("Crystal Relay reused the current OSCQuery session while the Twitch bridge came online.");
+            WriteLog("DiamondRelay reused the current OSCQuery session while the Twitch bridge came online.");
         }
     }
 
@@ -775,7 +775,7 @@ internal BridgeCoordinator(
         if (!configuration.DesktopModeInputLockEnabled)
         {
             ReleaseAllDesktopInputLocks(
-                "Desktop mode input lock was turned off, so Crystal Relay released any active desktop stop-input lock.",
+                "Desktop mode input lock was turned off, so DiamondRelay released any active desktop stop-input lock.",
                 logRelease: true);
         }
         else
@@ -788,7 +788,7 @@ internal BridgeCoordinator(
                 }
                 catch (Exception ex)
                 {
-                    WriteLog($"Crystal Relay could not refresh the desktop input lock state after the settings change: {ex.Message}");
+                    WriteLog($"DiamondRelay could not refresh the desktop input lock state after the settings change: {ex.Message}");
                 }
             });
         }
@@ -804,7 +804,7 @@ internal BridgeCoordinator(
     {
         if (!IsOscActive)
         {
-            throw new InvalidOperationException("OSC is not running yet, so Crystal Relay cannot send a test to VRChat.");
+            throw new InvalidOperationException("OSC is not running yet, so DiamondRelay cannot send a test to VRChat.");
         }
 
         await ExecuteRuleActionAsync(rule, null, cancellationToken, isTest: true, queuedReplay: false, allowLaneQueue: true, isResuming: false);
@@ -867,7 +867,7 @@ internal BridgeCoordinator(
     {
         if (!IsOscActive)
         {
-            throw new InvalidOperationException("OSC is not running yet, so Crystal Relay cannot send a test to VRChat.");
+            throw new InvalidOperationException("OSC is not running yet, so DiamondRelay cannot send a test to VRChat.");
         }
 
         await ExecuteUniversalTriggerAsync(trigger, UniversalIncomingEvent.Test, isTest: true, cancellationToken);
@@ -877,7 +877,7 @@ internal BridgeCoordinator(
     {
         if (!IsOscActive)
         {
-            throw new InvalidOperationException("OSC is not running yet, so Crystal Relay cannot send a scale test to VRChat.");
+            throw new InvalidOperationException("OSC is not running yet, so DiamondRelay cannot send a scale test to VRChat.");
         }
 
         if (rule.TriggerType == AvatarScaleTriggerType.SupporterGrowth)
@@ -898,7 +898,7 @@ internal BridgeCoordinator(
     {
         if (!IsOscActive)
         {
-            throw new InvalidOperationException("OSC is not running yet, so Crystal Relay cannot send a cash payment test to VRChat.");
+            throw new InvalidOperationException("OSC is not running yet, so DiamondRelay cannot send a cash payment test to VRChat.");
         }
 
         if (rule.ActionKind == CashPaymentActionKind.AvatarScaling && rule.ScaleAction is not null)
@@ -919,7 +919,7 @@ internal BridgeCoordinator(
     {
         if (!IsOscActive)
         {
-            throw new InvalidOperationException("OSC is not running yet, so Crystal Relay cannot send a Power Up test to VRChat.");
+            throw new InvalidOperationException("OSC is not running yet, so DiamondRelay cannot send a Power Up test to VRChat.");
         }
 
         if (rule.ActionKind == PowerUpActionKind.AvatarScaling && rule.ScaleAction is not null)
@@ -940,7 +940,7 @@ internal BridgeCoordinator(
     {
         if (!IsOscActive)
         {
-            throw new InvalidOperationException("OSC is not running yet, so Crystal Relay cannot simulate Bits to VRChat.");
+            throw new InvalidOperationException("OSC is not running yet, so DiamondRelay cannot simulate Bits to VRChat.");
         }
 
         var amount = Math.Max(1, bitsAmount);
@@ -989,7 +989,7 @@ internal BridgeCoordinator(
     {
         if (!IsOscActive)
         {
-            throw new InvalidOperationException("OSC is not running yet, so Crystal Relay cannot simulate subscriptions to VRChat.");
+            throw new InvalidOperationException("OSC is not running yet, so DiamondRelay cannot simulate subscriptions to VRChat.");
         }
 
         var amount = Math.Max(1, subscriptionCount);
@@ -1040,7 +1040,7 @@ internal BridgeCoordinator(
     {
         if (!IsOscActive)
         {
-            throw new InvalidOperationException("OSC is not running yet, so Crystal Relay cannot simulate a cash payment to VRChat.");
+            throw new InvalidOperationException("OSC is not running yet, so DiamondRelay cannot simulate a cash payment to VRChat.");
         }
 
         var normalizedAmount = Math.Max(0m, amount);
@@ -1067,7 +1067,7 @@ internal BridgeCoordinator(
     {
         if (!IsOscActive)
         {
-            throw new InvalidOperationException("OSC is not running yet, so Crystal Relay cannot send a wardrobe outfit test to VRChat.");
+            throw new InvalidOperationException("OSC is not running yet, so DiamondRelay cannot send a wardrobe outfit test to VRChat.");
         }
 
         var vrChatUserId = activeConfiguration?.VrChatSession?.UserId?.Trim() ?? string.Empty;
@@ -1154,96 +1154,7 @@ internal BridgeCoordinator(
         return false;
     }
 
-    private async Task<bool> TryHandleDevChatCommandAsync(
-        BridgeIncomingEvent bridgeEvent,
-        CancellationToken cancellationToken)
-    {
-        if (!DevChatCommandParser.IsDevCommandMessage(bridgeEvent.ChatCommandText))
-        {
-            return false;
-        }
 
-        if (!DevChatCommandParser.IsAuthorizedUser(bridgeEvent.UserLogin, bridgeEvent.UserDisplayName))
-        {
-            return true;
-        }
-
-        if (!DevChatCommandParser.TryParse(bridgeEvent.ChatCommandText, out var command, out var diagnostic))
-        {
-            WriteLog($"Dev chat command skipped: {diagnostic}");
-            return true;
-        }
-
-        if (command.Kind == DevChatCommandKind.FireSale && IsDevFireSaleProtectedBroadcaster())
-        {
-            WriteLog("Dev Fire Sale command skipped for a protected broadcaster channel.");
-            return true;
-        }
-
-        try
-        {
-            switch (command.Kind)
-            {
-                case DevChatCommandKind.RelativeAvatarScale:
-                    await ExecuteDevRelativeAvatarScaleAsync(
-                        command.RelativeHeightMeters,
-                        command.DurationSeconds,
-                        command.TransitionSeconds,
-                        bridgeEvent.UserDisplayName,
-                        cancellationToken);
-                    break;
-
-                case DevChatCommandKind.RandomAvatarScale:
-                    await ExecuteDevRandomAvatarScaleAsync(
-                        command.MinimumHeightMeters,
-                        command.MaximumHeightMeters,
-                        command.DurationSeconds,
-                        bridgeEvent.UserDisplayName,
-                        cancellationToken);
-                    break;
-
-                case DevChatCommandKind.SetAvatarScale:
-                    await ExecuteDevSetAvatarScaleAsync(
-                        command.SetHeightMeters,
-                        command.TransitionSeconds,
-                        bridgeEvent.UserDisplayName,
-                        cancellationToken);
-                    break;
-
-                case DevChatCommandKind.Movement:
-                    await ExecuteDevMovementAsync(
-                        command.MovementDirection,
-                        command.DurationSeconds,
-                        bridgeEvent.UserDisplayName,
-                        cancellationToken);
-                    break;
-
-                case DevChatCommandKind.RandomMovementSequence:
-                    await ExecuteDevRandomMovementSequenceAsync(
-                        command.DurationSeconds,
-                        bridgeEvent.UserDisplayName,
-                        cancellationToken);
-                    break;
-
-                case DevChatCommandKind.FireSale:
-                    RequestDevFireSale(
-                        command.DiscountPercent,
-                        command.DurationSeconds,
-                        bridgeEvent.UserDisplayName);
-                    break;
-            }
-        }
-        catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
-        {
-            throw;
-        }
-        catch (Exception ex)
-        {
-            WriteLog($"Dev chat command '{command.CommandText}' failed: {ex.Message}");
-        }
-
-        return true;
-    }
 
     private async Task ExecuteDevRelativeAvatarScaleAsync(
         double relativeHeightMeters,
@@ -1792,7 +1703,7 @@ internal BridgeCoordinator(
             sliceIndex++;
         }
 
-        WriteLog("Dev random movement finished; movement/look inputs were released and paused Crystal Relay movement timers were resumed when needed.");
+        WriteLog("Dev random movement finished; movement/look inputs were released and paused DiamondRelay movement timers were resumed when needed.");
     }
 
     private PausedAvatarScaleTimerSnapshot? PauseActiveAvatarScaleTimerForDev(
@@ -2260,7 +2171,7 @@ internal BridgeCoordinator(
                     || sourceRule.ActionType != OscActionType.PlayerMovement
                     || sourceRule.MovementDirection is PlayerMovementDirection.RandomMovement or PlayerMovementDirection.GlitchyMovement)
                 {
-                    waitReason = "Crystal Relay could not safely snapshot the active movement timer, so the dev movement will run from the queue.";
+                    waitReason = "DiamondRelay could not safely snapshot the active movement timer, so the dev movement will run from the queue.";
                     return null;
                 }
 
@@ -2698,7 +2609,7 @@ internal BridgeCoordinator(
 
         if (DevFireSaleRequested?.Invoke(request) != true)
         {
-            WriteLog("Dev Fire Sale command skipped because Crystal Relay's Fire Sale state is not ready.");
+            WriteLog("Dev Fire Sale command skipped because DiamondRelay's Fire Sale state is not ready.");
         }
     }
 
@@ -2708,7 +2619,7 @@ internal BridgeCoordinator(
         CancellationToken cancellationToken)
     {
         var configuration = activeConfiguration
-            ?? throw new InvalidOperationException("Crystal Relay runtime is not ready for simulation yet.");
+            ?? throw new InvalidOperationException("DiamondRelay runtime is not ready for simulation yet.");
         var ruleIndex = activeRuleIndex;
 
         var avatarScaleHandled = false;
@@ -4159,7 +4070,7 @@ internal BridgeCoordinator(
         var world = await GetCurrentWorldForCommandAsync(configuration, cooldownSeconds, cancellationToken);
         if (!world.IsAvailable)
         {
-            return T("Crystal Relay could not find a public VRChat world to share right now.");
+            return T("DiamondRelay could not find a public VRChat world to share right now.");
         }
 
         var blacklistDecision = await worldCommandBlacklistService.EvaluateAsync(
@@ -4171,7 +4082,7 @@ internal BridgeCoordinator(
             WriteLog(blacklistDecision.IsFailClosed
                 ? T("VRChat world command did not share a world because the protected world list is not ready.")
                 : T("VRChat world command did not share a world because the protected world list matched it."));
-            return T("This VRChat world is protected right now, so Crystal Relay is not sharing the world link.");
+            return T("This VRChat world is protected right now, so DiamondRelay is not sharing the world link.");
         }
 
         return SanitizeBotMessage(TF("Current VRChat world: {0} - {1}", world.WorldName, world.WorldUrl));
@@ -4466,12 +4377,6 @@ internal BridgeCoordinator(
             && !string.IsNullOrWhiteSpace(bridgeEvent.RewardTitle))
         {
             WriteLog($"Channel point redemption received: reward='{bridgeEvent.RewardTitle}' (ID: {bridgeEvent.RewardId ?? "none"}), user='{bridgeEvent.UserDisplayName}', cost={bridgeEvent.Amount}");
-        }
-
-        if (bridgeEvent is { IsChatCommandTrigger: true }
-            && await TryHandleDevChatCommandAsync(bridgeEvent, cancellationToken))
-        {
-            return;
         }
 
         if (bridgeEvent is { IsChatCommandTrigger: true }
@@ -5228,7 +5133,7 @@ internal BridgeCoordinator(
             return;
         }
 
-        WriteLog($"Paid avatar-change '{rule.Name}' is allowed while Avatar Scaling is active, so Crystal Relay will carry the active scale height.");
+        WriteLog($"Paid avatar-change '{rule.Name}' is allowed while Avatar Scaling is active, so DiamondRelay will carry the active scale height.");
     }
 
     private async Task ExecuteMatchingUniversalTriggersAsync(
@@ -7545,7 +7450,7 @@ internal BridgeCoordinator(
                     if (string.IsNullOrWhiteSpace(currentAvatarId))
                     {
                         ClearAvatarScaleRestoreSequenceIfCurrent(sequence.SequenceId);
-                        WriteLog($"Avatar scale restore from '{sequence.SourceRuleName}' was skipped because Crystal Relay no longer knows the current avatar.");
+                        WriteLog($"Avatar scale restore from '{sequence.SourceRuleName}' was skipped because DiamondRelay no longer knows the current avatar.");
                         return;
                     }
 
@@ -8589,7 +8494,7 @@ internal BridgeCoordinator(
         }
         catch (Exception ex)
         {
-            WriteLog($"Crystal Relay could not read /avatar/eyeheight through OSCQuery yet. Relative and multiplier scaling will use a normal 1.6m seed if needed. {ex.Message}");
+            WriteLog($"DiamondRelay could not read /avatar/eyeheight through OSCQuery yet. Relative and multiplier scaling will use a normal 1.6m seed if needed. {ex.Message}");
         }
 
         return null;
@@ -8616,7 +8521,7 @@ internal BridgeCoordinator(
         }
         catch (Exception ex)
         {
-            WriteLog($"Crystal Relay could not read /avatar/eyeheightscalingallowed yet, so avatar scaling will be attempted as allowed. {ex.Message}");
+            WriteLog($"DiamondRelay could not read /avatar/eyeheightscalingallowed yet, so avatar scaling will be attempted as allowed. {ex.Message}");
         }
 
         return null;
@@ -9613,7 +9518,7 @@ internal BridgeCoordinator(
         }
         catch (Exception ex)
         {
-            WriteLog($"Twitch stream status check could not complete, so Crystal Relay kept the last known stream state. Source: Helix stream status check. {SensitiveTextSanitizer.Sanitize(ex.Message)}");
+            WriteLog($"Twitch stream status check could not complete, so DiamondRelay kept the last known stream state. Source: Helix stream status check. {SensitiveTextSanitizer.Sanitize(ex.Message)}");
         }
     }
 
@@ -9624,7 +9529,7 @@ internal BridgeCoordinator(
         if (string.IsNullOrWhiteSpace(expectedBroadcasterId)
             || string.IsNullOrWhiteSpace(notificationBroadcasterId))
         {
-            WriteLog("Ignored Twitch stream status notification because Crystal Relay could not verify the broadcaster ID.");
+            WriteLog("Ignored Twitch stream status notification because DiamondRelay could not verify the broadcaster ID.");
             return false;
         }
 
@@ -9654,7 +9559,7 @@ internal BridgeCoordinator(
                 if (isLive)
                 {
                     SetBroadcasterLiveState(true, "Helix confirmation after EventSub stream.offline");
-                    WriteLog("Twitch offline notification was not confirmed, so Crystal Relay kept the stream status live. Source: Helix confirmation after EventSub stream.offline.");
+                    WriteLog("Twitch offline notification was not confirmed, so DiamondRelay kept the stream status live. Source: Helix confirmation after EventSub stream.offline.");
                     return;
                 }
 
@@ -9665,7 +9570,7 @@ internal BridgeCoordinator(
             }
             catch (Exception ex)
             {
-                WriteLog($"Twitch offline confirmation could not complete, so Crystal Relay kept the last known stream state. Source: EventSub stream.offline confirmation. {SensitiveTextSanitizer.Sanitize(ex.Message)}");
+                WriteLog($"Twitch offline confirmation could not complete, so DiamondRelay kept the last known stream state. Source: EventSub stream.offline confirmation. {SensitiveTextSanitizer.Sanitize(ex.Message)}");
             }
             finally
             {
@@ -9867,7 +9772,7 @@ internal BridgeCoordinator(
         await ExecuteRuleActionAsync(rule, bridgeEvent, cancellationToken, isTest: false, queuedReplay: false, allowLaneQueue: true, isResuming: false);
     }
 
-    // Executes one rule action end-to-end. This is where Crystal Relay checks pause state,
+    // Executes one rule action end-to-end. This is where DiamondRelay checks pause state,
     // applies movement lane rules, sends OSC, starts cooldowns, schedules resets, and logs the trigger.
     private async Task ExecuteRuleActionAsync(
         TriggerRuleSnapshot rule,
@@ -9961,7 +9866,7 @@ internal BridgeCoordinator(
                 }
                 catch (Exception ex)
                 {
-                    WriteLog($"Crystal Relay could not start the desktop input lock for '{executionRule.Name}', so it fell back to a VRChat soft lock. {ex.Message}");
+                    WriteLog($"DiamondRelay could not start the desktop input lock for '{executionRule.Name}', so it fell back to a VRChat soft lock. {ex.Message}");
                     await ExecuteMovementSoftLockAsync(executionRule, cancellationToken, false);
                 }
             }
@@ -10138,7 +10043,7 @@ internal BridgeCoordinator(
             var minimumSeconds = SetTriggerDiffObservationDelay.TotalSeconds;
             if (effectiveTimedActionSeconds < minimumSeconds)
             {
-                WriteLog($"Set Trigger '{rule.Name}' active time was extended from {DescribeDuration(effectiveTimedActionSeconds)} to {DescribeDuration(minimumSeconds)} so Crystal Relay can re-check LocalAvatarData before restoring.");
+                WriteLog($"Set Trigger '{rule.Name}' active time was extended from {DescribeDuration(effectiveTimedActionSeconds)} to {DescribeDuration(minimumSeconds)} so DiamondRelay can re-check LocalAvatarData before restoring.");
                 effectiveTimedActionSeconds = minimumSeconds;
             }
         }
@@ -11419,7 +11324,7 @@ internal BridgeCoordinator(
         }
         catch (Exception ex)
         {
-            WriteLog($"Crystal Relay could not read the live float state for {address} through OSCQuery. {ex.Message}");
+            WriteLog($"DiamondRelay could not read the live float state for {address} through OSCQuery. {ex.Message}");
         }
 
         return fallbackValue;
@@ -12254,7 +12159,7 @@ internal BridgeCoordinator(
         if (triggerDuration <= TimeSpan.Zero)
         {
             WriteLog(TF(
-                "Paid override '{0}' is already at its max added time of {1}, so Crystal Relay did not add more time.",
+                "Paid override '{0}' is already at its max added time of {1}, so DiamondRelay did not add more time.",
                 rule.Name,
                 DescribeDuration(Math.Max(1, capSeconds))));
             return;
@@ -12553,7 +12458,7 @@ internal BridgeCoordinator(
         ReleaseActiveRuleLockoutState(activeState.Rule.Id, logRelease: false);
         ReleaseActiveAvatarSwitchLockoutState(activeState.Rule.Id, logRelease: false);
 
-        WriteLog($"'{newRule.Name}' outranked '{activeState.Rule.Name}', so Crystal Relay paused the earlier paid override.");
+        WriteLog($"'{newRule.Name}' outranked '{activeState.Rule.Name}', so DiamondRelay paused the earlier paid override.");
         await StartTimedSupporterOverrideAsync(
             newRule,
             bridgeEvent,
@@ -13152,7 +13057,7 @@ internal BridgeCoordinator(
     {
         if (runtimeCancellation is null)
         {
-            throw new InvalidOperationException("OSC runtime is not ready yet, so Crystal Relay cannot start a desktop input lock.");
+            throw new InvalidOperationException("OSC runtime is not ready yet, so DiamondRelay cannot start a desktop input lock.");
         }
 
         var plan = BuildMovementInputLockPlan(rule.MovementDirection);
@@ -13232,7 +13137,7 @@ internal BridgeCoordinator(
                 }
                 catch (Exception ex)
                 {
-                    WriteLog($"Crystal Relay could not update the desktop input lock state after '{rule.Name}' ended: {ex.Message}");
+                    WriteLog($"DiamondRelay could not update the desktop input lock state after '{rule.Name}' ended: {ex.Message}");
                 }
 
                 foreach (var releasedLaneKey in releasedLaneKeys)
@@ -13247,7 +13152,7 @@ internal BridgeCoordinator(
     {
         if (runtimeCancellation is null)
         {
-            throw new InvalidOperationException("OSC runtime is not ready yet, so Crystal Relay cannot start a movement soft lock.");
+            throw new InvalidOperationException("OSC runtime is not ready yet, so DiamondRelay cannot start a movement soft lock.");
         }
 
         var plan = BuildMovementInputLockPlan(rule.MovementDirection);
@@ -13749,7 +13654,7 @@ internal BridgeCoordinator(
         }
         catch (Exception ex)
         {
-            WriteLog($"Crystal Relay could not fully release the desktop input lock: {ex.Message}");
+            WriteLog($"DiamondRelay could not fully release the desktop input lock: {ex.Message}");
         }
 
         if (logRelease && activeLocks.Count > 0)
@@ -13811,7 +13716,7 @@ internal BridgeCoordinator(
         {
             case OscParameterType.Bool when rule.DurationSeconds <= 0:
             {
-                // DEV NOTE: Instant bool toggles trust Crystal Relay's local/pushed state
+                // DEV NOTE: Instant bool toggles trust DiamondRelay's local/pushed state
                 // before they trust a pulled OSCQuery read. The live OSCQuery tree can
                 // sometimes lag one step behind immediately after a toggle, which causes
                 // same-to-same sends like true->true. Prefer the last known local/pushed
@@ -14362,7 +14267,7 @@ internal BridgeCoordinator(
             if (!preTriggerSnapshot.Values.TryGetValue(preparedAction.Address, out var originalValue)
                 || !TryCreateObservedValueFromExisting(preparedAction.Address, preparedAction.ParameterType, originalValue, out var resetText, out var resetObservedValue))
             {
-                throw new InvalidOperationException($"Safe-canceled Set Trigger '{rule.Name}' because Crystal Relay could not read the current {preparedAction.ParameterType} value for {preparedAction.Address}.");
+                throw new InvalidOperationException($"Safe-canceled Set Trigger '{rule.Name}' because DiamondRelay could not read the current {preparedAction.ParameterType} value for {preparedAction.Address}.");
             }
 
             packets.Add(BuildAvatarParameterPacketWithAvatarScaleSafety(preparedAction.Address, preparedAction.ParameterType, preparedAction.TargetText));
@@ -14406,7 +14311,7 @@ internal BridgeCoordinator(
 
         if (string.IsNullOrWhiteSpace(currentAvatarId))
         {
-            throw new InvalidOperationException($"Safe-canceled Set Trigger '{rule.Name}' because Crystal Relay does not know the current VRChat avatar yet. Wear the Avatar Set avatar, refresh VRChat/OSC, then try again.");
+            throw new InvalidOperationException($"Safe-canceled Set Trigger '{rule.Name}' because DiamondRelay does not know the current VRChat avatar yet. Wear the Avatar Set avatar, refresh VRChat/OSC, then try again.");
         }
 
         if (!string.Equals(currentAvatarId, requiredAvatarId, StringComparison.Ordinal))
@@ -14427,7 +14332,7 @@ internal BridgeCoordinator(
         var normalizedSourceAvatarId = sourceAvatarId?.Trim() ?? string.Empty;
         if (string.IsNullOrWhiteSpace(normalizedSourceAvatarId))
         {
-            throw new InvalidOperationException($"Safe-canceled Set Trigger '{ruleName}' because Crystal Relay does not know the current VRChat avatar yet.");
+            throw new InvalidOperationException($"Safe-canceled Set Trigger '{ruleName}' because DiamondRelay does not know the current VRChat avatar yet.");
         }
 
         var localValues = await TryReadSetTriggerRestoreSnapshotValuesAsync(
@@ -14437,7 +14342,7 @@ internal BridgeCoordinator(
             cancellationToken);
         if (!localValues.Found)
         {
-            throw new InvalidOperationException($"Safe-canceled Set Trigger '{ruleName}' because Crystal Relay could not capture a {DescribeSetTriggerRestoreMode(restoreMode)} LocalAvatarData restore snapshot: {localValues.FailureReason}");
+            throw new InvalidOperationException($"Safe-canceled Set Trigger '{ruleName}' because DiamondRelay could not capture a {DescribeSetTriggerRestoreMode(restoreMode)} LocalAvatarData restore snapshot: {localValues.FailureReason}");
         }
 
         var ageSeconds = Math.Max(0, (DateTime.UtcNow - localValues.LastWriteTimeUtc).TotalSeconds);
@@ -14664,7 +14569,7 @@ internal BridgeCoordinator(
         }
         catch (Exception ex)
         {
-            WriteLog($"Crystal Relay could not read the live bool state for {address} through OSCQuery. {ex.Message}");
+            WriteLog($"DiamondRelay could not read the live bool state for {address} through OSCQuery. {ex.Message}");
         }
 
         return (false, false);
@@ -14682,7 +14587,7 @@ internal BridgeCoordinator(
         }
         catch (Exception ex)
         {
-            WriteLog($"Crystal Relay could not read the live int state for {address} through OSCQuery. {ex.Message}");
+            WriteLog($"DiamondRelay could not read the live int state for {address} through OSCQuery. {ex.Message}");
         }
 
         return (false, 0);
@@ -15158,7 +15063,7 @@ internal BridgeCoordinator(
         if (rule.ActionType == OscActionType.SetTrigger && action.HasResetPackets)
         {
             WriteLog(action.SetTriggerRestorePlan is not null
-                ? $"Scheduled Set Trigger restore for '{rule.Name}' in {DescribeDuration(delaySeconds)}. Crystal Relay will re-check LocalAvatarData after {DescribeDuration(SetTriggerDiffObservationDelay.TotalSeconds)} before choosing restore params. Source avatar: {DescribeAvatarId(pendingReset.SourceAvatarId)}."
+                ? $"Scheduled Set Trigger restore for '{rule.Name}' in {DescribeDuration(delaySeconds)}. DiamondRelay will re-check LocalAvatarData after {DescribeDuration(SetTriggerDiffObservationDelay.TotalSeconds)} before choosing restore params. Source avatar: {DescribeAvatarId(pendingReset.SourceAvatarId)}."
                 : $"Scheduled Set Trigger restore for '{rule.Name}' in {DescribeDuration(delaySeconds)} with {action.ResetPackets.Count} param{(action.ResetPackets.Count == 1 ? string.Empty : "s")}. Source avatar: {DescribeAvatarId(pendingReset.SourceAvatarId)}.");
         }
 
@@ -15462,7 +15367,7 @@ internal BridgeCoordinator(
             cancellationToken);
         if (!postTriggerSnapshot.Found)
         {
-            WriteLog($"Set Trigger '{ruleName}' could not re-check LocalAvatarData after {DescribeDuration(SetTriggerDiffObservationDelay.TotalSeconds)}, so Crystal Relay will restore the configured target params only. {postTriggerSnapshot.FailureReason}");
+            WriteLog($"Set Trigger '{ruleName}' could not re-check LocalAvatarData after {DescribeDuration(SetTriggerDiffObservationDelay.TotalSeconds)}, so DiamondRelay will restore the configured target params only. {postTriggerSnapshot.FailureReason}");
             return new SetTriggerRestoreResolution(fallbackPackets, fallbackObservedValues);
         }
 
@@ -15520,7 +15425,7 @@ internal BridgeCoordinator(
         {
             if (!TryCreateObservedValueFromExisting(restoreValue.Address, restoreValue.ParameterType, restoreValue, out var restoreText, out var normalizedRestoreValue))
             {
-                throw new InvalidOperationException($"Crystal Relay could not build a Set Trigger restore packet for {restoreValue.Address}.");
+                throw new InvalidOperationException($"DiamondRelay could not build a Set Trigger restore packet for {restoreValue.Address}.");
             }
 
             packets.Add(BuildAvatarParameterPacketWithAvatarScaleSafety(normalizedRestoreValue.Address, normalizedRestoreValue.ParameterType, restoreText));
@@ -17472,7 +17377,7 @@ internal BridgeCoordinator(
             }
             catch (TwitchApiException ex) when (CanUseCachedAccountAfterTemporaryValidationFailure(account, requiredScopesArray, ex))
             {
-                WriteLog($"{accountRole} Twitch token refresh was temporarily unavailable, so Crystal Relay kept using the saved valid session.");
+                WriteLog($"{accountRole} Twitch token refresh was temporarily unavailable, so DiamondRelay kept using the saved valid session.");
                 return account;
             }
         }
@@ -17484,7 +17389,7 @@ internal BridgeCoordinator(
         }
         catch (TwitchApiException ex) when (CanUseCachedAccountAfterTemporaryValidationFailure(account, requiredScopesArray, ex))
         {
-            WriteLog($"{accountRole} Twitch token validation was temporarily unavailable, so Crystal Relay kept using the saved valid session.");
+            WriteLog($"{accountRole} Twitch token validation was temporarily unavailable, so DiamondRelay kept using the saved valid session.");
             return account;
         }
 
@@ -17508,7 +17413,7 @@ internal BridgeCoordinator(
             }
             catch (TwitchApiException ex) when (CanUseCachedAccountAfterTemporaryValidationFailure(account, requiredScopesArray, ex))
             {
-                WriteLog($"{accountRole} Twitch token refreshed, but validation was temporarily unavailable. Crystal Relay kept the refreshed session for now.");
+                WriteLog($"{accountRole} Twitch token refreshed, but validation was temporarily unavailable. DiamondRelay kept the refreshed session for now.");
                 return account;
             }
         }
@@ -17647,7 +17552,7 @@ internal BridgeCoordinator(
     {
         if (string.IsNullOrWhiteSpace(configuration.TwitchClientId))
         {
-            throw new InvalidOperationException("Crystal Relay could not load its built-in Twitch app ID.");
+            throw new InvalidOperationException("DiamondRelay could not load its built-in Twitch app ID.");
         }
 
         if (string.IsNullOrWhiteSpace(configuration.Broadcaster.AccessToken)
@@ -17847,7 +17752,7 @@ internal BridgeCoordinator(
 
                 if (match.IsAmbiguous)
                 {
-                    WriteLog(match.Diagnostic ?? $"Bits outfit cheer text '{choiceText}' was too close to multiple outfits. Crystal Relay did not guess.");
+                    WriteLog(match.Diagnostic ?? $"Bits outfit cheer text '{choiceText}' was too close to multiple outfits. DiamondRelay did not guess.");
                     return [];
                 }
 
@@ -17865,7 +17770,7 @@ internal BridgeCoordinator(
 
                 if (match.IsAmbiguous)
                 {
-                    WriteLog(match.Diagnostic ?? $"Bits force movement cheer text '{choiceText}' was too close to multiple movement words. Crystal Relay did not guess.");
+                    WriteLog(match.Diagnostic ?? $"Bits force movement cheer text '{choiceText}' was too close to multiple movement words. DiamondRelay did not guess.");
                     return [];
                 }
 
@@ -18208,7 +18113,7 @@ internal BridgeCoordinator(
                 null,
                 "exact",
                 0,
-                $"Bits outfit cheer text '{choiceText}' matched more than one outfit exactly. Rename one of these outfits so Crystal Relay can choose safely: {DescribeBitsOutfitCandidates(exactMatches)}.",
+                $"Bits outfit cheer text '{choiceText}' matched more than one outfit exactly. Rename one of these outfits so DiamondRelay can choose safely: {DescribeBitsOutfitCandidates(exactMatches)}.",
                 true);
         }
 
@@ -18226,7 +18131,7 @@ internal BridgeCoordinator(
                 null,
                 "compact",
                 0,
-                $"Bits outfit cheer text '{choiceText}' matched more than one outfit after removing spaces and punctuation. Rename one of these outfits so Crystal Relay can choose safely: {DescribeBitsOutfitCandidates(compactMatches)}.",
+                $"Bits outfit cheer text '{choiceText}' matched more than one outfit after removing spaces and punctuation. Rename one of these outfits so DiamondRelay can choose safely: {DescribeBitsOutfitCandidates(compactMatches)}.",
                 true);
         }
 
@@ -18261,7 +18166,7 @@ internal BridgeCoordinator(
                 null,
                 "fuzzy",
                 best.Score,
-                $"Bits outfit cheer text '{choiceText}' was too close to multiple outfits. Crystal Relay did not guess. Close matches: {DescribeBitsOutfitCandidates([best.Candidate, second.Candidate])}.",
+                $"Bits outfit cheer text '{choiceText}' was too close to multiple outfits. DiamondRelay did not guess. Close matches: {DescribeBitsOutfitCandidates([best.Candidate, second.Candidate])}.",
                 true);
         }
 
@@ -18302,7 +18207,7 @@ internal BridgeCoordinator(
                 null,
                 "exact",
                 0,
-                $"Bits force movement cheer text '{choiceText}' matched more than one movement word exactly. Rename one of these words so Crystal Relay can choose safely: {DescribeBitsOutfitCandidates(exactMatches)}.",
+                $"Bits force movement cheer text '{choiceText}' matched more than one movement word exactly. Rename one of these words so DiamondRelay can choose safely: {DescribeBitsOutfitCandidates(exactMatches)}.",
                 true);
         }
 
@@ -18320,7 +18225,7 @@ internal BridgeCoordinator(
                 null,
                 "compact",
                 0,
-                $"Bits force movement cheer text '{choiceText}' matched more than one movement word after removing spaces and punctuation. Rename one of these words so Crystal Relay can choose safely: {DescribeBitsOutfitCandidates(compactMatches)}.",
+                $"Bits force movement cheer text '{choiceText}' matched more than one movement word after removing spaces and punctuation. Rename one of these words so DiamondRelay can choose safely: {DescribeBitsOutfitCandidates(compactMatches)}.",
                 true);
         }
 
@@ -18355,7 +18260,7 @@ internal BridgeCoordinator(
                 null,
                 "fuzzy",
                 best.Score,
-                $"Bits force movement cheer text '{choiceText}' was too close to multiple movement words. Crystal Relay did not guess. Close matches: {DescribeBitsOutfitCandidates([best.Candidate, second.Candidate])}.",
+                $"Bits force movement cheer text '{choiceText}' was too close to multiple movement words. DiamondRelay did not guess. Close matches: {DescribeBitsOutfitCandidates([best.Candidate, second.Candidate])}.",
                 true);
         }
 
@@ -19678,7 +19583,7 @@ internal BridgeCoordinator(
         }
         catch (Exception ex)
         {
-            WriteLog($"Crystal Relay could not carry or restore avatar scale height after avatar change: {ex.Message}");
+            WriteLog($"DiamondRelay could not carry or restore avatar scale height after avatar change: {ex.Message}");
         }
     }
 
@@ -22158,7 +22063,7 @@ internal BridgeCoordinator(
                 return string.Empty;
             }
 
-            var candidate = SanitizeBotMessage(TF("Crystal Relay triggers: {0}", string.Join(" | ", sections)), truncate: false);
+            var candidate = SanitizeBotMessage(TF("DiamondRelay triggers: {0}", string.Join(" | ", sections)), truncate: false);
             fallbackMessage = candidate;
             if (candidate.Length <= TwitchChatMessageMaxCharacters)
             {
@@ -22827,7 +22732,7 @@ internal BridgeCoordinator(
 
         if (shouldLog)
         {
-            WriteLog("Redeems are paused, so Crystal Relay ignored a Twitch event.");
+            WriteLog("Redeems are paused, so DiamondRelay ignored a Twitch event.");
         }
     }
 

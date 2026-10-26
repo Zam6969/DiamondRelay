@@ -7,7 +7,7 @@ namespace VrcTwitchOscBridge.Services;
 
 /// <summary>
 /// Reads VRChat's LocalAvatarData cache for the current avatar's saved animation parameter values.
-/// Crystal Relay uses this only as a Set Trigger restore source, never for avatar scale height.
+/// DiamondRelay uses this only as a Set Trigger restore source, never for avatar scale height.
 /// </summary>
 internal sealed class VrChatLocalAvatarDataService
 {
@@ -115,7 +115,7 @@ internal sealed class VrChatLocalAvatarDataService
         var normalizedAvatarId = avatarId?.Trim() ?? string.Empty;
         if (string.IsNullOrWhiteSpace(normalizedAvatarId))
         {
-            return LocalAvatarDataParameterBatchReadResult.Unavailable("Crystal Relay does not know the current VRChat avatar yet.");
+            return LocalAvatarDataParameterBatchReadResult.Unavailable("DiamondRelay does not know the current VRChat avatar yet.");
         }
 
         var avatarFile = FindLatestAvatarDataFile(normalizedAvatarId);
@@ -192,7 +192,7 @@ internal sealed class VrChatLocalAvatarDataService
 
             if (observedValues.Count == 0)
             {
-                return LocalAvatarDataParameterBatchReadResult.Unsafe("Crystal Relay could not match any LocalAvatarData animationParameters to typed avatar OSC parameters.");
+                return LocalAvatarDataParameterBatchReadResult.Unsafe("DiamondRelay could not match any LocalAvatarData animationParameters to typed avatar OSC parameters.");
             }
 
             return LocalAvatarDataParameterBatchReadResult.Success(
@@ -208,7 +208,7 @@ internal sealed class VrChatLocalAvatarDataService
         }
         catch
         {
-            return LocalAvatarDataParameterBatchReadResult.Unsafe("Crystal Relay could not read the current avatar's LocalAvatarData file.");
+            return LocalAvatarDataParameterBatchReadResult.Unsafe("DiamondRelay could not read the current avatar's LocalAvatarData file.");
         }
     }
 
@@ -221,7 +221,7 @@ internal sealed class VrChatLocalAvatarDataService
         var normalizedAvatarId = avatarId?.Trim() ?? string.Empty;
         if (string.IsNullOrWhiteSpace(normalizedAvatarId))
         {
-            return LocalAvatarDataParameterBatchReadResult.Unavailable("Crystal Relay does not know the current VRChat avatar yet.");
+            return LocalAvatarDataParameterBatchReadResult.Unavailable("DiamondRelay does not know the current VRChat avatar yet.");
         }
 
         if (requests.Count == 0)
@@ -320,7 +320,7 @@ internal sealed class VrChatLocalAvatarDataService
         }
         catch
         {
-            return LocalAvatarDataParameterBatchReadResult.Unsafe("Crystal Relay could not read the current avatar's LocalAvatarData file.");
+            return LocalAvatarDataParameterBatchReadResult.Unsafe("DiamondRelay could not read the current avatar's LocalAvatarData file.");
         }
     }
 
@@ -767,7 +767,7 @@ internal sealed class VrChatLocalAvatarDataService
         }
         catch
         {
-            return LocalAvatarDataTypeMetadataResult.Unsafe("Crystal Relay could not read the current avatar's OSC config file.");
+            return LocalAvatarDataTypeMetadataResult.Unsafe("DiamondRelay could not read the current avatar's OSC config file.");
         }
     }
 

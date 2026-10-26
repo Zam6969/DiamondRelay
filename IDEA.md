@@ -1,8 +1,8 @@
-# 💎 Crystal Relay — Ideas & Future Concepts
+# 💎 DiamondRelay — Ideas & Future Concepts
 
-This document is a collection of ideas, experiments, and possible future directions for **Crystal Relay**.
+This document is a collection of ideas, experiments, and possible future directions for **DiamondRelay**.
 
-Crystal Relay connects Twitch interactions with VRChat through OSC/OSCQuery, allowing stream events such as Channel Points, Bits, subscriptions, chat commands, payments, and other triggers to control VRChat avatar parameters and streamer interactions.
+DiamondRelay connects Twitch interactions with VRChat through OSC/OSCQuery, allowing stream events such as Channel Points, Bits, subscriptions, chat commands, payments, and other triggers to control VRChat avatar parameters and streamer interactions.
 
 > [!NOTE]
 > Ideas listed here are **not guaranteed features** and should not be treated as a roadmap or promised release schedule.
@@ -11,7 +11,7 @@ Crystal Relay connects Twitch interactions with VRChat through OSC/OSCQuery, all
 
 ## 🎯 Goals
 
-Ideas for Crystal Relay should generally support one or more of these goals:
+Ideas for DiamondRelay should generally support one or more of these goals:
 
 * Make VRChat streams more interactive.
 * Give viewers fun ways to affect the stream.
@@ -20,7 +20,7 @@ Ideas for Crystal Relay should generally support one or more of these goals:
 * Keep interactions understandable and recoverable.
 * Avoid leaving avatars or OSC parameters in broken states.
 * Give creators flexible tools without requiring programming knowledge.
-* Keep Crystal Relay free and open source.
+* Keep DiamondRelay free and open source.
 
 ---
 
@@ -89,7 +89,7 @@ Possible actions:
 * Change scale
 * Send Twitch message
 * Wait
-* Play another Crystal Relay action
+* Play another DiamondRelay action
 * Restore previous state
 
 ---
@@ -198,7 +198,7 @@ Possible effects:
 * Viewer-controlled actions
 * Temporary enhanced redeems
 
-After the timer ends, Crystal Relay restores everything to its previous state.
+After the timer ends, DiamondRelay restores everything to its previous state.
 
 ---
 
@@ -383,7 +383,7 @@ Sensitive information should never be written into diagnostics unnecessarily.
 
 ## Parameter Conflict Detection
 
-Warn when multiple active Crystal Relay systems are attempting to control the same parameter.
+Warn when multiple active DiamondRelay systems are attempting to control the same parameter.
 
 Example:
 
@@ -413,7 +413,7 @@ Possible resolution:
 
 ## Emergency Reset
 
-A clearly visible action that immediately attempts to restore Crystal Relay-controlled state.
+A clearly visible action that immediately attempts to restore DiamondRelay-controlled state.
 
 Possible reset targets:
 
@@ -429,7 +429,7 @@ Possible reset targets:
 
 ## Stream Safe Mode
 
-Temporarily disable potentially disruptive interactions while keeping Crystal Relay connected.
+Temporarily disable potentially disruptive interactions while keeping DiamondRelay connected.
 
 Example:
 
@@ -461,7 +461,7 @@ Outfit: Default
 Expression: Neutral
 ```
 
-Crystal Relay could optionally return to this state after crashes, reconnects, or special events.
+DiamondRelay could optionally return to this state after crashes, reconnects, or special events.
 
 ---
 
@@ -486,12 +486,12 @@ A compact dashboard showing:
 
 ## Compact Mode
 
-A small always-visible Crystal Relay window containing only essential controls.
+A small always-visible DiamondRelay window containing only essential controls.
 
 Example:
 
 ```text
-💎 CRYSTAL RELAY
+💎 DIAMONDRELAY
 
 Twitch  ●
 VRChat ●
@@ -555,7 +555,7 @@ Amount: 500
 
 ## Event Inspector
 
-Show incoming events and how Crystal Relay processed them.
+Show incoming events and how DiamondRelay processed them.
 
 Example:
 
@@ -580,7 +580,7 @@ Success
 
 ## Plugin / Extension System
 
-Long-term concept for allowing developers to extend Crystal Relay without modifying the core application.
+Long-term concept for allowing developers to extend DiamondRelay without modifying the core application.
 
 Possible extension types:
 
@@ -610,7 +610,7 @@ Potential future integrations could include:
 * WebSocket integrations
 * Local HTTP API
 
-Integrations should remain optional so Crystal Relay does not become dependent on unnecessary external services.
+Integrations should remain optional so DiamondRelay does not become dependent on unnecessary external services.
 
 ---
 
@@ -631,7 +631,7 @@ Example:
 ```text
 Viewer Redeem
      ↓
-Crystal Relay
+DiamondRelay
      ├── VRChat → Giant Avatar
      └── OBS → Show "GIANT MODE" Overlay
 ```
@@ -640,7 +640,7 @@ Crystal Relay
 
 # 🔌 Local API
 
-Expose an optional local API so other applications can trigger Crystal Relay actions.
+Expose an optional local API so other applications can trigger DiamondRelay actions.
 
 Example concept:
 
@@ -676,7 +676,7 @@ Features that are relatively isolated or mostly quality-of-life improvements.
 
 ### 🟡 Medium
 
-Features involving multiple Crystal Relay systems or new UI.
+Features involving multiple DiamondRelay systems or new UI.
 
 ### 🔴 Large
 
@@ -695,8 +695,8 @@ Before turning an idea into a feature, consider:
 * Does it improve streamer/viewer interaction?
 * Can a normal user understand how to configure it?
 * Does it work safely when multiple actions happen simultaneously?
-* Can Crystal Relay recover if VRChat disconnects?
-* Can Crystal Relay recover if Twitch disconnects?
+* Can DiamondRelay recover if VRChat disconnects?
+* Can DiamondRelay recover if Twitch disconnects?
 * What happens if the avatar changes halfway through the action?
 * Can the action be cancelled?
 * Can the original state be restored?
@@ -738,7 +738,7 @@ Sometimes a strange idea becomes a great feature after experimentation.
 
 # 💎 Philosophy
 
-Crystal Relay should make it possible to build increasingly creative Twitch + VRChat interactions without forcing streamers to become programmers.
+DiamondRelay should make it possible to build increasingly creative Twitch + VRChat interactions without forcing streamers to become programmers.
 
 The ideal workflow is:
 
@@ -753,7 +753,7 @@ Stream
       ↓
 Chaos
       ↓
-Crystal Relay safely restores everything
+DiamondRelay safely restores everything
 ```
 
 More interaction.

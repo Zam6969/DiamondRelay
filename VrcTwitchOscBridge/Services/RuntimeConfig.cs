@@ -5,7 +5,7 @@ namespace VrcTwitchOscBridge.Services;
 public sealed class RuntimeConfig
 {
     public const string DefaultTwitchClientId = "gm0ihiq9yqljizmnbixp3l0os065l7";
-    public const string DefaultLiveFeedbackHeartbeatEndpoint = "https://crystal-relay-live-worker.screminpal-animation.workers.dev/api/ping";
+    public const string DefaultLiveFeedbackHeartbeatEndpoint = "";
 
     [JsonIgnore]
     public string TwitchClientId => DefaultTwitchClientId;
@@ -21,12 +21,11 @@ public sealed class RuntimeConfig
 
     public RuntimeConfig Normalize()
     {
-        SupplementalAboutProfilesEndpoint = SupplementalAboutProfilesEndpoint.Trim();
-        SupplementalAboutProfilesHeaderName = SupplementalAboutProfilesHeaderName.Trim();
-        SupplementalAboutProfilesHeaderValue = SupplementalAboutProfilesHeaderValue.Trim();
-        LiveFeedbackHeartbeatEndpoint = string.IsNullOrWhiteSpace(LiveFeedbackHeartbeatEndpoint)
-            ? DefaultLiveFeedbackHeartbeatEndpoint
-            : LiveFeedbackHeartbeatEndpoint.Trim();
+        // Ignore legacy developer endpoints even when loading an existing installation.
+        SupplementalAboutProfilesEndpoint = string.Empty;
+        SupplementalAboutProfilesHeaderName = string.Empty;
+        SupplementalAboutProfilesHeaderValue = string.Empty;
+        LiveFeedbackHeartbeatEndpoint = string.Empty;
         return this;
     }
 

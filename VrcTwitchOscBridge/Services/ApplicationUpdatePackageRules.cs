@@ -14,11 +14,11 @@ public enum ApplicationUpdateChannel
 public static class ApplicationUpdatePackageRules
 {
     private const string RuntimeName = "win-x64";
-    private const string StablePackagePrefix = "CrystalRelayTwitchOsc-v";
-    private const string BugFixPackagePrefix = "CrystalRelayBugFix-v";
-    private const string LegacyPackagePrefix = "CrystalRelay-v";
-    private const string StaticExecutableName = "Crystal Relay.exe";
-    private const string VersionedExecutablePrefix = "CrystalRelayTwitchOsc-v";
+    private const string StablePackagePrefix = "DiamondRelay-v";
+    private const string BugFixPackagePrefix = "DiamondRelayBugFix-v";
+    private const string LegacyPackagePrefix = "DiamondRelay-v";
+    private const string StaticExecutableName = "DiamondRelay.exe";
+    private const string VersionedExecutablePrefix = "DiamondRelay-v";
     private static readonly Regex BugFixVersionPattern = new(
         "^(?<base>\\d+\\.\\d+\\.\\d+)-bugfix(?<sequence>[1-9]\\d*)$",
         RegexOptions.Compiled | RegexOptions.CultureInvariant);
@@ -179,7 +179,7 @@ public static class ApplicationUpdatePackageRules
         !string.IsNullOrWhiteSpace(folderName)
         && !folderName.Contains(Path.DirectorySeparatorChar)
         && !folderName.Contains(Path.AltDirectorySeparatorChar)
-        && (string.Equals(folderName, "Crystal Relay", StringComparison.OrdinalIgnoreCase)
+        && (string.Equals(folderName, "DiamondRelay", StringComparison.OrdinalIgnoreCase)
             || HasPackageShape(folderName, StablePackagePrefix)
             || HasPackageShape(folderName, BugFixPackagePrefix)
             || HasPackageShape(folderName, LegacyPackagePrefix));

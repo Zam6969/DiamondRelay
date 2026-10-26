@@ -1,4 +1,4 @@
-Crystal Relay Changelog
+DiamondRelay Changelog
 =======================
 
 Newest updates appear first. This changelog focuses on the changes users will notice most.
@@ -12,7 +12,7 @@ v3.2.0 bug fix 7
 - Fixed long Avatar Swap reward summaries hiding Edit/Delete controls. Summaries now use an ellipsis with the full text available on hover while the actions stay visible.
 
 v3.2.0 bug fix 6
-- Fixed VRChat avatar loading after sign-in when avatar data contains legacy or unexpected `unityPackages` metadata. Crystal Relay now ignores unusable optional platform metadata instead of failing the entire avatar list, while normal PC/Quest selection continues to work.
+- Fixed VRChat avatar loading after sign-in when avatar data contains legacy or unexpected `unityPackages` metadata. DiamondRelay now ignores unusable optional platform metadata instead of failing the entire avatar list, while normal PC/Quest selection continues to work.
 - Avatar Scaling now always follows the configured global minimum and maximum height rules, with advanced height settings supporting values up to 10,000 m.
 - Fixed Movement Redeems reward-sync and Cash Payment trigger options, and improved World links, Protected World Guard, World Guard administration, Avatar Scaling Master Reward colors, Avatar Swap reward linking, Activity Resume recovery, updater processing, and managed Avatar Set cooldown colors.
 - Avatar Swap now supports standalone Twitch chat commands and more reliable supporter-rule timing, while VRChat login, OSC-only test sessions, OSCQuery lifecycle handling, activity timers, and avatar-scoped cleanup remain hardened across reconnects, stops, restarts, and avatar changes.
@@ -45,14 +45,14 @@ v3.2.0
 - Added Float limit hide for Avatar Sets so managed rewards can hide automatically when a float parameter reaches its min or max.
 - Moved Wardrobe editor into the Avatar Sets manager with per-outfit managed reward color pickers and copy/paste tools.
 - Consolidated each built-in language into one locale file and refreshed the translation catalog across all supported languages.
-- Restructured release and beta packages: install folder is always "Crystal Relay", executable is always "Crystal Relay.exe".
+- Restructured release and beta packages: install folder is always "DiamondRelay", executable is always "DiamondRelay.exe".
 - Redesigned the Home panel branding card, support section, and Void Crystal theme background.
 - Added Connection Status section in Settings with live 2x2 status grid and OSC Controls panel.
 - Various bug fixes, performance improvements, and UI polish across the app.
 
 v3.1.9 beta 5
 - Reworked the Avatar Scaling manager window with a cleaner, more organized UI layout for easier rule management.
-- Restructured release and beta packages: install folder is now always "Crystal Relay", the main executable is always "Crystal Relay.exe", and version info is shown via a `<version>.txt` dummy file instead of being embedded in folder and exe names.
+- Restructured release and beta packages: install folder is now always "DiamondRelay", the main executable is always "DiamondRelay.exe", and version info is shown via a `<version>.txt` dummy file instead of being embedded in folder and exe names.
 - The self-updater is compatible with both old and new naming for a clean transition.
 - Fixed VRChat login not showing the 2FA window when two-factor authentication is required. The login flow now handles both the older 200 OK response and a possible 401 response from the VRChat API.
 - Redesigned the VRChat login window: the 2FA code field now appears inline below the password instead of in a separate popup window. Enter your credentials, click Continue, and if the account needs two-factor authentication the code field shows up right there without closing the login window.
@@ -95,12 +95,12 @@ v3.1.9 beta 3
 - Added per-rule toggles for Run random action, Queue, and Active Duration in the editor.
 - Added an Avatar Readiness section in the editor that lists which OSC parameters are available on the current VRChat avatar.
 - Improved restore from manual test so trigger type, reward, bits range, sub tier, and action list all come back.
-- Routed managed reward saves and updates for Universal Triggers through Crystal Relay's standard channel-point reward sync.
+- Routed managed reward saves and updates for Universal Triggers through DiamondRelay's standard channel-point reward sync.
 - Fixed an issue where the Twitch background listener could fail to recover after a temporary drop, requiring a manual app restart.
 - Fixed an issue where the bridge could stop running when the optional bot account needed reconnecting. With broadcaster-as-bot enabled, the bridge now keeps running and only bot-driven chat announcements stay disabled.
 
 v3.1.9 beta 2
-- Added Activity Resume so Crystal Relay remembers active redeems and picks up where it left off after a restart. Avatar changes, movement redeems, and scaling actions now survive app restarts instead of being lost.
+- Added Activity Resume so DiamondRelay remembers active redeems and picks up where it left off after a restart. Avatar changes, movement redeems, and scaling actions now survive app restarts instead of being lost.
 - Redesigned the Avatar Scaling action setup with a cleaner, compact layout. Each scale mode (Set Height, Random, Relative, Multiplier, Preset, Glitchy) now shows only the options that matter for that mode.
 - Added a Multiplier direction option so multiplier scaling can push height up, down, or both.
 - Added a configurable transition speed for Glitchy Random Height so you can control how fast the height jumps around.
@@ -120,8 +120,8 @@ v3.1.9 beta 1
 - Added Wardrobe copy/paste tools for outfits and snapshot parameters, plus a clearer warning when outfit active time is below the safe 70-second observation window.
 - Simplified Wardrobe setup so the Wardrobe reward system is always available for avatar sets and the master reward card sits below Avatar Setup.
 - Fixed avatar picker thumbnails so VRChat image URLs are preserved through cached avatar lists, single avatar picker, and Avatar Roulette picker refreshes.
-- Added OSC Status restart controls for restarting Crystal Relay or restarting VRChat and Crystal Relay while restoring open Crystal Relay windows.
-- Improved VRChat + Crystal Relay restart so it can relaunch VRChat in desktop mode and rejoin the same private, group, or friends instance instead of falling back to home.
+- Added OSC Status restart controls for restarting DiamondRelay or restarting VRChat and DiamondRelay while restoring open DiamondRelay windows.
+- Improved VRChat + DiamondRelay restart so it can relaunch VRChat in desktop mode and rejoin the same private, group, or friends instance instead of falling back to home.
 - Added a Twitch Chatbox XSOverlay compatibility mode and remembered chatbox placement so overlay capture can keep a stable target between launches and restarts.
 - Fixed Wardrobe setup so Test Outfit sends configured OSC parameters, parameter removal enables correctly, and individual outfit rewards can be created from the outfit name.
 - Improved avatar-scaling height carryover around queued avatar swaps and interrupted height changes.
@@ -149,9 +149,9 @@ v3.1.8 beta 2
 - Improved Avatar Supporter Trigger setup so a new supporter rule can be drafted before the VRChat avatar list is available.
 
 v3.1.7
-- Added an optional setting to remove the `VRC:` prefix from Crystal Relay-created Twitch rewards while preserving saved reward IDs and linked-reward safety.
+- Added an optional setting to remove the `VRC:` prefix from DiamondRelay-created Twitch rewards while preserving saved reward IDs and linked-reward safety.
 - Bug reports now include recent sanitized diagnostics, with stronger redaction for tokens, auth headers, cookies, local Windows user paths, and payment secret fields.
-- Fixed fresh Twitch broadcaster login so Test Mode, EventSub, and managed reward sync can use the new session immediately without restarting Crystal Relay.
+- Fixed fresh Twitch broadcaster login so Test Mode, EventSub, and managed reward sync can use the new session immediately without restarting DiamondRelay.
 - Fixed Avatar Roulette in cooldown-only Avatar Change mode so roulette rewards can trigger without a return-avatar preset when no timed return is needed.
 - Added a clearer Activity warning when Twitch's custom reward list is full, while keeping linked existing rewards listen-only.
 - Improved managed reward sync so saved app-managed rewards can rename between prefixed and unprefixed titles without adopting unrelated broadcaster-created rewards.
@@ -160,19 +160,19 @@ v3.1.6
 - Added Glitchy Random Height to Avatar Scaling, letting a scale redeem rapidly vary height between configured minimum and maximum values for its active time before returning to the configured height.
 - Added Glitchy Movement for Movement Redeems and Bits + Subs Force Movement overrides, repeatedly rolling random VRChat movement directions until Active Time ends.
 - Strengthened Redeem Library Delete All confirmations so bulk-delete actions use clear themed warnings before removing avatar sets, cash rules, movement sets, Bits + Subs overrides, Universal Triggers, or Avatar Scaling.
-- Updated release and test packaging so Crystal Relay ships with the dedicated updater helper and organized test packages include the expected updater and test-build marker.
+- Updated release and test packaging so DiamondRelay ships with the dedicated updater helper and organized test packages include the expected updater and test-build marker.
 
 v3.1.5
 - Added Saved Login Repair for login/sign-out loops, backing up redeem setup and custom theme assets before clearing saved sessions and restoring redeems.
 - Added a guided repair prompt after repeated recoverable auth/session failures, plus a manual Repair and Restart action in Settings > Accounts.
 - Added in-app update installing from GitHub release ZIPs, with stable/beta channel handling and safe fallback to the release page.
 - Reorganized Settings into Twitch, VRChat, App, Visuals, and Safety sections so account, update, visual, and repair controls are easier to find.
-- Added About-page live-status support so community status cards can stay current while Crystal Relay is open.
+- Added About-page live-status support so community status cards can stay current while DiamondRelay is open.
 - Paid Bits/Subs avatar overrides now pause timed Avatar Change and Avatar Roulette redemptions, then resume them afterward with their remaining time.
 - Linked Avatar Change and Avatar Roulette redemptions received during paid avatar override time now queue for later instead of being dropped.
 - Added Random Movement for Movement Redeems, rolling one movement action from forward, back, left, right, jump, spin left, or spin right each time it runs.
 - Avatar Roulette now uses each avatar in the selected pool once before repeats begin again.
-- Universal Trigger organizer groups now start collapsed, and the action editor uses Avatar Parameter wording to match the rest of Crystal Relay.
+- Universal Trigger organizer groups now start collapsed, and the action editor uses Avatar Parameter wording to match the rest of DiamondRelay.
 - Added special Twitch Chatbox role-card styling for community members.
 
 v3.1.4
@@ -182,51 +182,51 @@ v3.1.4
 
 v3.1.3
 - Added Cash Payments in the Redeem Library for StreamElements tips, Streamlabs donations, and Ko-fi tips, including OSC actions, Set Trigger actions, Avatar Change, Avatar Roulette, and Avatar Scaling without creating Twitch rewards.
-- Added hosted Ko-fi relay support so streamers can paste a Crystal Relay webhook URL into Ko-fi without setting up Cloudflare Tunnel, ngrok, router ports, or a public local webhook URL.
+- Added hosted Ko-fi relay support so streamers can paste a DiamondRelay webhook URL into Ko-fi without setting up Cloudflare Tunnel, ngrok, router ports, or a public local webhook URL.
 - Added a themed Test Mode simulator window for Bits, subs, gift subs, and cash payments so streamers can test matching rules without waiting for live events.
 - Added Bits + Subs Force Movement overrides, plus a themed added-time popup for configuring Bits ratios, sub tier seconds, gift-sub multiplication, and maximum added time caps per override.
 - Improved Universal Triggers so managed rewards ignore Avatar Sets but only show when the current VRChat avatar's LocalLow OSC data contains a matching `/avatar/parameters/...` action path.
-- Improved Fooma config import so matching imported triggers update in place instead of duplicating, while preserving existing Crystal Relay/Twitch reward links when safe.
+- Improved Fooma config import so matching imported triggers update in place instead of duplicating, while preserving existing DiamondRelay/Twitch reward links when safe.
 - Added the missing advanced range and VRChat scale-limit bypass controls to Cash Payment Avatar Scaling actions, matching the normal Avatar Scaling controls.
 - Polished Provider Connections, Test Mode, Built-In Commands, update prompts, Bot + Broadcaster settings, and Bits + Subs editor layouts so large setup sections stay more compact and themed.
 - Fixed Cash Payment restore-height decimal entry, direct OSC path handling for Universal Triggers, and beta update checks for full beta identities such as `3.1.3-beta4`.
-- Switched the root project license and repo metadata to MIT while keeping Crystal Relay branding guidance in the README.
+- Switched the root project license and repo metadata to MIT while keeping DiamondRelay branding guidance in the README.
 
 v3.1.3 beta 4
 - Added a themed Test Mode simulator window for Bits, subs, gift subs, and cash payments so streamers can test matching rules without waiting for live events.
 - Test simulations now run through the same local matching paths as real events, including Universal Triggers, Avatar Scaling, paid override checks, cooldowns, lockouts, OSC sends, and bot messages without calling Twitch APIs.
 - Added cooldown-only Avatar Change mode for direct avatar changes that do not need a return avatar, hiding the current-avatar reward after cooldown while preserving Avatar Roulette's timed return behavior.
-- Polished Test Mode, Built-In Commands, update prompts, and Bot + Broadcaster settings so dropdowns, buttons, cards, and compact layouts better match the Crystal Relay theme.
-- Switched the root project license and repo metadata to MIT while keeping Crystal Relay branding guidance in the README.
+- Polished Test Mode, Built-In Commands, update prompts, and Bot + Broadcaster settings so dropdowns, buttons, cards, and compact layouts better match the DiamondRelay theme.
+- Switched the root project license and repo metadata to MIT while keeping DiamondRelay branding guidance in the README.
 
 v3.1.3 beta 3
 - Added Bits + Subs Force Movement overrides so viewers can cheer with words like `Cheer100 forward` to trigger timed VRChat movement.
 - Force Movement words are editable, Bits-only, and tolerate capitalization, punctuation, accents, and small misspellings while skipping unclear close matches safely.
 - Fixed beta update checks so beta builds compare against their full beta identity, such as `3.1.3-beta3`, instead of only the base app version.
 - Added a beta update prompt option to hide future betas for the same base version while still allowing the stable release prompt to appear.
-- Added a Crystal Relay Discord card on the About page for update pings, beta announcements, and community news.
+- Added a DiamondRelay Discord card on the About page for update pings, beta announcements, and community news.
 
 v3.1.3 beta 2
 - Added Cash Payments in the Redeem Library for StreamElements tips, Streamlabs donations, and Ko-fi tips, letting cash support trigger OSC actions, Set Trigger actions, Avatar Change, Avatar Roulette, and Avatar Scaling without creating Twitch rewards.
-- Added hosted Ko-fi relay support so streamers can paste a Crystal Relay webhook URL into Ko-fi without setting up Cloudflare Tunnel, ngrok, router ports, or a public local webhook URL.
+- Added hosted Ko-fi relay support so streamers can paste a DiamondRelay webhook URL into Ko-fi without setting up Cloudflare Tunnel, ngrok, router ports, or a public local webhook URL.
 - Ko-fi setup now keeps the fixed hosted relay address hidden, masks the verification token field, and includes a quick button to open Ko-fi's webhook settings page.
 
 v3.1.2
-- Added editable Twitch reward descriptions for Crystal Relay-created channel-point rewards, syncing to Twitch's reward prompt field.
+- Added editable Twitch reward descriptions for DiamondRelay-created channel-point rewards, syncing to Twitch's reward prompt field.
 - Blank standard managed rewards now use a formal default description, while Set Trigger shared rewards keep their numbered choice instructions and Fire Sale funding rewards keep their automatic progress prompt.
 - Added float redeem setup improvements, including decimal/percent input modes, optional smooth transitions, and active boost rewards that can appear while a timed float redeem is active.
 - Active Float Boost rewards can add to the current float value, refresh the parent active timer, respect configured min/max values, and use their own reward title, description, cost, cooldown, and ready/cooldown colors.
-- Improved broadcaster Twitch sign-in recovery so Crystal Relay can restore the background listener from a saved refresh token when the access token expires.
+- Improved broadcaster Twitch sign-in recovery so DiamondRelay can restore the background listener from a saved refresh token when the access token expires.
 - Broadcaster token refreshes are now gated so startup, EventSub, reward sync, and validation do not spend the same Twitch refresh token at the same time.
 - Temporary Twitch validation or network trouble can keep a still-valid broadcaster session alive, while revoked consent, missing scopes, disconnected Twitch apps, and invalid refresh tokens still ask for reconnect.
-- Linked existing Twitch rewards remain listen-only, so Crystal Relay does not edit their name, cost, description, prompt, color, input settings, visibility, or cooldown.
+- Linked existing Twitch rewards remain listen-only, so DiamondRelay does not edit their name, cost, description, prompt, color, input settings, visibility, or cooldown.
 
 v3.1.1
 - Fixed Avatar Scaling carryover during VRChat avatar swaps so active scale height waits for the new avatar to finish loading, reapplies across repeated swaps, and restores to the configured return height only after the active timer ends.
 
 v3.1.0
 - Added Movement Sets so Movement Redeems can be organized into folders while keeping existing movement rewards, active times, cooldowns, and runtime behavior global.
-- Added real Twitch reward cooldown controls for Universal Trigger and Movement channel-point rewards created by Crystal Relay, while linked rewards stay listen-only.
+- Added real Twitch reward cooldown controls for Universal Trigger and Movement channel-point rewards created by DiamondRelay, while linked rewards stay listen-only.
 - Expanded Trigger Info chat messages and the `!rewards` reminder command so viewers can see current-avatar outfit choices, Bits outfit names, Bits grow/shrink scale words, and sub/gift-sub scale effects.
 - Twitch Chatbox now shows special cards for channel-point redemptions, Bits cheers, subscriptions, resubs, gift subs, and incoming raids, separate from normal chat and not relayed to VRChat chatbox OSC.
 - Supporter Growth Bits can use editable grow/shrink keywords such as `Cheer100 grow` or `Cheer100 shrink`, with ambiguous cheer text rejected instead of guessed.
@@ -237,17 +237,17 @@ v3.1.0
 
 v3.0.2
 - Added Reward Fire Sale, a new Redeem Library section that can build a shared Bits and optional funding reward goal for temporary or permanent channel-point discounts.
-- Fire Sale tiers can use one discount or the highest reached tier, then apply the discount only to Crystal Relay-created `VRC:` rewards while linked Twitch rewards stay listen-only and unchanged.
+- Fire Sale tiers can use one discount or the highest reached tier, then apply the discount only to DiamondRelay-created `VRC:` rewards while linked Twitch rewards stay listen-only and unchanged.
 - Temporary Fire Sales restore normal reward prices when the timer ends, and permanent Fire Sales stay active until stopped.
-- Fire Sale progress uses Bits amounts and an optional Crystal Relay-owned funding reward with an editable channel-point conversion rate, without polling Twitch or syncing rewards while progress is only filling.
-- Added Fire Sale test-mode warning text so streamers know starting or stopping a sale can update Crystal Relay-owned Twitch reward prices.
+- Fire Sale progress uses Bits amounts and an optional DiamondRelay-owned funding reward with an editable channel-point conversion rate, without polling Twitch or syncing rewards while progress is only filling.
+- Added Fire Sale test-mode warning text so streamers know starting or stopping a sale can update DiamondRelay-owned Twitch reward prices.
 - Added an in-app Report Bug flow on the About page, with optional sanitized logs and a source-only Cloudflare Worker scaffold for creating public GitHub issues safely.
-- Polished the Report Bug window to match Crystal Relay themes, moved the Report Bug button to the top action bar, and tightened the Worker path so normal browser submissions are rejected while the desktop app can still send reports.
+- Polished the Report Bug window to match DiamondRelay themes, moved the Report Bug button to the top action bar, and tightened the Worker path so normal browser submissions are rejected while the desktop app can still send reports.
 
 v3.0.1
 - Reworked Avatar Scaling paid support so bits, new subs, resubs, and gift subs feed one Supporter Growth height timer with soft cap, max cap, and fair time-add controls.
 - Added an option that lets channel-point and chat scale redeems temporarily overlay height changes during paid Supporter Growth without shortening, resetting, or canceling the paid timer.
-- Cleaned up the Avatar Scaling setup UI so Supporter Growth is the guided paid-scale path, legacy paid scale trigger types still load, and reward cooldown controls only show where Crystal Relay manages the channel-point reward.
+- Cleaned up the Avatar Scaling setup UI so Supporter Growth is the guided paid-scale path, legacy paid scale trigger types still load, and reward cooldown controls only show where DiamondRelay manages the channel-point reward.
 - Reward and chat scale restores now return to the active paid Supporter Growth height while paid growth is still running, then Supporter Growth restores to Normal Height when its paid timer ends.
 
 v3.0.0
@@ -256,16 +256,16 @@ v3.0.0
 - Added Bits outfit triggers with outfit-name matching, including exact, compact, and fuzzy spelling matching, plus queueing so paid outfit changes restore safely in order.
 - Reorganized Bits + Subs into direct VRChat-avatar scoped supporter triggers and separate avatar-change overrides, with clearer avatar pickers and Use Current Avatar shortcuts.
 - Improved Avatar Scaling with cooldown-free stress tests, transition-gated scale queues, explicit Return Height restores, VRChat min/max bypass per scale redeem, master reward gating, and stronger avatar-swap carryover.
-- Linked existing Twitch rewards are now listen-only: Crystal Relay listens for redemptions without changing Twitch name, cost, cooldown, color, prompt, visibility, or deletion settings.
-- Managed Twitch reward sync now makes fewer API calls, backs off on Twitch rate limits, preserves reward IDs more carefully, and can recycle disabled Crystal Relay-owned `VRC:` rewards only when Twitch's 50 reward cap blocks current-avatar rewards.
+- Linked existing Twitch rewards are now listen-only: DiamondRelay listens for redemptions without changing Twitch name, cost, cooldown, color, prompt, visibility, or deletion settings.
+- Managed Twitch reward sync now makes fewer API calls, backs off on Twitch rate limits, preserves reward IDs more carefully, and can recycle disabled DiamondRelay-owned `VRC:` rewards only when Twitch's 50 reward cap blocks current-avatar rewards.
 - Added broadcaster-as-bot chat sending and optional live-only outfit trigger announcement messages for current-avatar redeem and Bits outfit triggers.
 - Added the Stinky Online built-in theme and polished Home, Redeem Library, About/support, dropdown, and grouped-list layouts.
 - Fixed Avatar Set parameter picker/type syncing, timed bool restores, Int organizer row selection, Set Trigger dropdown display, reward dropdown stability, streaming status flicker, broadcaster scope recovery, and Test Mode reward population issues.
 - Improved Twitch Chatbox emote handling, including animated GIF emotes, while keeping static emotes working.
 
 v2.9.2
-- Added an optional managed reward cleanup setting that can delete inactive Crystal Relay Twitch rewards instead of only hiding them, helping avoid Twitch's 50 custom reward limit.
-- The cleanup option is available on Avatar Sets, Avatar Change, Movement Redeems, and Universal channel-point rewards, and Crystal Relay recreates or relinks those rewards when they become active again.
+- Added an optional managed reward cleanup setting that can delete inactive DiamondRelay Twitch rewards instead of only hiding them, helping avoid Twitch's 50 custom reward limit.
+- The cleanup option is available on Avatar Sets, Avatar Change, Movement Redeems, and Universal channel-point rewards, and DiamondRelay recreates or relinks those rewards when they become active again.
 - Cooldown and temporary in-use reward states are preserved so active reward flows do not churn Twitch rewards.
 
 v2.9.1
@@ -276,7 +276,7 @@ v2.9.1
 v2.9.0
 - Added Universal Triggers for broader Twitch interaction setups, including Fooma config import, grouped trigger cards, managed channel point rewards, and optional chat-command fallback on reward cards.
 - Twitch Chatbox emote rendering is more reliable for native Twitch emotes and supported named emotes from Twitch, BetterTTV, FrankerFaceZ, and 7TV.
-- Fixed VRChat LocalLow OSC JSON loading so Crystal Relay reads current-avatar parameter files correctly and Universal rewards can evaluate avatar parameters more reliably.
+- Fixed VRChat LocalLow OSC JSON loading so DiamondRelay reads current-avatar parameter files correctly and Universal rewards can evaluate avatar parameters more reliably.
 - Fixed current-avatar detection so Universal reward checks no longer fall back to the newest LocalLow JSON file or spam avatar swap messages while you stay on one avatar.
 - Added a public tutorial video link to the README so new users can follow a visual setup walkthrough.
 
@@ -286,14 +286,14 @@ v2.8.9
 - Reduced runtime overhead with bounded Twitch emote caches, smoother virtualized lists, fewer unnecessary secure credential writes, lighter OSC/EventSub hot paths, and faster indexed rule matching.
 
 v2.8.8
-- Added a new app-wide Custom theme slot so you can tune Crystal Relay's colors, heading/body fonts, and overall look without replacing the built-in themes.
+- Added a new app-wide Custom theme slot so you can tune DiamondRelay's colors, heading/body fonts, and overall look without replacing the built-in themes.
 - The Custom theme can now use an optional imported main-window background image while the rest of the app keeps the same live-updating color and font palette.
 - Cleaned up main UI scrollbar spacing so page scrollbars no longer sit flush against nearby cards and panels.
 
 v2.8.7
-- Crystal Relay can now check the public GitHub release page on startup and show a themed in-app update popup when a newer version is available.
-- The update popup uses Crystal Relay's custom window style, shows your current version and the latest version, and can open the GitHub release page directly in your browser.
-- If you choose Not Now, Crystal Relay remembers that ignored release and will stay quiet until a newer published version exists.
+- DiamondRelay can now check the public GitHub release page on startup and show a themed in-app update popup when a newer version is available.
+- The update popup uses DiamondRelay's custom window style, shows your current version and the latest version, and can open the GitHub release page directly in your browser.
+- If you choose Not Now, DiamondRelay remembers that ignored release and will stay quiet until a newer published version exists.
 
 v2.8.6
 - Bits and Subs paid overrides now let you set separate amount-based timer ratios, so Bits and Subs can each add their own amount of time.
@@ -313,7 +313,7 @@ v2.8.4
 v2.8.3
 - Bits and subs overrides can now use amount-based timers, with separate settings for Bits and Subs so each paid trigger type can add its own amount of time.
 - Amount-based paid override timers now use the actual Twitch event amount: cheers use the bit count, normal subs count as 1, and gift subs use the gift total.
-- The minimize button now minimizes Crystal Relay normally to the taskbar again, while the title-bar X remains the deliberate hide-to-tray action.
+- The minimize button now minimizes DiamondRelay normally to the taskbar again, while the title-bar X remains the deliberate hide-to-tray action.
 - Added the new Trash Kitty theme with dark grey, charcoal, and light-blue digital alley styling.
 - Added TheRaccoonCat to the About page playtester cards with the same Twitch live-aware behavior as the other tester cards.
 
@@ -325,8 +325,8 @@ v2.8.1
 - Fixed Twitch reward names in the Redeem Editor so they no longer snap back to the old title while you are trying to rename them.
 
 v2.8.0
-- Crystal Relay now hides the main window to the system tray when you minimize it, so it no longer sits minimized on the taskbar.
-- Added a tray icon with quick reopen and quit actions, plus a one-time tip so it is clearer where Crystal Relay went after you hide it.
+- DiamondRelay now hides the main window to the system tray when you minimize it, so it no longer sits minimized on the taskbar.
+- Added a tray icon with quick reopen and quit actions, plus a one-time tip so it is clearer where DiamondRelay went after you hide it.
 - The title-bar power button now asks for confirmation before fully closing the app, while the Twitch Chatbox stays independent for VRChat chat viewing.
 - Channel point redeems can now use their own custom ready and cooldown background colors through the native color picker in Twitch Trigger Settings.
 
@@ -336,7 +336,7 @@ v2.7.9
 
 v2.7.8
 - Added 8 more built-in languages: Swedish, Italian, Simplified Chinese, Traditional Chinese, Korean, Russian, Polish, and Thai.
-- Expanded localization coverage across Crystal Relay so more editor text, help popups, status text, and dialog text now translate instead of falling back to English.
+- Expanded localization coverage across DiamondRelay so more editor text, help popups, status text, and dialog text now translate instead of falling back to English.
 - Fixed localization startup crashes caused by malformed translation files, and added a build check that now catches missing or broken language files before a test or release package is created.
 
 v2.7.7
@@ -344,7 +344,7 @@ v2.7.7
 - Added an optional viewer chat notification sound for the Twitch Chatbox, with bot and broadcaster messages filtered out so it only pings for human chatters.
 
 v2.7.6
-- Added a new MainFrame theme with a darker digital purple, black, and neon-green look across Crystal Relay.
+- Added a new MainFrame theme with a darker digital purple, black, and neon-green look across DiamondRelay.
 - Expanded the in-app help popups so the ? buttons explain each section in more useful detail.
 - Fixed visible Avatar Roulette spelling so the new avatar-pool flow reads more cleanly in the editor.
 
@@ -355,27 +355,27 @@ v2.7.5
 
 v2.7.4
 - Added optional per-rule Twitch chat command fallback triggers, so channels without channel points can still run rules from chat with permission controls.
-- Restyled the checkbox UI to fit Crystal Relay's custom theme better, and fixed the click area so the full checkbox box is easier to hit.
-- Removed bad people who keep eating the Void Crystal Relay servers.
+- Restyled the checkbox UI to fit DiamondRelay's custom theme better, and fixed the click area so the full checkbox box is easier to hit.
+- Removed bad people who keep eating the Void DiamondRelay servers.
 
 v2.7.3
 - Added a new Streaming Status card on Home so you can quickly see Twitch stream and listener status in one place.
 - Removed the failed stop-input movement options, so Movement Redeems are back to the normal directional movement controls only.
 
 v2.7.2
-- Startup recovery now handles invalid Twitch broadcaster tokens more safely, so Crystal Relay no longer crashes when reward cleanup cannot use an expired or revoked login.
+- Startup recovery now handles invalid Twitch broadcaster tokens more safely, so DiamondRelay no longer crashes when reward cleanup cannot use an expired or revoked login.
 
 v2.7.1
 - Avatar Change redeems can now use an Active Time of `0` for a permanent switch that becomes the new shared return avatar.
 - Timed avatar-change redeems now switch back to the shared return avatar from Avatar Change Setup instead of using a per-redeem switch-back picker.
 
 v2.7.0
-- Crystal Relay now reuses existing Twitch redeems more reliably instead of repeatedly trying to create duplicate managed rewards.
+- DiamondRelay now reuses existing Twitch redeems more reliably instead of repeatedly trying to create duplicate managed rewards.
 - Twitch and VRChat network requests now fail faster when those services stall, so the app is less likely to feel stuck.
 - VRChat avatar refreshes now load faster, and local VRChat tracking does less repeated disk scanning while staying accurate.
 
 v2.6.9
-- Crystal Relay now handles broadcaster accounts without Twitch channel point reward access more gracefully, so startup recovery no longer crashes the app.
+- DiamondRelay now handles broadcaster accounts without Twitch channel point reward access more gracefully, so startup recovery no longer crashes the app.
 
 v2.6.7
 - Added a new Baked theme with a rich mocha look, warm tan framing, and scarlet accents across the app.
@@ -393,7 +393,7 @@ v2.6.4
 - Test builds now label themselves more clearly in the window title.
 
 v2.6.3
-- Added a setting that lets you turn Crystal Relay's hidden easter egg interactions on or off, and it remembers your choice.
+- Added a setting that lets you turn DiamondRelay's hidden easter egg interactions on or off, and it remembers your choice.
 
 v2.6.2
 - Added a small hidden interaction bonus and tuned its trigger timing so it is easier to activate on purpose.
@@ -403,15 +403,15 @@ v2.6.1
 
 v2.6.0
 - Fixed the Twitch Chatbox timestamp style picker so the current 12-hour or 24-hour selection shows correctly in settings.
-- Added a new Dread Night Bar theme with a darker blood-moon inspired look across Crystal Relay.
+- Added a new Dread Night Bar theme with a darker blood-moon inspired look across DiamondRelay.
 - Added EzekielTyr to the About page tester list.
 
 v2.4.3
-- The About page now refreshes live-status markers while Crystal Relay stays open, so live indicators clear and return more reliably without needing a restart.
+- The About page now refreshes live-status markers while DiamondRelay stays open, so live indicators clear and return more reliably without needing a restart.
 - The About button live marker was polished again so it sits more cleanly on the button corner.
 
 v2.4.2
-- Crystal Relay now always opens back to Home on launch for a more stable startup flow.
+- DiamondRelay now always opens back to Home on launch for a more stable startup flow.
 - The About button can now show a small live indicator when someone on the About page is currently live on Twitch.
 - The About page got another layout polish pass, including clearer heading sizes and cleaner badge placement.
 - Updated an existing hidden surprise and added another small hidden joke for the app.
@@ -419,16 +419,16 @@ v2.4.2
 v2.4.1
 - Fixed avatar-set disable pairings so linked redeems stay hidden for the full lockout window instead of popping back early after a short reset.
 - Improved Twitch reward syncing around avatar-set redeems so cooldown and paired redeem availability behave more reliably.
-- Cleaned up reward-sync cancellation handling so Crystal Relay is less noisy when closing or replacing an in-progress sync.
+- Cleaned up reward-sync cancellation handling so DiamondRelay is less noisy when closing or replacing an in-progress sync.
 - Updated an existing easter egg so it scales more cleanly inside the program window.
 
 v2.4.0
 - Added a new Pause Redeems button so you can quickly stop Twitch redeems during a serious moment or stream talk segment.
-- While redeems are paused, Crystal Relay turns managed Twitch redeems off and ignores Twitch-triggered actions until you resume them.
-- The pause state now saves properly, so Crystal Relay remembers if redeems were paused.
+- While redeems are paused, DiamondRelay turns managed Twitch redeems off and ignores Twitch-triggered actions until you resume them.
+- The pause state now saves properly, so DiamondRelay remembers if redeems were paused.
 
 v2.3.0
-- Cleaned up a lot of the wording across Crystal Relay so buttons, help text, and setup screens are easier to understand.
+- Cleaned up a lot of the wording across DiamondRelay so buttons, help text, and setup screens are easier to understand.
 - Help popups were rewritten to explain what nearby buttons do and how each section works in friendlier language.
 - Avatar Rules were renamed to Avatar Sets, and Master Avatar was renamed to Avatar Change so the tabs match what they actually do.
 - Void Crystal borders were polished to feel more like glowing crystal edges.
@@ -439,11 +439,11 @@ v2.2.0
 - Twitch Chatbox settings were reorganized into cleaner grouped sections so the panel is easier to read and use.
 - VRChat OSC Chatbox relay was added to the Twitch Chatbox, with ordered scrolling chat bundles and adjustable 1-6 second pacing between posts.
 - Twitch chat mirrored into VRChat now uses stronger safety filtering to block racial slurs from being forwarded.
-- Managed Twitch reward cooldowns now sync with Crystal Relay cooldown settings, so redeems can be rate-limited on Twitch itself.
+- Managed Twitch reward cooldowns now sync with DiamondRelay cooldown settings, so redeems can be rate-limited on Twitch itself.
 - Avatar Rules were simplified again with a cleaner redeem-management flow and a dedicated Disable Pairing popup for linking sibling redeems.
 - Disable Pairing behavior was improved so linked redeems stay blocked more reliably while the active redeem is in use.
 - Instant bool toggle rules behave more reliably again for both test sends and live Twitch redeems.
-- Crystal Relay now uses the new final icon artwork across the app, and the home card icon frame was polished to fit it better.
+- DiamondRelay now uses the new final icon artwork across the app, and the home card icon frame was polished to fit it better.
 - Added new hidden surprises for the app.
 
 v2.1.0
@@ -486,8 +486,8 @@ v2.0.0
 - App shutdown was upgraded with a safer power-off flow:
   - title bar close is now a power button.
   - close paths run managed reward disable cleanup before exit.
-  - if shutdown is interrupted, Crystal Relay runs a reward cleanup recovery check on next launch.
-- Streaming Test Mode now resets to off when Crystal Relay launches.
+  - if shutdown is interrupted, DiamondRelay runs a reward cleanup recovery check on next launch.
+- Streaming Test Mode now resets to off when DiamondRelay launches.
 
 v1.8.0
 - Twitch Chatbox got a full quality pass for stream and overlay use.
@@ -495,14 +495,14 @@ v1.8.0
 - Added a Stream Overlay Mode toggle for a cleaner low-clutter chatbox layout.
 - Improved chat readability so very dark Twitch username colors are automatically lifted to stay readable.
 - Expanded the chatbox font list and gave Bubblegum its own theme-matching font style.
-- Chatbox top styling and frame behavior were polished to better match Crystal Relay's custom window style.
-- Chatbox now stays open on its own when the main Crystal Relay window is minimized.
+- Chatbox top styling and frame behavior were polished to better match DiamondRelay's custom window style.
+- Chatbox now stays open on its own when the main DiamondRelay window is minimized.
 - Dropdowns are safer to edit now: mouse wheel scrolling no longer changes selections by accident, and clicking the field or arrow opens and closes the list.
 - Scrollbars were cleaned up again so they behave more like proper in-app scrollbars.
 - The old chatbox alpha control was removed after causing instability, and chatbox opening stability was improved.
-- Crystal Relay now saves crash logs automatically when a real app crash happens.
-- Crystal Relay now keeps local saves, runtime config, secure files, and crash logs together inside one Crystal Relay app folder.
-- The folder shortcut in the app now opens the main Crystal Relay local folder directly.
+- DiamondRelay now saves crash logs automatically when a real app crash happens.
+- DiamondRelay now keeps local saves, runtime config, secure files, and crash logs together inside one DiamondRelay app folder.
+- The folder shortcut in the app now opens the main DiamondRelay local folder directly.
 
 v1.6.5
 - Bubblegum background art now sits farther right so it stays clearer of the main cards.
@@ -512,7 +512,7 @@ v1.6.4
 
 v1.6.3
 - The About page creator and tester entries can now show Twitch profile pictures.
-- About page Twitch names and profile pictures now refresh automatically when Crystal Relay has Twitch account access.
+- About page Twitch names and profile pictures now refresh automatically when DiamondRelay has Twitch account access.
 
 v1.6.2
 - Description and helper text across the app is a little larger for easier reading.
@@ -544,7 +544,7 @@ v1.5.4
 - Connected Twitch broadcaster and bot cards now show the account profile image for a cleaner account view.
 
 v1.5.3
-- Crystal Relay now prevents a second copy from opening. Launching it again will bring the existing window forward instead.
+- DiamondRelay now prevents a second copy from opening. Launching it again will bring the existing window forward instead.
 
 v1.5.2
 - Maximized windows now stay above the Windows taskbar instead of stretching behind it.
@@ -557,14 +557,14 @@ v1.5.0
 - The custom title bar can now drag the window from the full top bar instead of only the title text.
 
 v1.4.8
-- Crystal Relay now uses a fully themed custom title bar with its own minimize, maximize, and close buttons.
+- DiamondRelay now uses a fully themed custom title bar with its own minimize, maximize, and close buttons.
 - The top window frame now matches the active Void Crystal or Dream Scape theme.
 
 v1.4.7
 - Twitch activity messages are cleaner and no longer show raw EventSub session IDs.
 
 v1.4.6
-- The Crystal Relay home card in Void Crystal has more room so the title fits better beside the large icon.
+- The DiamondRelay home card in Void Crystal has more room so the title fits better beside the large icon.
 - The vertical scrollbar lane sits inside the panel more cleanly.
 
 v1.4.5
@@ -572,7 +572,7 @@ v1.4.5
 - Dream Scape delete-all wording was polished.
 
 v1.4.4
-- Warnings and confirmation popups now match the Crystal Relay theme instead of using default Windows popups.
+- Warnings and confirmation popups now match the DiamondRelay theme instead of using default Windows popups.
 - A new easter egg was added.
 
 v1.4.3
@@ -582,17 +582,17 @@ v1.4.2
 - UI opacity can now go as low as 10%.
 
 v1.4.1
-- The About page now has a cleaner centered layout and a dedicated Crystal Relay intro card.
+- The About page now has a cleaner centered layout and a dedicated DiamondRelay intro card.
 
 v1.4.0
 - Scroll areas were restyled so the vertical scrollbar no longer looked clipped or out of place.
 
 v1.3.9
 - The VRChat 2FA window now has a cleaner layout with more room for the code input.
-- The VRChat login and 2FA windows now match the active Crystal Relay theme better.
+- The VRChat login and 2FA windows now match the active DiamondRelay theme better.
 
 v1.3.8
-- Dropdowns and scrollbars now use Crystal Relay styling instead of the default Windows look.
+- Dropdowns and scrollbars now use DiamondRelay styling instead of the default Windows look.
 
 v1.3.7
 - The Dream Scape home-card title now stays on one line beside the icon.
@@ -614,7 +614,7 @@ v1.3.3
 v1.3.2
 - Theme choice now loads properly on startup, so the app opens on the last theme you used.
 - Dream Scape now applies its own colors more consistently across the full interface.
-- Crystal Relay now uses a temporary crystal icon for the app and packaged executable until the final icon is ready.
+- DiamondRelay now uses a temporary crystal icon for the app and packaged executable until the final icon is ready.
 - The home card now shows the icon next to the app name.
 - Media files like the settings Easter egg audio are now embedded into the app instead of shipping as loose files.
 
@@ -639,7 +639,7 @@ v1.2.7
 - Dream Scape background art is more vibrant.
 
 v1.2.6
-- Crystal Relay no longer crashes at startup if an old runtime config file is locked or blocked.
+- DiamondRelay no longer crashes at startup if an old runtime config file is locked or blocked.
 
 v1.2.5
 - A startup theme crash was fixed.
@@ -655,7 +655,7 @@ v1.2.3
 - The launcher is more reliable after fresh builds or renamed releases.
 
 v1.2.2
-- The app was rebranded from Void Hub to Crystal Relay.
+- The app was rebranded from Void Hub to DiamondRelay.
 - Launcher, release, and backup names were updated to match the new branding.
 
 v1.2.1
@@ -734,5 +734,5 @@ v1.0.1
 - The app version is now shown in the title bar.
 
 v1.0.0
-- First versioned Crystal Relay release.
+- First versioned DiamondRelay release.
 - Included the dark crystal UI, Twitch-to-OSC workflow, Twitch broadcaster and bot login, trigger rules, VRChat OSC controls, test tools, release packaging, and backup flow.

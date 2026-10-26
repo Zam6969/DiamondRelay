@@ -11,13 +11,13 @@ namespace VrcTwitchOscBridge.Services;
 
 public sealed class XSOverlayNotificationService : IDisposable
 {
-    private const string WebSocketUrl = "ws://localhost:42070/?client=CrystalRelay";
+    private const string WebSocketUrl = "ws://localhost:42070/?client=DiamondRelay";
     private const float DefaultVolume = 0.7f;
     private const float DefaultOpacity = 1f;
     private const float DefaultHeight = 175f;
     private const string DefaultAudio = "default";
     private const string DefaultIcon = "default";
-    private const string SourceApp = "Crystal Relay";
+    private const string SourceApp = "DiamondRelay";
 
     private readonly XSOverlaySettings _settings;
     private ClientWebSocket? _webSocket;
@@ -199,7 +199,7 @@ public sealed class XSOverlayNotificationService : IDisposable
             var notification = new XSONotificationObject
             {
                 messageType = 1,
-                title = "Crystal Relay",
+                title = "DiamondRelay",
                 content = messageText,
                 timeout = timeout,
                 height = DefaultHeight,
@@ -213,7 +213,7 @@ public sealed class XSOverlayNotificationService : IDisposable
 
             var apiObject = new XSOApiObject
             {
-                sender = "crystal_relay",
+                sender = "diamondrelay",
                 target = "xsoverlay",
                 command = "SendNotification",
                 jsonData = JsonSerializer.Serialize(notification),

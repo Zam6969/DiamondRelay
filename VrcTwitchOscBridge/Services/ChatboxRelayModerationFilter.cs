@@ -6,7 +6,7 @@ namespace VrcTwitchOscBridge.Services;
 
 public static class ChatboxRelayModerationFilter
 {
-    // Crystal Relay intentionally allows common non-racial profanity in the
+    // DiamondRelay intentionally allows common non-racial profanity in the
     // VRChat chat relay. This filter is only for zero-tolerance slurs,
     // self-harm encouragement, harassment/doxxing patterns, and common
     // bypass styles around them.

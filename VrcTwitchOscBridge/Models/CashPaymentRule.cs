@@ -25,8 +25,8 @@ public enum KoFiConnectionMode
 
 public sealed class CashPaymentConnectionSettings : ObservableObject
 {
-    public const string DefaultKoFiRelayBaseUrl = "https://crystal-relay-kofi-relay.screminpal-animation.workers.dev";
-    private const string LegacyKoFiRelayBaseUrl = "https://relay.crystalrelay.app";
+    public const string DefaultKoFiRelayBaseUrl = "";
+    private const string LegacyKoFiRelayBaseUrl = "https://relay.diamondrelay.app";
 
     private bool streamElementsEnabled;
     private string streamElementsAccountId = string.Empty;
@@ -34,7 +34,7 @@ public sealed class CashPaymentConnectionSettings : ObservableObject
     private bool streamlabsEnabled;
     private string streamlabsAccessToken = string.Empty;
     private bool koFiEnabled;
-    private KoFiConnectionMode koFiConnectionMode = KoFiConnectionMode.HostedRelay;
+    private KoFiConnectionMode koFiConnectionMode = KoFiConnectionMode.LocalWebhook;
     private string koFiRelayBaseUrl = DefaultKoFiRelayBaseUrl;
     private string koFiRelayChannelId = CreateKoFiRelayChannelId();
     private string koFiRelayClientSecret = CreateKoFiRelayClientSecret();

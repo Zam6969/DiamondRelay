@@ -49,7 +49,7 @@ public sealed class ApplicationUpdateRollbackTests
     public void RelocationBackup_RejectsExistingFileAtTargetInsteadOfTreatingItAsMissing()
     {
         using var folder = TemporaryFolder.Create();
-        var source = CreateCrystalRelayPackage(folder.Path, "source-package");
+        var source = CreateDiamondRelayPackage(folder.Path, "source-package");
         var backup = Path.Combine(folder.Path, "backup");
         var target = Path.Combine(folder.Path, "target");
         File.WriteAllText(target, "existing target file");
@@ -60,7 +60,7 @@ public sealed class ApplicationUpdateRollbackTests
             targetDirectory: target,
             relocatesInstallFolder: true,
             copyDirectoryContents: CopyDirectoryContents,
-            validateBackupDirectory: ValidateCrystalRelayPackage,
+            validateBackupDirectory: ValidateDiamondRelayPackage,
             deleteDirectoryTree: DeleteDirectoryTree));
 
         Assert.False(Directory.Exists(backup));
@@ -72,8 +72,8 @@ public sealed class ApplicationUpdateRollbackTests
     public void RelocationBackup_RecordsTargetPresenceAndRejectsDisappearingTargetBackup()
     {
         using var folder = TemporaryFolder.Create();
-        var source = CreateCrystalRelayPackage(folder.Path, "source-package");
-        var target = CreateCrystalRelayPackage(folder.Path, "target-package");
+        var source = CreateDiamondRelayPackage(folder.Path, "source-package");
+        var target = CreateDiamondRelayPackage(folder.Path, "target-package");
         var backup = Path.Combine(folder.Path, "backup");
 
         ApplicationUpdateRollback.PrepareCompleteBackup(
@@ -82,7 +82,7 @@ public sealed class ApplicationUpdateRollbackTests
             targetDirectory: target,
             relocatesInstallFolder: true,
             copyDirectoryContents: CopyDirectoryContents,
-            validateBackupDirectory: ValidateCrystalRelayPackage,
+            validateBackupDirectory: ValidateDiamondRelayPackage,
             deleteDirectoryTree: DeleteDirectoryTree);
 
         var targetPresencePath = Path.Combine(backup, "target-presence.flag");
@@ -100,7 +100,7 @@ public sealed class ApplicationUpdateRollbackTests
     public void RelocationBackup_RecordsAbsentTargetWithoutAllowingMissingMarker()
     {
         using var folder = TemporaryFolder.Create();
-        var source = CreateCrystalRelayPackage(folder.Path, "source-package");
+        var source = CreateDiamondRelayPackage(folder.Path, "source-package");
         var target = Path.Combine(folder.Path, "missing-target");
         var backup = Path.Combine(folder.Path, "backup");
 
@@ -110,7 +110,7 @@ public sealed class ApplicationUpdateRollbackTests
             targetDirectory: target,
             relocatesInstallFolder: true,
             copyDirectoryContents: CopyDirectoryContents,
-            validateBackupDirectory: ValidateCrystalRelayPackage,
+            validateBackupDirectory: ValidateDiamondRelayPackage,
             deleteDirectoryTree: DeleteDirectoryTree);
 
         Assert.Equal(
@@ -278,7 +278,7 @@ public sealed class ApplicationUpdateRollbackTests
         var backup = Path.Combine(folder.Path, "backup");
         var source = Path.Combine(backup, "source");
         Directory.CreateDirectory(source);
-        File.WriteAllText(Path.Combine(source, "Crystal Relay.exe"), "partial");
+        File.WriteAllText(Path.Combine(source, "DiamondRelay.exe"), "partial");
 
         Assert.False(ApplicationUpdateRollback.IsCompleteBackup(
             backup,
@@ -290,7 +290,7 @@ public sealed class ApplicationUpdateRollbackTests
     public void PrepareCompleteBackup_CopyFailureRemovesPartialStaging()
     {
         using var folder = TemporaryFolder.Create();
-        var source = CreateCrystalRelayPackage(folder.Path, "source-package");
+        var source = CreateDiamondRelayPackage(folder.Path, "source-package");
         var backup = Path.Combine(folder.Path, "backup");
         var target = Path.Combine(folder.Path, "target");
         var incomplete = ApplicationUpdateRollback.GetIncompleteBackupDirectory(backup);
@@ -306,7 +306,7 @@ public sealed class ApplicationUpdateRollbackTests
                 File.WriteAllText(Path.Combine(destinationDirectory, "partial-output.tmp"), "partial");
                 throw new IOException("copy failed after partial output");
             },
-            validateBackupDirectory: ValidateCrystalRelayPackage,
+            validateBackupDirectory: ValidateDiamondRelayPackage,
             deleteDirectoryTree: DeleteDirectoryTree));
 
         Assert.False(Directory.Exists(backup));
@@ -317,7 +317,7 @@ public sealed class ApplicationUpdateRollbackTests
     public void PrepareCompleteBackup_RejectsSilentlyOmittedSourceFiles()
     {
         using var folder = TemporaryFolder.Create();
-        var source = CreateCrystalRelayPackage(folder.Path, "source-package");
+        var source = CreateDiamondRelayPackage(folder.Path, "source-package");
         var omittedSourceFile = Path.Combine(source, "settings.dat");
         File.WriteAllText(omittedSourceFile, "must be backed up");
         var backup = Path.Combine(folder.Path, "backup");
@@ -344,7 +344,7 @@ public sealed class ApplicationUpdateRollbackTests
                         Path.Combine(destinationDirectory, Path.GetFileName(sourceFile)));
                 }
             },
-            validateBackupDirectory: ValidateCrystalRelayPackage,
+            validateBackupDirectory: ValidateDiamondRelayPackage,
             deleteDirectoryTree: DeleteDirectoryTree));
 
         Assert.False(Directory.Exists(backup));
@@ -370,7 +370,7 @@ public sealed class ApplicationUpdateRollbackTests
     public void PrepareCompleteBackup_StagesAndValidatesCompletePackage()
     {
         using var folder = TemporaryFolder.Create();
-        var source = CreateCrystalRelayPackage(folder.Path, "source-package");
+        var source = CreateDiamondRelayPackage(folder.Path, "source-package");
         var backup = Path.Combine(folder.Path, "backup");
         var target = Path.Combine(folder.Path, "target");
         var incomplete = ApplicationUpdateRollback.GetIncompleteBackupDirectory(backup);
@@ -385,7 +385,7 @@ public sealed class ApplicationUpdateRollbackTests
             validateBackupDirectory: directory =>
             {
                 validationCalls++;
-                ValidateCrystalRelayPackage(directory);
+                ValidateDiamondRelayPackage(directory);
             },
             deleteDirectoryTree: DeleteDirectoryTree);
 
@@ -396,7 +396,7 @@ public sealed class ApplicationUpdateRollbackTests
         Assert.Equal(
             "complete",
             File.ReadAllText(Path.Combine(backup, ApplicationUpdateRollback.CompleteMarkerFileName)));
-        Assert.True(File.Exists(Path.Combine(stagedSource, "crystal-relay-update.json")));
+        Assert.True(File.Exists(Path.Combine(stagedSource, "diamondrelay-update.json")));
         Assert.True(File.Exists(Path.Combine(stagedSource, ExpectedEntryExecutableName)));
     }
 
@@ -404,7 +404,7 @@ public sealed class ApplicationUpdateRollbackTests
     public async Task AcknowledgementHelpers_RejectMissingAndWrongVersionThenAcceptExactVersion()
     {
         using var folder = TemporaryFolder.Create();
-        var manifestPath = Path.Combine(folder.Path, "crystal-relay-apply-update.json");
+        var manifestPath = Path.Combine(folder.Path, "diamondrelay-apply-update.json");
         var timeout = TimeSpan.FromMilliseconds(100);
 
         using var cancellation = new CancellationTokenSource(TimeSpan.FromSeconds(5));
@@ -439,12 +439,12 @@ public sealed class ApplicationUpdateRollbackTests
             folder.Path,
             "Updates",
             "session-one",
-            "crystal-relay-apply-update.json");
+            "diamondrelay-apply-update.json");
         var secondManifestPath = Path.Combine(
             folder.Path,
             "Updates",
             "session-two",
-            "crystal-relay-apply-update.json");
+            "diamondrelay-apply-update.json");
 
         var firstAcknowledgementPath =
             ApplicationUpdateRollback.GetStartupAcknowledgementPath(firstManifestPath);
@@ -462,7 +462,7 @@ public sealed class ApplicationUpdateRollbackTests
             folder.Path,
             "Updates",
             "3.2.1-20260802120000000-session",
-            "crystal-relay-apply-update.json");
+            "diamondrelay-apply-update.json");
         var acknowledgementPath =
             ApplicationUpdateRollback.GetStartupAcknowledgementPath(manifestPath);
 
@@ -479,30 +479,30 @@ public sealed class ApplicationUpdateRollbackTests
                 TimeSpan.FromMilliseconds(50)));
     }
 
-    private const string ExpectedEntryExecutableName = "Crystal Relay.exe";
-    private const string CrystalRelayManifest =
-        "{\"product\":\"Crystal Relay\",\"runtime\":\"win-x64\",\"channel\":\"stable\",\"version\":\"3.2.0\",\"entryExecutableName\":\"Crystal Relay.exe\"}";
+    private const string ExpectedEntryExecutableName = "DiamondRelay.exe";
+    private const string DiamondRelayManifest =
+        "{\"product\":\"DiamondRelay\",\"runtime\":\"win-x64\",\"channel\":\"stable\",\"version\":\"3.2.0\",\"entryExecutableName\":\"DiamondRelay.exe\"}";
 
-    private static string CreateCrystalRelayPackage(string parentDirectory, string directoryName)
+    private static string CreateDiamondRelayPackage(string parentDirectory, string directoryName)
     {
         var packageDirectory = Path.Combine(parentDirectory, directoryName);
         Directory.CreateDirectory(packageDirectory);
         File.WriteAllText(
-            Path.Combine(packageDirectory, "crystal-relay-update.json"),
-            CrystalRelayManifest);
+            Path.Combine(packageDirectory, "diamondrelay-update.json"),
+            DiamondRelayManifest);
         File.WriteAllText(
             Path.Combine(packageDirectory, ExpectedEntryExecutableName),
-            "Crystal Relay entry");
+            "DiamondRelay entry");
         return packageDirectory;
     }
 
-    private static void ValidateCrystalRelayPackage(string packageDirectory)
+    private static void ValidateDiamondRelayPackage(string packageDirectory)
     {
-        var manifestPath = Path.Combine(packageDirectory, "crystal-relay-update.json");
+        var manifestPath = Path.Combine(packageDirectory, "diamondrelay-update.json");
         using var manifest = JsonDocument.Parse(File.ReadAllText(manifestPath));
         var root = manifest.RootElement;
 
-        Assert.Equal("Crystal Relay", root.GetProperty("product").GetString());
+        Assert.Equal("DiamondRelay", root.GetProperty("product").GetString());
         Assert.Equal("win-x64", root.GetProperty("runtime").GetString());
         Assert.Equal("stable", root.GetProperty("channel").GetString());
         Assert.Equal("3.2.0", root.GetProperty("version").GetString());
@@ -557,7 +557,7 @@ public sealed class ApplicationUpdateRollbackTests
         {
             var path = System.IO.Path.Combine(
                 System.IO.Path.GetTempPath(),
-                $"CrystalRelayRollback-{Guid.NewGuid():N}");
+                $"DiamondRelayRollback-{Guid.NewGuid():N}");
             Directory.CreateDirectory(path);
             return new TemporaryFolder(path);
         }

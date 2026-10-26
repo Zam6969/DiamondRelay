@@ -4,7 +4,7 @@ using System.IO;
 namespace VrcTwitchOscBridge.Services;
 
 /// <summary>
-/// Tracks whether the previous Crystal Relay session shut down cleanly.
+/// Tracks whether the previous DiamondRelay session shut down cleanly.
 /// A simple marker file lets the next launch decide whether recovery cleanup should run.
 /// </summary>
 internal static class ShutdownRecoveryStateStore

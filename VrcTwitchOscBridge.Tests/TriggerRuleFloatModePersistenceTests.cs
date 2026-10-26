@@ -11,7 +11,7 @@ public sealed class TriggerRuleFloatModePersistenceTests
     [Fact]
     public void ToRule_MissingNewFields_AppliesSafeDefaults()
     {
-        // Simulates a JSON file written by an older Crystal Relay that did
+        // Simulates a JSON file written by an older DiamondRelay that did
         // not know about the float action fields.
         var old = new SettingsStore.PersistedTriggerRule
         {
@@ -110,7 +110,7 @@ public sealed class TriggerRuleFloatModePersistenceTests
     [Fact]
     public void ToRule_OldFloatTransitionSeconds_MigratesToInAndOut()
     {
-        // Simulates a JSON file written by a Crystal Relay that only had
+        // Simulates a JSON file written by a DiamondRelay that only had
         // the single FloatTransitionSeconds field.
         var persisted = new SettingsStore.PersistedTriggerRule
         {

@@ -1120,7 +1120,7 @@ public sealed class AvatarScaleRule : ObservableObject
         get
         {
             var rangeText = AdvancedRangeEnabled
-                ? LocalizationService.Translate("Advanced range is on. Crystal Relay accepts 0.01m to 10000m technically; extreme values can be uncomfortable or world-blocked.")
+                ? LocalizationService.Translate("Advanced range is on. DiamondRelay accepts 0.01m to 10000m technically; extreme values can be uncomfortable or world-blocked.")
                 : LocalizationService.Translate("Safe range is 0.1m to 100m.");
 
             return BypassVrChatScaleLimits

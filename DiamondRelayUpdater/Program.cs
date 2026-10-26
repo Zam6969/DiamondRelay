@@ -3,14 +3,14 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using VrcTwitchOscBridge.Services;
 
-namespace CrystalRelayUpdater;
+namespace DiamondRelayUpdater;
 
 internal static class Program
 {
-    private const string ApplyUpdateArgument = "--crystal-relay-apply-update";
-    private const string CleanupUpdateArgument = "--crystal-relay-update-cleanup";
-    private const string PackageManifestFileName = "crystal-relay-update.json";
-    private const string ProductName = "Crystal Relay";
+    private const string ApplyUpdateArgument = "--diamondrelay-apply-update";
+    private const string CleanupUpdateArgument = "--diamondrelay-update-cleanup";
+    private const string PackageManifestFileName = "diamondrelay-update.json";
+    private const string ProductName = "DiamondRelay";
     private const string RuntimeName = "win-x64";
     private const string SourceBackupFolderName = "source";
     private const string TargetBackupFolderName = "target";
@@ -111,7 +111,7 @@ internal static class Program
                         || !TryDeletePreviousInstallDirectory(installPlan))
                     {
                         throw new UpdaterException(
-                            "Crystal Relay applied the update, but could not finish post-acknowledgement cleanup.");
+                            "DiamondRelay applied the update, but could not finish post-acknowledgement cleanup.");
                     }
 
                     return Task.CompletedTask;
@@ -135,7 +135,7 @@ internal static class Program
         var fullManifestPath = Path.GetFullPath(manifestPath);
         var json = await File.ReadAllTextAsync(fullManifestPath);
         return JsonSerializer.Deserialize(json, UpdaterJsonContext.Default.ApplicationUpdateApplyManifest)
-            ?? throw new UpdaterException("The Crystal Relay update apply manifest could not be read.");
+            ?? throw new UpdaterException("The DiamondRelay update apply manifest could not be read.");
     }
 
     private static void ValidateApplyManifestPath(string manifestPath)
@@ -149,7 +149,7 @@ internal static class Program
             || AreSamePath(updateRoot, sessionRoot)
             || !IsPathInside(updateRoot, sessionRoot))
         {
-            throw new UpdaterException("The Crystal Relay update apply manifest is outside updater storage.");
+            throw new UpdaterException("The DiamondRelay update apply manifest is outside updater storage.");
         }
     }
 
@@ -162,7 +162,7 @@ internal static class Program
             || string.IsNullOrWhiteSpace(manifest.InstallDirectory)
             || string.IsNullOrWhiteSpace(manifest.BackupDirectory))
         {
-            throw new UpdaterException("The Crystal Relay update apply manifest is incomplete.");
+            throw new UpdaterException("The DiamondRelay update apply manifest is incomplete.");
         }
 
         if (!string.Equals(manifest.Runtime, RuntimeName, StringComparison.OrdinalIgnoreCase)
@@ -175,7 +175,7 @@ internal static class Program
                 manifest.Version,
                 manifest.EntryExecutableName))
         {
-            throw new UpdaterException("The Crystal Relay update apply manifest channel or entry executable is invalid.");
+            throw new UpdaterException("The DiamondRelay update apply manifest channel or entry executable is invalid.");
         }
 
         if (!string.IsNullOrWhiteSpace(manifest.PreviousEntryExecutableName)
@@ -184,7 +184,7 @@ internal static class Program
                 || manifest.PreviousEntryExecutableName.Contains(Path.AltDirectorySeparatorChar)
                 || !ApplicationUpdatePackageRules.IsApplicationExecutableName(manifest.PreviousEntryExecutableName)))
         {
-            throw new UpdaterException("The Crystal Relay restored entry executable is invalid.");
+            throw new UpdaterException("The DiamondRelay restored entry executable is invalid.");
         }
 
         var packageRoot = NormalizeDirectoryPath(manifest.PackageRoot);
@@ -195,13 +195,13 @@ internal static class Program
         ApplicationUpdatePathSafety.EnsureNoReparsePointInExistingAncestors(backupDirectory);
         if (!Directory.Exists(packageRoot))
         {
-            throw new UpdaterException("The staged Crystal Relay update folder is missing.");
+            throw new UpdaterException("The staged DiamondRelay update folder is missing.");
         }
 
         var updateRoot = NormalizeDirectoryPath(UpdatesFolder);
         if (!IsPathInside(updateRoot, packageRoot))
         {
-            throw new UpdaterException("The staged Crystal Relay update folder is outside updater storage.");
+            throw new UpdaterException("The staged DiamondRelay update folder is outside updater storage.");
         }
 
         ValidateBuildMarker(packageRoot, manifestChannel, manifest.Version);
@@ -213,7 +213,7 @@ internal static class Program
         if (AreSamePath(backupRoot, backupDirectory)
             || !IsPathInside(backupRoot, backupDirectory))
         {
-            throw new UpdaterException("The update backup folder is outside Crystal Relay's updater storage.");
+            throw new UpdaterException("The update backup folder is outside DiamondRelay's updater storage.");
         }
     }
 
@@ -227,7 +227,7 @@ internal static class Program
         var entryExecutablePath = Path.Combine(packageRoot, applyManifest.EntryExecutableName);
         if (!File.Exists(entryExecutablePath))
         {
-            throw new UpdaterException("The staged Crystal Relay update entry executable is missing.");
+            throw new UpdaterException("The staged DiamondRelay update entry executable is missing.");
         }
 
         var packageManifestPath = Path.Combine(packageRoot, PackageManifestFileName);
@@ -251,7 +251,7 @@ internal static class Program
         catch (Exception ex)
         {
             throw new UpdaterException(
-                "The staged Crystal Relay package manifest could not be read.",
+                "The staged DiamondRelay package manifest could not be read.",
                 ex);
         }
 
@@ -263,7 +263,7 @@ internal static class Program
             || !string.Equals(packageManifest.Version, applyManifest.Version, StringComparison.Ordinal)
             || !string.Equals(packageManifest.EntryExecutableName, applyManifest.EntryExecutableName, StringComparison.Ordinal))
         {
-            throw new UpdaterException("The staged Crystal Relay package manifest does not match the apply manifest.");
+            throw new UpdaterException("The staged DiamondRelay package manifest does not match the apply manifest.");
         }
 
         if (!ApplicationUpdatePackageRules.TryParseManifestChannel(
@@ -278,7 +278,7 @@ internal static class Program
                 packageManifest.Version,
                 packageManifest.EntryExecutableName))
         {
-            throw new UpdaterException("The staged Crystal Relay package manifest is invalid.");
+            throw new UpdaterException("The staged DiamondRelay package manifest is invalid.");
         }
     }
 
@@ -308,7 +308,7 @@ internal static class Program
 
         if (!Directory.Exists(installDirectory))
         {
-            throw new UpdaterException("The Crystal Relay install folder could not be found.");
+            throw new UpdaterException("The DiamondRelay install folder could not be found.");
         }
     }
 
@@ -320,19 +320,19 @@ internal static class Program
         if (string.IsNullOrWhiteSpace(root)
             || string.Equals(NormalizeDirectoryPath(root), normalizedInstallDirectory, StringComparison.OrdinalIgnoreCase))
         {
-            throw new UpdaterException("Crystal Relay refused to update because the install folder path is unsafe.");
+            throw new UpdaterException("DiamondRelay refused to update because the install folder path is unsafe.");
         }
 
         var runtimeDataRoot = NormalizeDirectoryPath(RootFolder);
         if (IsPathInside(runtimeDataRoot, normalizedInstallDirectory))
         {
-            throw new UpdaterException("Crystal Relay refused to replace files inside its runtime data folder.");
+            throw new UpdaterException("DiamondRelay refused to replace files inside its runtime data folder.");
         }
 
         var parentDirectory = Path.GetDirectoryName(normalizedInstallDirectory);
         if (string.IsNullOrWhiteSpace(parentDirectory) || !Directory.Exists(parentDirectory))
         {
-            throw new UpdaterException("The Crystal Relay install parent folder could not be found.");
+            throw new UpdaterException("The DiamondRelay install parent folder could not be found.");
         }
 
         if (Directory.Exists(normalizedInstallDirectory))
@@ -359,7 +359,7 @@ internal static class Program
         }
         catch (OperationCanceledException)
         {
-            throw new UpdaterException("Crystal Relay could not close in time to apply the update.");
+            throw new UpdaterException("DiamondRelay could not close in time to apply the update.");
         }
     }
 
@@ -375,7 +375,7 @@ internal static class Program
         startInfo.ArgumentList.Add(applyManifestPath);
         startInfo.ArgumentList.Add(Environment.ProcessId.ToString());
         return Process.Start(startInfo)
-            ?? throw new UpdaterException("Crystal Relay updater could not launch the installed application.");
+            ?? throw new UpdaterException("DiamondRelay updater could not launch the installed application.");
     }
 
     private static void TryTerminateProcess(Process? process)
@@ -391,9 +391,9 @@ internal static class Program
         }
         catch (Exception ex)
         {
-            WriteUpdateLog($"Could not terminate the failed Crystal Relay process: {ex.Message}");
+            WriteUpdateLog($"Could not terminate the failed DiamondRelay process: {ex.Message}");
             throw new UpdaterException(
-                "Crystal Relay could not terminate the failed replacement process.",
+                "DiamondRelay could not terminate the failed replacement process.",
                 ex);
         }
     }
@@ -405,7 +405,7 @@ internal static class Program
 
         if (!ApplicationUpdatePackageRules.TryParseManifestChannel(manifest.Channel, out var channel))
         {
-            throw new UpdaterException("The Crystal Relay update apply manifest channel is invalid.");
+            throw new UpdaterException("The DiamondRelay update apply manifest channel is invalid.");
         }
 
         var targetDirectory = NormalizeDirectoryPath(
@@ -433,18 +433,18 @@ internal static class Program
         }
 
         var sourceParent = Path.GetDirectoryName(installPlan.SourceDirectory)
-            ?? throw new UpdaterException("The Crystal Relay install folder path is invalid.");
+            ?? throw new UpdaterException("The DiamondRelay install folder path is invalid.");
         var targetParent = Path.GetDirectoryName(installPlan.TargetDirectory)
-            ?? throw new UpdaterException("The Crystal Relay install target path is invalid.");
+            ?? throw new UpdaterException("The DiamondRelay install target path is invalid.");
         if (!AreSamePath(sourceParent, targetParent))
         {
-            throw new UpdaterException("Crystal Relay refused to move the install folder outside its current parent folder.");
+            throw new UpdaterException("DiamondRelay refused to move the install folder outside its current parent folder.");
         }
 
         if (!IsPackageInstallFolderName(Path.GetFileName(installPlan.SourceDirectory))
             || !IsPackageInstallFolderName(Path.GetFileName(installPlan.TargetDirectory)))
         {
-            throw new UpdaterException("Crystal Relay refused to rename a folder that is not a Crystal Relay package folder.");
+            throw new UpdaterException("DiamondRelay refused to rename a folder that is not a DiamondRelay package folder.");
         }
 
         if (Directory.Exists(installPlan.TargetDirectory))
@@ -497,7 +497,7 @@ internal static class Program
             : ResolveSingleExecutable(installPlan.SourceDirectory);
         if (!IsPathInside(installPlan.SourceDirectory, restoredExecutable))
         {
-            throw new UpdaterException("The restored Crystal Relay executable is outside the previous install folder.");
+            throw new UpdaterException("The restored DiamondRelay executable is outside the previous install folder.");
         }
 
         if (!File.Exists(restoredExecutable))
@@ -510,7 +510,7 @@ internal static class Program
             FileName = restoredExecutable,
             UseShellExecute = true,
             WorkingDirectory = Path.GetDirectoryName(restoredExecutable)
-        }) ?? throw new UpdaterException("Crystal Relay updater could not relaunch the restored application.");
+        }) ?? throw new UpdaterException("DiamondRelay updater could not relaunch the restored application.");
     }
 
     private static void RestoreBackup(ApplicationUpdateApplyManifest manifest, UpdateInstallPlan installPlan)
@@ -528,11 +528,11 @@ internal static class Program
                     IsValidPackageContents(directory)))
         {
             throw new UpdaterException(
-                "The Crystal Relay rollback backup is incomplete or invalid; the current installation was left untouched.");
+                "The DiamondRelay rollback backup is incomplete or invalid; the current installation was left untouched.");
         }
 
         RestoreDirectoryBackup(installPlan.SourceBackupDirectory, installPlan.SourceDirectory);
-        WriteUpdateLog("Restored previous Crystal Relay files from update backup.");
+        WriteUpdateLog("Restored previous DiamondRelay files from update backup.");
     }
 
     private static void RestoreRelocatedTarget(
@@ -546,7 +546,7 @@ internal static class Program
                     IsValidPackageContents(directory)))
         {
             throw new UpdaterException(
-                "The Crystal Relay rollback backup is incomplete or invalid; the current installation was left untouched.");
+                "The DiamondRelay rollback backup is incomplete or invalid; the current installation was left untouched.");
         }
 
         if (ApplicationUpdateRollback.GetRecordedTargetPresence(manifest.BackupDirectory))
@@ -558,7 +558,7 @@ internal static class Program
             }
 
             RestoreDirectoryBackup(installPlan.TargetBackupDirectory, installPlan.TargetDirectory);
-            WriteUpdateLog("Restored previous Crystal Relay target files from update backup.");
+            WriteUpdateLog("Restored previous DiamondRelay target files from update backup.");
         }
         else if (!ApplicationUpdateRollback.IsEntryMissing(installPlan.TargetBackupDirectory))
         {
@@ -574,10 +574,10 @@ internal static class Program
                 if (!ApplicationUpdateRollback.IsEntryMissing(installPlan.TargetDirectory))
                 {
                     throw new UpdaterException(
-                        "Crystal Relay could not remove the newly-created relocation target folder.");
+                        "DiamondRelay could not remove the newly-created relocation target folder.");
                 }
 
-                WriteUpdateLog("Removed partial Crystal Relay update target folder.");
+                WriteUpdateLog("Removed partial DiamondRelay update target folder.");
             }
             else if (!ApplicationUpdateRollback.IsEntryMissing(installPlan.TargetDirectory))
             {
@@ -738,7 +738,7 @@ internal static class Program
             catch (Exception ex) when (IsRetriableFileOperationException(ex))
             {
                 throw new UpdaterException(
-                    $"Crystal Relay could not {description} because the file stayed busy.",
+                    $"DiamondRelay could not {description} because the file stayed busy.",
                     ex);
             }
         }
@@ -755,7 +755,7 @@ internal static class Program
             .ToArray();
         return executables.Length == 1
             ? executables[0]
-            : throw new UpdaterException("The update package must contain exactly one Crystal Relay executable.");
+            : throw new UpdaterException("The update package must contain exactly one DiamondRelay executable.");
     }
 
     private static bool TryDeleteSuccessfulUpdateBackup(string backupDirectory)
@@ -788,11 +788,11 @@ internal static class Program
             DeleteDirectoryTree(fullBackupDirectory);
             if (Directory.Exists(fullBackupDirectory))
             {
-                WriteUpdateLog("Could not confirm removal of the completed Crystal Relay update backup.");
+                WriteUpdateLog("Could not confirm removal of the completed DiamondRelay update backup.");
                 return false;
             }
 
-            WriteUpdateLog("Removed completed Crystal Relay update backup.");
+            WriteUpdateLog("Removed completed DiamondRelay update backup.");
             return true;
         }
         catch (Exception ex)
@@ -813,7 +813,7 @@ internal static class Program
         {
             if (File.Exists(installPlan.SourceDirectory))
             {
-                WriteUpdateLog("Could not remove the previous Crystal Relay install folder because a file occupies its path.");
+                WriteUpdateLog("Could not remove the previous DiamondRelay install folder because a file occupies its path.");
                 return false;
             }
 
@@ -824,29 +824,29 @@ internal static class Program
         {
             if (IsCurrentProcessInsideDirectory(installPlan.SourceDirectory))
             {
-                WriteUpdateLog("Skipped old Crystal Relay install folder cleanup because it is still running from that folder.");
+                WriteUpdateLog("Skipped old DiamondRelay install folder cleanup because it is still running from that folder.");
                 return true;
             }
 
             if (!TryValidatePackageInstallDirectory(installPlan.SourceDirectory, out var validationError))
             {
-                WriteUpdateLog($"Skipped old Crystal Relay install folder cleanup: {validationError}");
+                WriteUpdateLog($"Skipped old DiamondRelay install folder cleanup: {validationError}");
                 return false;
             }
 
             DeleteDirectoryTree(installPlan.SourceDirectory);
             if (Directory.Exists(installPlan.SourceDirectory))
             {
-                WriteUpdateLog("Could not confirm removal of the previous Crystal Relay install folder.");
+                WriteUpdateLog("Could not confirm removal of the previous DiamondRelay install folder.");
                 return false;
             }
 
-            WriteUpdateLog($"Removed previous Crystal Relay install folder '{installPlan.SourceDirectory}'.");
+            WriteUpdateLog($"Removed previous DiamondRelay install folder '{installPlan.SourceDirectory}'.");
             return true;
         }
         catch (Exception ex)
         {
-            WriteUpdateLog($"Could not remove previous Crystal Relay install folder: {ex.Message}");
+            WriteUpdateLog($"Could not remove previous DiamondRelay install folder: {ex.Message}");
             return false;
         }
     }
@@ -855,7 +855,7 @@ internal static class Program
     {
         if (!TryValidatePackageInstallDirectory(directoryPath, out var validationError))
         {
-            throw new UpdaterException($"{description} is not a validated Crystal Relay install folder. {validationError}");
+            throw new UpdaterException($"{description} is not a validated DiamondRelay install folder. {validationError}");
         }
     }
 
@@ -864,7 +864,7 @@ internal static class Program
     {
         if (!TryValidatePackageContents(directoryPath, out var validationError))
         {
-            throw new UpdaterException($"The rollback backup is not a validated Crystal Relay package. {validationError}");
+            throw new UpdaterException($"The rollback backup is not a validated DiamondRelay package. {validationError}");
         }
     }
 
@@ -884,7 +884,7 @@ internal static class Program
 
         if (!IsPackageInstallFolderName(Path.GetFileName(fullDirectoryPath)))
         {
-            validationError = "The folder name does not match Crystal Relay's package format.";
+            validationError = "The folder name does not match DiamondRelay's package format.";
             return false;
         }
 
@@ -936,7 +936,7 @@ internal static class Program
                 return true;
             }
 
-            validationError = "The package manifest is missing and no safe Crystal Relay executable was found.";
+            validationError = "The package manifest is missing and no safe DiamondRelay executable was found.";
             return false;
         }
 
@@ -968,7 +968,7 @@ internal static class Program
                 manifest.Version,
                 manifest.EntryExecutableName))
         {
-            validationError = "The package manifest is not a Crystal Relay install manifest.";
+            validationError = "The package manifest is not a DiamondRelay install manifest.";
             return false;
         }
 
@@ -1053,7 +1053,7 @@ internal static class Program
     private static string LocalAppDataFolder =>
         Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
 
-    private static string RootFolder => Path.Combine(LocalAppDataFolder, "CrystalRelay");
+    private static string RootFolder => Path.Combine(LocalAppDataFolder, "DiamondRelay");
 
     private static string UpdatesFolder => Path.Combine(RootFolder, "Updates");
 

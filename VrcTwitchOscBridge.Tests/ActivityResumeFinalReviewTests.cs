@@ -14,7 +14,7 @@ public sealed class ActivityResumeFinalReviewTests
     {
         var testDirectory = Path.Combine(
             Path.GetTempPath(),
-            "CrystalRelayActivityResumeTests",
+            "DiamondRelayActivityResumeTests",
             Guid.NewGuid().ToString("N"));
         Directory.CreateDirectory(testDirectory);
         var snapshotPath = Path.Combine(testDirectory, "activity-resume.json");

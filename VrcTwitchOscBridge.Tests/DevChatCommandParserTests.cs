@@ -62,10 +62,10 @@ public sealed class DevChatCommandParserTests
     }
 
     [Fact]
-    public void IsAuthorizedUser_PreservesLoginOrDisplayNameMatching()
+    public void IsAuthorizedUser_RejectsEveryAccount()
     {
-        Assert.True(DevChatCommandParser.IsAuthorizedUser("screminpal_", null));
-        Assert.True(DevChatCommandParser.IsAuthorizedUser(null, " Screminpal_ "));
+        Assert.False(DevChatCommandParser.IsAuthorizedUser("screminpal_", null));
+        Assert.False(DevChatCommandParser.IsAuthorizedUser(null, " Screminpal_ "));
         Assert.False(DevChatCommandParser.IsAuthorizedUser("different-user", "different-name"));
     }
 }

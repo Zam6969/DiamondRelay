@@ -12,7 +12,7 @@
         xmlns:userControls="clr-namespace:VrcTwitchOscBridge.UserControls"
         mc:Ignorable="d"
         Title="{Binding WindowTitle}"
-        Icon="Assets/crystal-relay-icon.ico"
+        Icon="Assets/diamondrelay-icon.ico"
         Height="940"
         Width="1540"
         MinHeight="820"
@@ -1554,13 +1554,13 @@
 
                     <StackPanel Orientation="Horizontal"
                                 VerticalAlignment="Center">
-                        <Image Source="Assets/crystal-relay-icon.png"
+                        <Image Source="Assets/diamondrelay-icon.png"
                                Width="24"
                                Height="24"
                                Margin="0,0,10,0"
                                Stretch="Uniform" />
                         <StackPanel VerticalAlignment="Center">
-                            <TextBlock Text="Crystal Relay"
+                            <TextBlock Text="DiamondRelay"
                                        Foreground="{DynamicResource TitleBarTextBrush}"
                                        FontWeight="SemiBold"
                                        FontSize="15"
@@ -1785,7 +1785,7 @@
                                                                         RadiusX="20"
                                                                         RadiusY="20" />
                                                  </Grid.Clip>
-                                                 <Image Source="Assets/crystal-relay-icon.png"
+                                                 <Image Source="Assets/diamondrelay-icon.png"
                                                         Stretch="UniformToFill" />
                                                  <Border Background="Transparent"
                                                          BorderBrush="{DynamicResource PanelHighlightBrush}"
@@ -1799,7 +1799,7 @@
                                  <StackPanel Grid.Column="1"
                                              VerticalAlignment="Center"
                                              Margin="14,0,0,0">
-                                     <TextBlock Text="{loc:Translate 'Crystal Relay'}"
+                                     <TextBlock Text="{loc:Translate 'DiamondRelay'}"
                                                 Style="{StaticResource HeadingTextStyle}"
                                                 FontSize="26"
                                                 FontWeight="Bold"
@@ -1854,7 +1854,7 @@
                             </Border>
 
                             <StackPanel Margin="0,16,0,0">
-                                <TextBlock Text="{loc:Translate 'Support Crystal Relay'}"
+                                <TextBlock Text="{loc:Translate 'Support DiamondRelay'}"
                                            Style="{StaticResource HeadingTextStyle}"
                                            FontSize="15"
                                            FontWeight="SemiBold"
@@ -1862,7 +1862,7 @@
                                 <TextBlock Margin="0,4,0,10"
                                            FontSize="12"
                                            Foreground="{DynamicResource MutedBrush}"
-                                           Text="{loc:Translate 'Crystal Relay is free for everyone. If it helps your stream, you can leave a tip or join the community.'}"
+                                           Text="{loc:Translate 'DiamondRelay is free for everyone. If it helps your stream, you can leave a tip or join the community.'}"
                                            TextWrapping="Wrap" />
 
                                 <Border Background="{DynamicResource PanelSecondaryBrush}"
@@ -1976,7 +1976,7 @@
                                             </Viewbox>
                                         </Border>
                                         <StackPanel Grid.Column="1" Margin="10,0,10,0" VerticalAlignment="Center">
-                                            <TextBlock Text="{loc:Translate 'Open Crystal Relay Folder'}"
+                                            <TextBlock Text="{loc:Translate 'Open DiamondRelay Folder'}"
                                                        FontSize="13" FontWeight="SemiBold"
                                                        Foreground="{DynamicResource TextBrush}" />
                                             <TextBlock Text="{loc:Translate 'Access saves, backups, and config files'}"
@@ -2067,7 +2067,7 @@
                                         <Button Style="{StaticResource HelpIconButtonStyle}"
                                                 Click="OnHelpButtonClicked"
                                                 CommandParameter="Twitch Accounts"
-                                                Tag="Connect the Twitch accounts Crystal Relay uses here. The broadcaster account listens for channel points, chat commands, stream status, and managed reward sync, while the optional bot account is only for sending chat messages back to Twitch. If Twitch shows a device code while linking, copy the code shown under that account into Twitch to finish the sign-in." />
+                                                Tag="Connect the Twitch accounts DiamondRelay uses here. The broadcaster account listens for channel points, chat commands, stream status, and managed reward sync, while the optional bot account is only for sending chat messages back to Twitch. If Twitch shows a device code while linking, copy the code shown under that account into Twitch to finish the sign-in." />
                                     </DockPanel>
                                     <TextBlock Text="{loc:Translate 'VRChat Settings'}"
                                                Style="{StaticResource HeadingTextStyle}"
@@ -2098,7 +2098,7 @@
                                                        Foreground="{DynamicResource TextBrush}"
                                                        TextWrapping="Wrap" />
                                             <TextBlock Margin="0,8,0,0"
-                                                        Text="{loc:Translate 'Crystal Relay includes a Live Feedback Heartbeat. This helps the developer find live Crystal Relay streams for feedback, support, and community interaction. This does not send Twitch tokens, VRChat credentials, OSC data, chat messages, or private VRChat information.'}"
+                                                        Text="{loc:Translate 'DiamondRelay has removed the developer heartbeat. No live feedback pings are sent, including when loading an existing profile.'}"
                                                         Foreground="{DynamicResource MutedBrush}"
                                                         TextWrapping="Wrap" />
                                         </StackPanel>
@@ -2114,7 +2114,7 @@
                                                        Foreground="{DynamicResource TextBrush}"
                                                        TextWrapping="Wrap" />
                                             <TextBlock Margin="0,8,0,0"
-                                                       Text="{loc:Translate 'Crystal Relay can check beta releases when you want early access. Stable builds stay on stable updates unless this is enabled.'}"
+                                                       Text="{loc:Translate 'DiamondRelay can check beta releases when you want early access. Stable builds stay on stable updates unless this is enabled.'}"
                                                        Foreground="{DynamicResource MutedBrush}"
                                                        TextWrapping="Wrap" />
                                             <Grid Margin="0,12,0,0">
@@ -2157,7 +2157,7 @@
                                                        Foreground="{DynamicResource TextBrush}"
                                                        TextWrapping="Wrap" />
                                             <TextBlock Margin="0,8,0,0"
-                                                       Text="{loc:Translate 'Crystal Relay can add VRC: to Twitch rewards it creates so app-managed rewards are easy to recognize. Turn this off if you want cleaner public reward names.'}"
+                                                       Text="{loc:Translate 'DiamondRelay can add VRC: to Twitch rewards it creates so app-managed rewards are easy to recognize. Turn this off if you want cleaner public reward names.'}"
                                                        Foreground="{DynamicResource MutedBrush}"
                                                        TextWrapping="Wrap" />
                                             <Grid Margin="0,12,0,0">
@@ -2173,7 +2173,7 @@
                                                                Foreground="{DynamicResource TextBrush}"
                                                                TextWrapping="Wrap" />
                                                     <TextBlock Margin="0,6,0,0"
-                                                               Text="{loc:Translate 'Existing Crystal Relay-managed rewards are renamed on the next Twitch reward sync. Linked existing rewards stay listen-only.'}"
+                                                               Text="{loc:Translate 'Existing DiamondRelay-managed rewards are renamed on the next Twitch reward sync. Linked existing rewards stay listen-only.'}"
                                                                Foreground="{DynamicResource MutedBrush}"
                                                                TextWrapping="Wrap" />
                                                 </StackPanel>
@@ -2260,7 +2260,7 @@
                                                                 Margin="8,0,0,0"
                                                                 Click="OnHelpButtonClicked"
                                                                 CommandParameter="Broadcaster Device Code"
-                                                                Tag="This code is only used during Twitch's device-link flow for your broadcaster account. Open the Twitch page shown during login, sign in to the broadcaster account you want Crystal Relay to use, and paste this code exactly as shown. Crystal Relay finishes the connection automatically after Twitch accepts it." />
+                                                                Tag="This code is only used during Twitch's device-link flow for your broadcaster account. Open the Twitch page shown during login, sign in to the broadcaster account you want DiamondRelay to use, and paste this code exactly as shown. DiamondRelay finishes the connection automatically after Twitch accepts it." />
                                                     </DockPanel>
                                                 </StackPanel>
                                             </StackPanel>
@@ -2375,7 +2375,7 @@
                                                                 Margin="8,0,0,0"
                                                                 Click="OnHelpButtonClicked"
                                                                 CommandParameter="Bot Device Code"
-                                                                Tag="This code is only used during Twitch's device-link flow for your optional bot account. Open the Twitch page shown during login, sign in to the bot account you want Crystal Relay to use for chat replies, and paste this code exactly as shown. Crystal Relay finishes the connection automatically after Twitch accepts it." />
+                                                                Tag="This code is only used during Twitch's device-link flow for your optional bot account. Open the Twitch page shown during login, sign in to the bot account you want DiamondRelay to use for chat replies, and paste this code exactly as shown. DiamondRelay finishes the connection automatically after Twitch accepts it." />
                                                     </DockPanel>
                                                 </StackPanel>
                                             </StackPanel>
@@ -2435,7 +2435,7 @@
                                                         Style="{StaticResource HelpIconButtonStyle}"
                                                         Click="OnHelpButtonClicked"
                                                         CommandParameter="Bot + Broadcaster Chat Messages"
-                                                        Tag="Choose which Twitch account Crystal Relay uses when it posts chat messages. The broadcaster can act as the bot after reconnecting once with chat-send permission, or you can keep using a separate bot account." />
+                                                        Tag="Choose which Twitch account DiamondRelay uses when it posts chat messages. The broadcaster can act as the bot after reconnecting once with chat-send permission, or you can keep using a separate bot account." />
                                             </Grid>
                                             <CheckBox Margin="0,10,0,0"
                                                       Content="{loc:Translate 'Let broadcaster send bot messages'}"
@@ -2504,7 +2504,7 @@
                                                                 Style="{StaticResource HelpIconButtonStyle}"
                                                                 Click="OnHelpButtonClicked"
                                                                 CommandParameter="Trigger info announcements"
-                                                                Tag="When enabled, Crystal Relay posts one compact Twitch chat message while you are live. The message lists current-avatar outfit choices, Bits outfit names, Bits grow/shrink scale words, and sub or gift-sub scale effects." />
+                                                                Tag="When enabled, DiamondRelay posts one compact Twitch chat message while you are live. The message lists current-avatar outfit choices, Bits outfit names, Bits grow/shrink scale words, and sub or gift-sub scale effects." />
                                                     </Grid>
                                                     <CheckBox Margin="0,10,0,0"
                                                               Content="{loc:Translate 'Post current trigger info while live'}"
@@ -2531,7 +2531,7 @@
                                                                    TextWrapping="Wrap" />
                                                     </Grid>
                                                     <TextBlock Margin="0,8,0,0"
-                                                               Text="{loc:Translate 'Crystal Relay only posts these automatic trigger messages while Twitch says the stream is live. It skips the timed message if no current-avatar trigger info is available.'}"
+                                                               Text="{loc:Translate 'DiamondRelay only posts these automatic trigger messages while Twitch says the stream is live. It skips the timed message if no current-avatar trigger info is available.'}"
                                                                Foreground="{DynamicResource MutedBrush}"
                                                                TextWrapping="Wrap" />
                                                 </StackPanel>
@@ -2567,7 +2567,7 @@
                                                 <Button Style="{StaticResource HelpIconButtonStyle}"
                                                         Click="OnHelpButtonClicked"
                                                         CommandParameter="VRChat Avatar Access"
-                                                        Tag="Sign in to the VRChat account whose avatars you want Crystal Relay to use. This login loads your selectable avatar list, keeps avatar names clean in the pickers, and lets Avatar Change and Avatar Roulette rules point at the correct avatar IDs. Your live current avatar and local OSC parameter data still come from your local VRChat files for the connected user." />
+                                                        Tag="Sign in to the VRChat account whose avatars you want DiamondRelay to use. This login loads your selectable avatar list, keeps avatar names clean in the pickers, and lets Avatar Change and Avatar Roulette rules point at the correct avatar IDs. Your live current avatar and local OSC parameter data still come from your local VRChat files for the connected user." />
                                             </DockPanel>
                                             <TextBlock Margin="0,10,0,0"
                                                        Text="{Binding VrChatStatus}"
@@ -2633,7 +2633,7 @@
                                                        Foreground="{DynamicResource TextBrush}"
                                                        TextWrapping="Wrap" />
                                             <TextBlock Margin="0,8,0,0"
-                                                       Text="{loc:Translate 'Use this if Crystal Relay keeps signing out, rejects saved sessions, or gets stuck in login loops. It backs up your redeem setup and theme assets, clears saved login state, restores the redeems, and restarts Crystal Relay.'}"
+                                                       Text="{loc:Translate 'Use this if DiamondRelay keeps signing out, rejects saved sessions, or gets stuck in login loops. It backs up your redeem setup and theme assets, clears saved login state, restores the redeems, and restarts DiamondRelay.'}"
                                                        Foreground="{DynamicResource MutedBrush}"
                                                        TextWrapping="Wrap" />
                                             <Border Margin="0,10,0,0"
@@ -2915,7 +2915,7 @@
                                                        Foreground="{DynamicResource MutedBrush}"
                                                        TextWrapping="Wrap">
                                                 <TextBlock.Text>
-                                                    <loc:TranslateExtension Text="Turns Crystal Relay's hidden joke interactions on or off." />
+                                                    <loc:TranslateExtension Text="Turns DiamondRelay's hidden joke interactions on or off." />
                                                 </TextBlock.Text>
                                             </TextBlock>
                                         </StackPanel>
@@ -3479,12 +3479,12 @@
                                             <WrapPanel Margin="0,10,0,0">
                                                 <Button Margin="0,0,8,8"
                                                         Style="{StaticResource SecondaryButtonStyle}"
-                                                        Content="{loc:Translate 'Restart Crystal Relay'}"
-                                                        Click="OnRestartCrystalRelayClicked" />
+                                                        Content="{loc:Translate 'Restart DiamondRelay'}"
+                                                        Click="OnRestartDiamondRelayClicked" />
                                                 <Button Margin="0,0,0,8"
                                                         Style="{StaticResource SecondaryButtonStyle}"
-                                                        Content="{loc:Translate 'Restart VRChat + Crystal Relay'}"
-                                                        Click="OnRestartVrChatAndCrystalRelayClicked" />
+                                                        Content="{loc:Translate 'Restart VRChat + DiamondRelay'}"
+                                                        Click="OnRestartVrChatAndDiamondRelayClicked" />
                                             </WrapPanel>
                                             <CheckBox Margin="0,4,0,0"
                                                       IsChecked="{Binding Settings.RestartVrChatInDesktopMode, UpdateSourceTrigger=PropertyChanged}">
@@ -3524,7 +3524,7 @@
                         <Button Style="{StaticResource HelpIconButtonStyle}"
                                 Click="OnHelpButtonClicked"
                                 CommandParameter="Activity"
-                                Tag="Activity is Crystal Relay's running event log. It shows Twitch connection changes, reward sync results, VRChat avatar detection, OSC events, chat-command triggers, and errors so you can see what the app is doing without guessing. If something behaves strangely, this is usually the first place to check." />
+                                Tag="Activity is DiamondRelay's running event log. It shows Twitch connection changes, reward sync results, VRChat avatar detection, OSC events, chat-command triggers, and errors so you can see what the app is doing without guessing. If something behaves strangely, this is usually the first place to check." />
                     </DockPanel>
                     <Border DockPanel.Dock="Top"
                             Margin="0,14,0,0"
@@ -3599,7 +3599,7 @@
                                     HorizontalAlignment="Center"
                                     Margin="0,0,0,250"
                                     Panel.ZIndex="1">
-                        <!-- About intro explains the goal of Crystal Relay before the profile cards below. -->
+                        <!-- About intro explains the goal of DiamondRelay before the profile cards below. -->
                         <Border HorizontalAlignment="Center"
                                 Width="940"
                                 Background="{DynamicResource PanelHighlightBrush}"
@@ -3608,20 +3608,20 @@
                                 CornerRadius="22"
                                 Padding="24">
                             <StackPanel>
-                                <TextBlock Text="{loc:Translate 'About Crystal Relay'}"
+                                <TextBlock Text="{loc:Translate 'About DiamondRelay'}"
                                            Style="{StaticResource HeadingTextStyle}"
                                            FontSize="26"
                                            FontWeight="Bold"
                                            Foreground="{DynamicResource TextBrush}"
                                            TextAlignment="Center" />
                                 <TextBlock Margin="0,12,0,0"
-                                           Text="{loc:Translate 'Crystal Relay is built to make Twitch-to-OSC control for VRChat easier to understand and easier to use.'}"
+                                           Text="{loc:Translate 'DiamondRelay is built to make Twitch-to-OSC control for VRChat easier to understand and easier to use.'}"
                                            FontSize="22"
                                            Foreground="{DynamicResource MutedBrush}"
                                            TextAlignment="Center"
                                            TextWrapping="Wrap" />
                                 <TextBlock Margin="0,12,0,0"
-                                           Text="{loc:Translate 'Crystal Relay exists because too many Twitch-to-OSC tools felt harder to learn than they needed to be.'}"
+                                           Text="{loc:Translate 'DiamondRelay exists because too many Twitch-to-OSC tools felt harder to learn than they needed to be.'}"
                                            FontSize="18"
                                            Foreground="{DynamicResource MutedBrush}"
                                            TextAlignment="Center"
@@ -3681,7 +3681,7 @@
                                                TextAlignment="Center"
                                                 TextWrapping="Wrap" />
                                     <TextBlock Margin="0,8,0,0"
-                                               Text="{loc:Translate 'These streamers help test Crystal Relay before updates go out.'}"
+                                               Text="{loc:Translate 'These streamers help test DiamondRelay before updates go out.'}"
                                                FontSize="16"
                                                Foreground="{DynamicResource MutedBrush}"
                                                TextAlignment="Center"
@@ -3791,9 +3791,9 @@
                Opacity="0.15"
                 Margin="40,0,40,0" />
 
-    <!-- CRYSTAL RELAY header text -->
+    <!-- DIAMONDRELAY header text -->
     <TextBlock x:Name="CrystalHeaderText"
-               Text="CRYSTAL RELAY"
+               Text="DIAMONDRELAY"
                FontFamily="Consolas"
                FontSize="13"
                FontWeight="SemiBold"
@@ -3831,7 +3831,7 @@
         </Ellipse>
 
         <!-- Crystal icon -->
-        <Image Source="Assets/crystal-relay-icon.png"
+        <Image Source="Assets/diamondrelay-icon.png"
                Width="80" Height="80"
                Stretch="Uniform"
                HorizontalAlignment="Center"

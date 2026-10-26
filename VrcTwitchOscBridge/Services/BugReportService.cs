@@ -10,11 +10,11 @@ namespace VrcTwitchOscBridge.Services;
 
 internal sealed class BugReportService : IDisposable
 {
-    public const string GitHubIssuesUrl = "https://github.com/seluvia/crystal-relay-public/issues";
+    public const string GitHubIssuesUrl = "https://github.com/Zam6969/DiamondRelay/issues";
 
-    private const string DesktopClientHeaderName = "X-Crystal-Relay-Client";
-    private const string DesktopClientHeaderValue = "CrystalRelayDesktop";
-    private const string AppVersionHeaderName = "X-Crystal-Relay-Version";
+    private const string DesktopClientHeaderName = "X-DiamondRelay-Client";
+    private const string DesktopClientHeaderValue = "DiamondRelayDesktop";
+    private const string AppVersionHeaderName = "X-DiamondRelay-Version";
     private const int MaxDiagnosticLogLength = 40 * 1024;
     private const int MaxPayloadLength = 56 * 1024;
     private const int MaxActivityLogLines = 200;
@@ -23,75 +23,22 @@ internal sealed class BugReportService : IDisposable
     private static readonly TimeSpan RequestTimeout = TimeSpan.FromSeconds(15);
     private static readonly JsonSerializerOptions JsonOptions = new(JsonSerializerDefaults.Web);
 
-    private static readonly string[] BugReportEndpointSegments =
-    [
-        "https://crystal",
-        "-relay",
-        "-bug",
-        "-report",
-        ".screminpal",
-        "-animation",
-        ".workers",
-        ".dev",
-        "/report"
-    ];
+
 
     private readonly HttpClient httpClient = new()
     {
         Timeout = RequestTimeout
     };
 
-    public static Uri BugReportEndpoint => new(string.Concat(BugReportEndpointSegments));
+    public static Uri BugReportEndpoint => new(GitHubIssuesUrl);
 
-    public async Task<BugReportSubmitResult> SubmitAsync(
+    public Task<BugReportSubmitResult> SubmitAsync(
         BugReportSubmission submission,
         CancellationToken cancellationToken = default)
     {
-        var json = PreparePayloadJson(submission);
-        var appVersion = SanitizeAndTrimForTransport(submission.AppVersion, 80);
-
-        try
-        {
-            using var request = new HttpRequestMessage(HttpMethod.Post, BugReportEndpoint)
-            {
-                Content = new StringContent(json, Encoding.UTF8, "application/json")
-            };
-            request.Headers.TryAddWithoutValidation(DesktopClientHeaderName, DesktopClientHeaderValue);
-            request.Headers.TryAddWithoutValidation(AppVersionHeaderName, appVersion);
-
-            using var response = await httpClient.SendAsync(request, cancellationToken);
-            var responsePayload = await ReadResponsePayloadAsync(response, cancellationToken);
-            if (response.IsSuccessStatusCode && !string.IsNullOrWhiteSpace(responsePayload?.IssueUrl))
-            {
-                return BugReportSubmitResult.Success(responsePayload.IssueUrl);
-            }
-
-            var message = responsePayload?.Message;
-            if (string.IsNullOrWhiteSpace(message))
-            {
-                message = $"The bug report service returned HTTP {(int)response.StatusCode}.";
-            }
-
-            if (response.StatusCode == HttpStatusCode.TooManyRequests)
-            {
-                var retryAfterSeconds = GetRetryAfterSeconds(response, responsePayload);
-                if (retryAfterSeconds is > 0)
-                {
-                    message = $"{message} {LocalizationService.Format("Try again in {0}.", DescribeRetryDelay(retryAfterSeconds.Value))}";
-                }
-            }
-
-            return BugReportSubmitResult.Failure(message);
-        }
-        catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
-        {
-            return BugReportSubmitResult.Failure(LocalizationService.Translate("Bug report sending was canceled."));
-        }
-        catch (Exception ex) when (ex is HttpRequestException or TaskCanceledException or JsonException)
-        {
-            return BugReportSubmitResult.Failure(
-                LocalizationService.Format("Crystal Relay could not reach the bug report service: {0}", ex.Message));
-        }
+        cancellationToken.ThrowIfCancellationRequested();
+        return Task.FromResult(BugReportSubmitResult.Failure(
+            "In-app report uploads are disabled in this unofficial fork. Review your report and open a GitHub issue manually."));
     }
 
     public string BuildActivityLogSection(IEnumerable<string> activityLogEntries)

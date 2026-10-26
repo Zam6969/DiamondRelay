@@ -14,7 +14,7 @@ public enum DesktopInputLockScope
 
 /// <summary>
 /// Runtime-only Windows input blocker for desktop-mode stop-input redeems.
-/// Crystal Relay only installs these hooks while a desktop hard lock is active,
+/// DiamondRelay only installs these hooks while a desktop hard lock is active,
 /// and an emergency hotkey always releases the lock immediately.
 /// </summary>
 public sealed class DesktopInputLockService : IAsyncDisposable
@@ -162,7 +162,7 @@ public sealed class DesktopInputLockService : IAsyncDisposable
         keyboardHookHandle = SetWindowsHookEx(WH_KEYBOARD_LL, keyboardCallback, moduleHandle, 0);
         if (keyboardHookHandle == IntPtr.Zero)
         {
-            throw new InvalidOperationException($"Crystal Relay could not start the desktop input lock keyboard hook. Win32 error {Marshal.GetLastWin32Error()}.");
+            throw new InvalidOperationException($"DiamondRelay could not start the desktop input lock keyboard hook. Win32 error {Marshal.GetLastWin32Error()}.");
         }
 
         mouseHookHandle = SetWindowsHookEx(WH_MOUSE_LL, mouseCallback, moduleHandle, 0);
@@ -170,7 +170,7 @@ public sealed class DesktopInputLockService : IAsyncDisposable
         {
             UnhookWindowsHookEx(keyboardHookHandle);
             keyboardHookHandle = IntPtr.Zero;
-            throw new InvalidOperationException($"Crystal Relay could not start the desktop input lock mouse hook. Win32 error {Marshal.GetLastWin32Error()}.");
+            throw new InvalidOperationException($"DiamondRelay could not start the desktop input lock mouse hook. Win32 error {Marshal.GetLastWin32Error()}.");
         }
     }
 

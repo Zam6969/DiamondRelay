@@ -245,47 +245,14 @@ public sealed class CashPaymentProviderService : IAsyncDisposable
         return string.Empty;
     }
 
-    private static async Task RunKoFiHostedRelayAsync(
+    private static Task RunKoFiHostedRelayAsync(
         CashPaymentConnectionSnapshot connections,
         Func<CashPaymentEvent, CancellationToken, Task> handlePaymentAsync,
         Action<string> writeLog,
         CancellationToken cancellationToken)
     {
-        using var socket = new ClientWebSocket();
-        socket.Options.KeepAliveInterval = TimeSpan.FromSeconds(20);
-        await socket.ConnectAsync(BuildKoFiRelayWebSocketUri(connections), cancellationToken);
-
-        var auth = new
-        {
-            type = "auth",
-            protocolVersion = 1,
-            clientSecret = connections.KoFiRelayClientSecret,
-            verificationToken = connections.KoFiVerificationToken,
-            appVersion = GetApplicationVersion()
-        };
-        await SendWebSocketTextAsync(socket, JsonSerializer.Serialize(auth, RelayJsonOptions), cancellationToken);
-        writeLog("Ko-fi hosted relay connected.");
-
-        while (socket.State == WebSocketState.Open && !cancellationToken.IsCancellationRequested)
-        {
-            var message = await ReceiveWebSocketTextAsync(socket, cancellationToken);
-            if (string.IsNullOrWhiteSpace(message))
-            {
-                continue;
-            }
-
-            if (TryParseHostedKoFiRelayEvent(message, out var paymentEvent))
-            {
-                await handlePaymentAsync(paymentEvent, cancellationToken);
-                await SendKoFiRelayAckAsync(socket, paymentEvent.EventId, cancellationToken);
-                continue;
-            }
-
-            if (TryParseKoFiRelayStatus(message, out var statusMessage))
-            {
-                writeLog(statusMessage);
-            }
-        }
+        writeLog("Hosted Ko-fi relay is disabled in this fork. Configure Local Webhook mode instead.");
+        return Task.Delay(Timeout.InfiniteTimeSpan, cancellationToken);
     }
 
     private static async Task RunKoFiWebhookAsync(

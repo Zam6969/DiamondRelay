@@ -34,7 +34,7 @@ internal static class DebugLogService
             }
             catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
             {
-                Debug.WriteLine($"Crystal Relay debug logging failed: {ex.Message}");
+                Debug.WriteLine($"DiamondRelay debug logging failed: {ex.Message}");
             }
         }
 
@@ -106,7 +106,7 @@ internal static class DebugLogService
             }
             catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
             {
-                Debug.WriteLine($"Crystal Relay debug log cleanup skipped '{path}': {ex.Message}");
+                Debug.WriteLine($"DiamondRelay debug log cleanup skipped '{path}': {ex.Message}");
             }
         }
     }

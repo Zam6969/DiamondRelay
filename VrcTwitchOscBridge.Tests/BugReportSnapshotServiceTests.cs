@@ -23,7 +23,7 @@ public sealed class BugReportSnapshotServiceTests
 
         var result = BugReportSnapshotService.Build(data);
 
-        Assert.Contains("Crystal Relay Status Snapshot", result);
+        Assert.Contains("DiamondRelay Status Snapshot", result);
         Assert.Contains("Twitch broadcaster: Connected", result);
         Assert.Contains("Twitch bot: Disconnected", result);
         Assert.Contains("VRChat: Connected", result);

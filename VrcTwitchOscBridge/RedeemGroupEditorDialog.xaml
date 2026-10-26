@@ -4,7 +4,7 @@
         xmlns:loc="clr-namespace:VrcTwitchOscBridge.Services"
         xmlns:shell="clr-namespace:System.Windows.Shell;assembly=PresentationFramework"
         Title="{loc:Translate 'Edit Redeem Group'}"
-        Icon="Assets/crystal-relay-icon.ico"
+        Icon="Assets/diamondrelay-icon.ico"
         Width="480"
         MinHeight="400"
         SizeToContent="Height"
