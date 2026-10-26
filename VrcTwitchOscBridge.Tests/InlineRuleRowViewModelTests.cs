@@ -261,7 +261,7 @@ public sealed class InlinePaymentRuleRowViewModelTests
         var vm = new InlinePaymentRuleRowViewModel(rule);
 
         Assert.Contains("Tip Swap", vm.Summary);
-        Assert.Contains("Ko-fi", vm.Summary);
+        Assert.Contains("Unsupported legacy provider", vm.Summary);
     }
 
     [Fact]
@@ -315,7 +315,7 @@ public sealed class InlinePaymentRuleRowViewModelTests
     {
         Assert.Contains("StreamElements", new InlinePaymentRuleRowViewModel(new CashPaymentRule { Provider = CashPaymentProvider.StreamElements }).Summary);
         Assert.Contains("Streamlabs", new InlinePaymentRuleRowViewModel(new CashPaymentRule { Provider = CashPaymentProvider.Streamlabs }).Summary);
-        Assert.Contains("Ko-fi", new InlinePaymentRuleRowViewModel(new CashPaymentRule { Provider = CashPaymentProvider.KoFi }).Summary);
+        Assert.Contains("Unsupported legacy provider", new InlinePaymentRuleRowViewModel(new CashPaymentRule { Provider = CashPaymentProvider.KoFi }).Summary);
     }
 }
 

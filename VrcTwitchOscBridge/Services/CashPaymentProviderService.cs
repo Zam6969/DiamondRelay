@@ -57,28 +57,7 @@ public sealed class CashPaymentProviderService : IAsyncDisposable
                 cancellationToken));
         }
 
-        if (connections.KoFiEnabled
-            && !string.IsNullOrWhiteSpace(connections.KoFiVerificationToken))
-        {
-            if (connections.KoFiConnectionMode == KoFiConnectionMode.HostedRelay
-                && !string.IsNullOrWhiteSpace(connections.KoFiRelayChannelId)
-                && !string.IsNullOrWhiteSpace(connections.KoFiRelayClientSecret))
-            {
-                tasks.Add(RunProviderLoopAsync(
-                    "Ko-fi hosted relay",
-                    token => RunKoFiHostedRelayAsync(connections, handlePaymentAsync, writeLog, token),
-                    writeLog,
-                    cancellationToken));
-            }
-            else
-            {
-                tasks.Add(RunProviderLoopAsync(
-                    "Ko-fi",
-                    token => RunKoFiWebhookAsync(connections, handlePaymentAsync, writeLog, token),
-                    writeLog,
-                    cancellationToken));
-            }
-        }
+
 
         if (tasks.Count == 0)
         {
@@ -245,105 +224,11 @@ public sealed class CashPaymentProviderService : IAsyncDisposable
         return string.Empty;
     }
 
-    private static Task RunKoFiHostedRelayAsync(
-        CashPaymentConnectionSnapshot connections,
-        Func<CashPaymentEvent, CancellationToken, Task> handlePaymentAsync,
-        Action<string> writeLog,
-        CancellationToken cancellationToken)
-    {
-        writeLog("Hosted Ko-fi relay is disabled in this fork. Configure Local Webhook mode instead.");
-        return Task.Delay(Timeout.InfiniteTimeSpan, cancellationToken);
-    }
 
-    private static async Task RunKoFiWebhookAsync(
-        CashPaymentConnectionSnapshot connections,
-        Func<CashPaymentEvent, CancellationToken, Task> handlePaymentAsync,
-        Action<string> writeLog,
-        CancellationToken cancellationToken)
-    {
-        using var listener = new HttpListener();
-        var prefix = $"http://127.0.0.1:{connections.KoFiLocalPort}/";
-        listener.Prefixes.Add(prefix);
-        listener.Start();
-        writeLog($"Ko-fi webhook listener started on http://127.0.0.1:{connections.KoFiLocalPort}{NormalizeWebhookPath(connections.KoFiWebhookPath)}.");
 
-        using var stopRegistration = cancellationToken.Register(() =>
-        {
-            try
-            {
-                listener.Stop();
-            }
-            catch
-            {
-            }
-        });
 
-        while (!cancellationToken.IsCancellationRequested)
-        {
-            HttpListenerContext context;
-            try
-            {
-                context = await listener.GetContextAsync().WaitAsync(cancellationToken);
-            }
-            catch (HttpListenerException) when (cancellationToken.IsCancellationRequested)
-            {
-                throw new OperationCanceledException(cancellationToken);
-            }
 
-            _ = Task.Run(
-                () => HandleKoFiContextAsync(context, connections, handlePaymentAsync, cancellationToken),
-                CancellationToken.None);
-        }
-    }
 
-    private static async Task HandleKoFiContextAsync(
-        HttpListenerContext context,
-        CashPaymentConnectionSnapshot connections,
-        Func<CashPaymentEvent, CancellationToken, Task> handlePaymentAsync,
-        CancellationToken cancellationToken)
-    {
-        try
-        {
-            var expectedPath = NormalizeWebhookPath(connections.KoFiWebhookPath);
-            if (!string.Equals(context.Request.Url?.AbsolutePath ?? string.Empty, expectedPath, StringComparison.OrdinalIgnoreCase)
-                || !string.Equals(context.Request.HttpMethod, "POST", StringComparison.OrdinalIgnoreCase))
-            {
-                context.Response.StatusCode = (int)HttpStatusCode.NotFound;
-                return;
-            }
-
-            using var reader = new StreamReader(context.Request.InputStream, context.Request.ContentEncoding ?? Encoding.UTF8);
-            var body = await reader.ReadToEndAsync(cancellationToken);
-            if (TryParseKoFiWebhook(body, connections.KoFiVerificationToken, out var paymentEvent))
-            {
-                await handlePaymentAsync(paymentEvent, cancellationToken);
-                context.Response.StatusCode = (int)HttpStatusCode.OK;
-                await WriteHttpResponseAsync(context.Response, "ok", cancellationToken);
-                return;
-            }
-
-            context.Response.StatusCode = (int)HttpStatusCode.OK;
-            await WriteHttpResponseAsync(context.Response, "ignored", cancellationToken);
-        }
-        catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
-        {
-            context.Response.StatusCode = (int)HttpStatusCode.ServiceUnavailable;
-        }
-        catch
-        {
-            context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-        }
-        finally
-        {
-            try
-            {
-                context.Response.Close();
-            }
-            catch
-            {
-            }
-        }
-    }
 
     public static bool TryParseStreamElementsTip(string json, out CashPaymentEvent paymentEvent)
     {
@@ -478,166 +363,15 @@ public sealed class CashPaymentProviderService : IAsyncDisposable
         }
     }
 
-    public static bool TryParseKoFiWebhook(string requestBody, string verificationToken, out CashPaymentEvent paymentEvent)
-    {
-        paymentEvent = default!;
-        var json = ExtractKoFiJson(requestBody);
-        if (string.IsNullOrWhiteSpace(json))
-        {
-            return false;
-        }
 
-        try
-        {
-            using var document = JsonDocument.Parse(json);
-            var root = document.RootElement;
-            if (!TryGetString(root, "verification_token", out var actualToken)
-                || !string.Equals(actualToken, verificationToken, StringComparison.Ordinal))
-            {
-                return false;
-            }
 
-            if (TryGetString(root, "type", out var type)
-                && !string.Equals(type, "Donation", StringComparison.OrdinalIgnoreCase)
-                && !string.Equals(type, "Tip", StringComparison.OrdinalIgnoreCase))
-            {
-                return false;
-            }
 
-            if (!TryGetDecimal(root, "amount", out var amount) || amount <= 0)
-            {
-                return false;
-            }
 
-            var eventId = TryGetString(root, "message_id", out var messageId)
-                ? messageId
-                : TryGetString(root, "kofi_transaction_id", out var transactionId)
-                    ? transactionId
-                    : Guid.NewGuid().ToString("N");
-            var user = TryGetString(root, "from_name", out var fromName) ? fromName : "Ko-fi supporter";
-            var currency = TryGetString(root, "currency", out var currencyText) ? currencyText : string.Empty;
-            var message = TryGetString(root, "message", out var messageText) ? messageText : string.Empty;
 
-            paymentEvent = new CashPaymentEvent(
-                CashPaymentProvider.KoFi,
-                eventId,
-                user,
-                amount,
-                NormalizeCurrencyCode(currency),
-                message,
-                DateTimeOffset.UtcNow);
-            return true;
-        }
-        catch (JsonException)
-        {
-            return false;
-        }
-    }
 
-    private static bool TryParseHostedKoFiRelayEvent(string json, out CashPaymentEvent paymentEvent)
-    {
-        paymentEvent = default!;
-        try
-        {
-            using var document = JsonDocument.Parse(json);
-            var root = document.RootElement;
-            if (!TryGetString(root, "type", out var type)
-                || !string.Equals(type, "kofi.event", StringComparison.OrdinalIgnoreCase)
-                || !root.TryGetProperty("event", out var eventElement)
-                || !TryGetString(eventElement, "eventId", out var eventId)
-                || !TryGetDecimal(eventElement, "amount", out var amount)
-                || amount <= 0)
-            {
-                return false;
-            }
 
-            var user = TryGetString(eventElement, "userDisplayName", out var userText)
-                ? userText
-                : "Ko-fi supporter";
-            var currency = TryGetString(eventElement, "currencyCode", out var currencyText)
-                ? currencyText
-                : string.Empty;
-            var message = TryGetString(eventElement, "message", out var messageText)
-                ? messageText
-                : string.Empty;
-            var receivedAt = TryGetString(eventElement, "receivedAt", out var receivedAtText)
-                && DateTimeOffset.TryParse(
-                    receivedAtText,
-                    CultureInfo.InvariantCulture,
-                    DateTimeStyles.AssumeUniversal,
-                    out var parsedReceivedAt)
-                    ? parsedReceivedAt
-                    : DateTimeOffset.UtcNow;
 
-            paymentEvent = new CashPaymentEvent(
-                CashPaymentProvider.KoFi,
-                eventId,
-                user,
-                amount,
-                NormalizeCurrencyCode(currency),
-                message,
-                receivedAt);
-            return true;
-        }
-        catch (JsonException)
-        {
-            return false;
-        }
-    }
 
-    private static bool TryParseKoFiRelayStatus(string json, out string statusMessage)
-    {
-        statusMessage = string.Empty;
-        try
-        {
-            using var document = JsonDocument.Parse(json);
-            var root = document.RootElement;
-            if (!TryGetString(root, "type", out var type))
-            {
-                return false;
-            }
-
-            statusMessage = type switch
-            {
-                "ready" => "Ko-fi hosted relay authenticated.",
-                "heartbeat" => string.Empty,
-                "error" => "Ko-fi hosted relay reported an error.",
-                _ => string.Empty
-            };
-            return !string.IsNullOrWhiteSpace(statusMessage);
-        }
-        catch (JsonException)
-        {
-            return false;
-        }
-    }
-
-    private static Uri BuildKoFiRelayWebSocketUri(CashPaymentConnectionSnapshot connections)
-    {
-        var baseUrl = string.IsNullOrWhiteSpace(connections.KoFiRelayBaseUrl)
-            ? CashPaymentConnectionSettings.DefaultKoFiRelayBaseUrl
-            : connections.KoFiRelayBaseUrl.Trim().TrimEnd('/');
-        var baseUri = new Uri(baseUrl);
-        var builder = new UriBuilder(baseUri)
-        {
-            Scheme = string.Equals(baseUri.Scheme, Uri.UriSchemeHttp, StringComparison.OrdinalIgnoreCase)
-                ? "ws"
-                : "wss",
-            Path = $"/v1/kofi/connect/{Uri.EscapeDataString(connections.KoFiRelayChannelId.Trim())}",
-            Query = string.Empty
-        };
-        return builder.Uri;
-    }
-
-    private static Task SendKoFiRelayAckAsync(ClientWebSocket socket, string eventId, CancellationToken cancellationToken)
-    {
-        var ack = new
-        {
-            type = "ack",
-            eventId
-        };
-        return SendWebSocketTextAsync(socket, JsonSerializer.Serialize(ack, RelayJsonOptions), cancellationToken);
-    }
 
     private static string GetApplicationVersion()
     {
@@ -654,30 +388,7 @@ public sealed class CashPaymentProviderService : IAsyncDisposable
         return assembly.GetName().Version?.ToString() ?? "Unknown";
     }
 
-    private static string ExtractKoFiJson(string requestBody)
-    {
-        if (string.IsNullOrWhiteSpace(requestBody))
-        {
-            return string.Empty;
-        }
 
-        var trimmed = requestBody.Trim();
-        if (trimmed.StartsWith('{'))
-        {
-            return trimmed;
-        }
-
-        foreach (var pair in trimmed.Split('&', StringSplitOptions.RemoveEmptyEntries))
-        {
-            var parts = pair.Split('=', 2);
-            if (parts.Length == 2 && string.Equals(parts[0], "data", StringComparison.OrdinalIgnoreCase))
-            {
-                return WebUtility.UrlDecode(parts[1]) ?? string.Empty;
-            }
-        }
-
-        return string.Empty;
-    }
 
     private static async Task<string> ReceiveWebSocketTextAsync(ClientWebSocket socket, CancellationToken cancellationToken)
     {
@@ -754,14 +465,5 @@ public sealed class CashPaymentProviderService : IAsyncDisposable
         return normalized.Length <= 8 ? normalized : normalized[..8];
     }
 
-    private static string NormalizeWebhookPath(string path)
-    {
-        var trimmed = path?.Trim() ?? string.Empty;
-        if (string.IsNullOrWhiteSpace(trimmed))
-        {
-            return "/kofi";
-        }
 
-        return trimmed.StartsWith("/", StringComparison.Ordinal) ? trimmed : $"/{trimmed}";
-    }
 }

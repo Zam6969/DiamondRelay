@@ -12,7 +12,7 @@ Reviewed 2026-10-26. Upstream baseline: `seluvia/crystal-relay-public@aff72beeff
 
 4. **Original-owner software update trust.** `ApplicationUpdateService` queried the original repository's releases. Installing a future upstream package could replace modified code. The release API now targets `Zam6969/DiamondRelay`; the security tests assert the actual request URI.
 
-5. **Developer-hosted Ko-fi relay.** The desktop authenticated to an upstream-hosted WebSocket and sent its relay client secret and Ko-fi verification token. Trust in that server was required; its storage/privacy promises cannot be established from the desktop source. Hosted connections are disabled, including for imported profiles, and new profiles default to Local Webhook mode. The old default hosted URL is removed.
+5. **Developer-hosted Ko-fi relay.** The desktop authenticated to an upstream-hosted WebSocket and sent its relay client secret and Ko-fi verification token. Trust in that server was required; its storage/privacy promises cannot be established from the desktop source. Ko-fi integration is now removed entirely: no hosted connection, local webhook listener, configuration UI, credential reads/writes, or provider selection. Imported rules for its legacy provider ID remain disabled. Upstream donation/Discord commands and promotional About content are also removed.
 
 6. **Bug report upload.** `BugReportService` assembled its worker URL from string fragments. This is unusual but does not establish malicious intent. Submission was user initiated and could include diagnostic data. Uploads are disabled in this distribution; preview/formatting remain available, and manual issue links target this repository.
 
@@ -30,4 +30,6 @@ Reviewed 2026-10-26. Upstream baseline: `seluvia/crystal-relay-public@aff72beeff
 
 The Windows Release application compiles with .NET 10. Security regression tests cover rejected developer authorization, removed command dispatch, disabled telemetry despite legacy settings, the fork update request, disabled report upload, cancellation handling, and world disclosure without network requests. Hosted guard protocol tests were replaced with tests of the new local-only behavior.
 
-Validation: all 256 targeted security, update, developer-command, and world-privacy tests passed. A broader upstream suite run was stopped after failures and slow/hanging tests. A separate unchanged-baseline run reproduced five failures out of ten tests across payment summaries, scale timer fairness, and movement window layout. Application behavior has not been tested against live Twitch or VRChat accounts.
+Validation: all 278 targeted security, update, developer-command, and world-privacy tests passed. A broader upstream suite run was stopped after failures and slow/hanging tests. A separate unchanged-baseline run reproduced five failures out of ten tests across payment summaries, scale timer fairness, and movement window layout. Application behavior has not been tested against live Twitch or VRChat accounts.
+
+Ko-fi removal validation: legacy connection settings are ignored, imported provider-ID-2 rules cannot be enabled, and webhook/relay entry points and promotional commands are absent. The expanded targeted suite passes 278 tests.

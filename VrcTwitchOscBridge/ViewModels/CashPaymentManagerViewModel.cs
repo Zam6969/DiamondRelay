@@ -20,11 +20,7 @@ public sealed class CashPaymentManagerViewModel : ObservableObject, IDisposable
         CashPayments.PropertyChanged += OnCashPaymentsPropertyChanged;
     }
 
-    public System.Windows.Input.ICommand? OpenKoFiWebhooksCommand =>
-        mainWindowViewModel?.OpenKoFiWebhooksCommand;
 
-    public System.Windows.Input.ICommand? RegenerateKoFiRelayIdentityCommand =>
-        mainWindowViewModel?.RegenerateKoFiRelayIdentityCommand;
 
     private void OnCashPaymentsPropertyChanged(object? sender, PropertyChangedEventArgs e)
     {

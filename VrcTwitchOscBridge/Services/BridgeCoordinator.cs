@@ -4973,7 +4973,7 @@ internal BridgeCoordinator(
     private static string DescribeCashPaymentProvider(CashPaymentProvider provider) => provider switch
     {
         CashPaymentProvider.Streamlabs => "Streamlabs",
-        CashPaymentProvider.KoFi => "Ko-fi",
+        CashPaymentProvider.KoFi => "Unsupported legacy provider",
         _ => "StreamElements"
     };
 

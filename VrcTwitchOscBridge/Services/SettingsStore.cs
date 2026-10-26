@@ -30,8 +30,6 @@ public sealed class SettingsStore
     private const string WorldCommandBlacklistGitHubTokenCredential = "CrystalRelay:WorldCommandBlacklist:GitHubToken";
     private const string StreamElementsJwtCredential = "CrystalRelay:CashPayments:StreamElements:JwtToken";
     private const string StreamlabsAccessTokenCredential = "CrystalRelay:CashPayments:Streamlabs:AccessToken";
-    private const string KoFiVerificationTokenCredential = "CrystalRelay:CashPayments:KoFi:VerificationToken";
-    private const string KoFiRelayClientSecretCredential = "CrystalRelay:CashPayments:KoFi:RelayClientSecret";
     internal static readonly string[] SavedSecretCredentialTargets =
     [
         BroadcasterAccessTokenCredential,
@@ -41,8 +39,6 @@ public sealed class SettingsStore
         VrChatAuthCookieCredential,
         StreamElementsJwtCredential,
         StreamlabsAccessTokenCredential,
-        KoFiVerificationTokenCredential,
-        KoFiRelayClientSecretCredential
     ];
 
     private readonly string legacySettingsPath;
@@ -704,16 +700,12 @@ public sealed class SettingsStore
     {
         SaveSecretIfChanged(StreamElementsJwtCredential, settings.StreamElementsJwtToken);
         SaveSecretIfChanged(StreamlabsAccessTokenCredential, settings.StreamlabsAccessToken);
-        SaveSecretIfChanged(KoFiVerificationTokenCredential, settings.KoFiVerificationToken);
-        SaveSecretIfChanged(KoFiRelayClientSecretCredential, settings.KoFiRelayClientSecret);
     }
 
     private void LoadCashPaymentSecrets(CashPaymentConnectionSettings settings)
     {
         settings.StreamElementsJwtToken = credentialStore.LoadSecret(StreamElementsJwtCredential);
         settings.StreamlabsAccessToken = credentialStore.LoadSecret(StreamlabsAccessTokenCredential);
-        settings.KoFiVerificationToken = credentialStore.LoadSecret(KoFiVerificationTokenCredential);
-        settings.KoFiRelayClientSecret = credentialStore.LoadSecret(KoFiRelayClientSecretCredential);
     }
 
     private void SaveSecretIfChanged(string targetName, string? value)
@@ -2756,13 +2748,6 @@ ChannelPointRules = [.. profile.ChannelPointRules.Select(ToPersistedRule)],
             StreamElementsEnabled = settings.StreamElementsEnabled,
             StreamElementsAccountId = settings.StreamElementsAccountId,
             StreamlabsEnabled = settings.StreamlabsEnabled,
-            KoFiEnabled = settings.KoFiEnabled,
-            KoFiConnectionMode = settings.KoFiConnectionMode,
-            KoFiRelayBaseUrl = settings.KoFiRelayBaseUrl,
-            KoFiRelayChannelId = settings.KoFiRelayChannelId,
-            KoFiLocalPort = settings.KoFiLocalPort,
-            KoFiWebhookPath = settings.KoFiWebhookPath,
-            KoFiPublicWebhookUrl = settings.KoFiPublicWebhookUrl
         };
 
     private static CashPaymentConnectionSettings ToCashPaymentConnectionSettings(
@@ -2772,18 +2757,6 @@ ChannelPointRules = [.. profile.ChannelPointRules.Select(ToPersistedRule)],
             StreamElementsEnabled = settings.StreamElementsEnabled ?? false,
             StreamElementsAccountId = settings.StreamElementsAccountId ?? string.Empty,
             StreamlabsEnabled = settings.StreamlabsEnabled ?? false,
-            KoFiEnabled = settings.KoFiEnabled ?? false,
-            KoFiConnectionMode = settings.KoFiConnectionMode
-                ?? (string.IsNullOrWhiteSpace(settings.KoFiPublicWebhookUrl)
-                    ? KoFiConnectionMode.HostedRelay
-                    : KoFiConnectionMode.LocalWebhook),
-            KoFiRelayBaseUrl = settings.KoFiRelayBaseUrl ?? CashPaymentConnectionSettings.DefaultKoFiRelayBaseUrl,
-            KoFiRelayChannelId = settings.KoFiRelayChannelId ?? string.Empty,
-            KoFiLocalPort = settings.KoFiLocalPort is >= 1 and <= 65535
-                ? settings.KoFiLocalPort.Value
-                : 47891,
-            KoFiWebhookPath = settings.KoFiWebhookPath ?? "/kofi",
-            KoFiPublicWebhookUrl = settings.KoFiPublicWebhookUrl ?? string.Empty
         };
 
     private static PersistedCashPaymentRule ToPersistedCashPaymentRule(CashPaymentRule rule) =>
@@ -3053,19 +3026,12 @@ ChannelPointRules = [.. profile.ChannelPointRules.Select(ToPersistedRule)],
 
         public bool? StreamlabsEnabled { get; set; }
 
-        public bool? KoFiEnabled { get; set; }
 
-        public KoFiConnectionMode? KoFiConnectionMode { get; set; }
 
-        public string? KoFiRelayBaseUrl { get; set; }
 
-        public string? KoFiRelayChannelId { get; set; }
 
-        public int? KoFiLocalPort { get; set; }
 
-        public string? KoFiWebhookPath { get; set; }
 
-        public string? KoFiPublicWebhookUrl { get; set; }
     }
 
     internal sealed class PersistedCashPaymentRule

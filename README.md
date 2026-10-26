@@ -10,7 +10,8 @@ The app connects Twitch events to VRChat through OSC and OSCQuery. It includes a
 - Removed live feedback heartbeat transmission, including when old settings request it.
 - Removed hosted World Guard checks and status requests. `!world` disclosure stays blocked locally, so world and creator identifiers are not uploaded to that service.
 - Disabled in-app bug-report uploads. Review any report and submit a GitHub issue manually.
-- Disabled hosted Ko-fi relay connections. Use Local Webhook mode with infrastructure you control. Existing hosted settings do not reconnect automatically.
+- Removed Ko-fi integration entirely, including local webhook and hosted relay support. Legacy Ko-fi rules remain disabled when imported.
+- Removed the upstream developer donation and Discord links and promotional About cards.
 - Removed supplemental developer About endpoints from loaded runtime configuration.
 - Update checks and issue links now target this repository. No original-owner release packages are offered through its update feed.
 

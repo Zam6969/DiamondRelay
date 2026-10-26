@@ -113,7 +113,6 @@
                             <ComboBox SelectedValuePath="Tag" SelectedValue="{Binding Provider, UpdateSourceTrigger=PropertyChanged}">
                                 <ComboBoxItem Content="StreamElements" Tag="StreamElements" />
                                 <ComboBoxItem Content="Streamlabs" Tag="Streamlabs" />
-                                <ComboBoxItem Content="Ko-fi" Tag="KoFi" />
                             </ComboBox>
                         </StackPanel>
                     </UniformGrid>

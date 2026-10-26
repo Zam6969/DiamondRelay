@@ -1865,91 +1865,9 @@
                                            Text="{loc:Translate 'DiamondRelay is free for everyone. If it helps your stream, you can leave a tip or join the community.'}"
                                            TextWrapping="Wrap" />
 
-                                <Border Background="{DynamicResource PanelSecondaryBrush}"
-                                        BorderBrush="{DynamicResource InputBorderBrush}"
-                                        BorderThickness="1"
-                                        CornerRadius="10"
-                                        Padding="12"
-                                        Margin="0,0,0,8">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="Auto" />
-                                        </Grid.ColumnDefinitions>
-                                        <Border Width="32" Height="32"
-                                                CornerRadius="8"
-                                                Background="{DynamicResource StatusChipBrush}"
-                                                VerticalAlignment="Center"
-                                                HorizontalAlignment="Center">
-                                            <Viewbox Width="16" Height="16"
-                                                     Stretch="Uniform">
-                                                <Grid Width="24" Height="24">
-                                                    <Path Data="M12,21.35L10.55,20.03C5.4,15.36 2,12.27 2,8.5C2,5.41 4.42,3 7.5,3C9.24,3 10.91,3.81 12,5.08C13.09,3.81 14.76,3 16.5,3C19.58,3 22,5.41 22,8.5C22,12.27 18.6,15.36 13.45,20.03L12,21.35Z"
-                                                          Fill="{DynamicResource AccentBrush}" />
-                                                </Grid>
-                                            </Viewbox>
-                                        </Border>
-                                        <StackPanel Grid.Column="1" Margin="10,0,10,0" VerticalAlignment="Center">
-                                            <TextBlock Text="{loc:Translate 'Support on Ko-fi'}"
-                                                       FontSize="13" FontWeight="SemiBold"
-                                                       Foreground="{DynamicResource TextBrush}" />
-                                            <TextBlock Text="{loc:Translate 'One-time tips help keep development going'}"
-                                                       FontSize="11"
-                                                       Foreground="{DynamicResource MutedBrush}" />
-                                        </StackPanel>
-                                        <Button Grid.Column="2"
-                                                Style="{StaticResource SecondaryButtonStyle}"
-                                                Padding="10,5"
-                                                FontSize="11"
-                                                Content="{loc:Translate 'Tip'}"
-                                                Command="{Binding OpenKoFiSupportCommand}"
-                                                VerticalAlignment="Center" />
-                                    </Grid>
-                                </Border>
 
-                                <Border Background="{DynamicResource PanelSecondaryBrush}"
-                                        BorderBrush="{DynamicResource InputBorderBrush}"
-                                        BorderThickness="1"
-                                        CornerRadius="10"
-                                        Padding="12"
-                                        Margin="0,0,0,8">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="Auto" />
-                                        </Grid.ColumnDefinitions>
-                                        <Border Width="32" Height="32"
-                                                CornerRadius="8"
-                                                Background="{DynamicResource StatusChipBrush}"
-                                                VerticalAlignment="Center"
-                                                HorizontalAlignment="Center">
-                                            <Viewbox Width="16" Height="16"
-                                                     Stretch="Uniform">
-                                                <Grid Width="24" Height="24">
-                                                    <Path Data="M2,2H22V16H6L2,20V2Z"
-                                                          Fill="{DynamicResource AccentBrush}" />
-                                                </Grid>
-                                            </Viewbox>
-                                        </Border>
-                                        <StackPanel Grid.Column="1" Margin="10,0,10,0" VerticalAlignment="Center">
-                                            <TextBlock Text="{loc:Translate 'Join Discord'}"
-                                                       FontSize="13" FontWeight="SemiBold"
-                                                       Foreground="{DynamicResource TextBrush}" />
-                                            <TextBlock Text="{loc:Translate 'Get help, share setups, and see what is coming next'}"
-                                                       FontSize="11"
-                                                       Foreground="{DynamicResource MutedBrush}" />
-                                        </StackPanel>
-                                        <Button Grid.Column="2"
-                                                Style="{StaticResource SecondaryButtonStyle}"
-                                                Padding="10,5"
-                                                FontSize="11"
-                                                Content="{loc:Translate 'Join'}"
-                                                Command="{Binding OpenDiscordInviteCommand}"
-                                                VerticalAlignment="Center" />
-                                    </Grid>
-                                </Border>
+
+
 
                                 <Border Background="{DynamicResource PanelSecondaryBrush}"
                                         BorderBrush="{DynamicResource InputBorderBrush}"
@@ -2642,7 +2560,7 @@
                                                     BorderBrush="{DynamicResource DangerBrush}"
                                                     BorderThickness="1"
                                                     CornerRadius="10">
-                                                <TextBlock Text="{loc:Translate 'This clears Twitch, VRChat, StreamElements, Streamlabs, and Ko-fi saved login tokens. Redeems and custom theme assets are restored from the backup.'}"
+                                                <TextBlock Text="{loc:Translate 'This clears Twitch, VRChat, StreamElements, and Streamlabs saved login tokens. Redeems and custom theme assets are restored from the backup.'}"
                                                            Foreground="{DynamicResource TextBrush}"
                                                            FontWeight="SemiBold"
                                                            TextWrapping="Wrap" />
@@ -3236,7 +3154,7 @@
                                               FontSize="15"
                                               Foreground="{DynamicResource TextBrush}" />
                                    <TextBlock Margin="0,6,0,14"
-                                              Text="{loc:Translate 'StreamElements, Streamlabs, Ko-fi payments and reward fire sales'}"
+                                              Text="{loc:Translate 'StreamElements, Streamlabs payments and reward fire sales'}"
                                               Foreground="{DynamicResource MutedBrush}"
                                               FontSize="11"
                                               TextWrapping="Wrap" />
@@ -3571,138 +3489,11 @@
                         </Style.Triggers>
                     </Style>
                 </Border.Style>
-                <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <Grid Width="980"
-                          HorizontalAlignment="Center">
-                        <Image Source="pack://application:,,,/Assets/rikuknifesticker.png"
-                               Width="320"
-                               HorizontalAlignment="Right"
-                               VerticalAlignment="Bottom"
-                               Margin="0,300,12,22"
-                               Opacity="0.9"
-                               Stretch="Uniform"
-                               IsHitTestVisible="False"
-                               Panel.ZIndex="0"
-                               RenderOptions.BitmapScalingMode="Fant">
-                            <Image.Style>
-                                <Style TargetType="Image">
-                                    <Setter Property="Visibility" Value="Collapsed" />
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Settings.Theme}" Value="{x:Static models:AppTheme.DreamScape}">
-                                            <Setter Property="Visibility" Value="Visible" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Image.Style>
-                        </Image>
-                        <StackPanel MaxWidth="980"
-                                    HorizontalAlignment="Center"
-                                    Margin="0,0,0,250"
-                                    Panel.ZIndex="1">
-                        <!-- About intro explains the goal of DiamondRelay before the profile cards below. -->
-                        <Border HorizontalAlignment="Center"
-                                Width="940"
-                                Background="{DynamicResource PanelHighlightBrush}"
-                                BorderBrush="{DynamicResource AccentBrush}"
-                                BorderThickness="1"
-                                CornerRadius="22"
-                                Padding="24">
-                            <StackPanel>
-                                <TextBlock Text="{loc:Translate 'About DiamondRelay'}"
-                                           Style="{StaticResource HeadingTextStyle}"
-                                           FontSize="26"
-                                           FontWeight="Bold"
-                                           Foreground="{DynamicResource TextBrush}"
-                                           TextAlignment="Center" />
-                                <TextBlock Margin="0,12,0,0"
-                                           Text="{loc:Translate 'DiamondRelay is built to make Twitch-to-OSC control for VRChat easier to understand and easier to use.'}"
-                                           FontSize="22"
-                                           Foreground="{DynamicResource MutedBrush}"
-                                           TextAlignment="Center"
-                                           TextWrapping="Wrap" />
-                                <TextBlock Margin="0,12,0,0"
-                                           Text="{loc:Translate 'DiamondRelay exists because too many Twitch-to-OSC tools felt harder to learn than they needed to be.'}"
-                                           FontSize="18"
-                                           Foreground="{DynamicResource MutedBrush}"
-                                           TextAlignment="Center"
-                                           TextWrapping="Wrap" />
-                            </StackPanel>
-                        </Border>
-
-                        <Grid Margin="0,22,0,0"
-                              HorizontalAlignment="Center">
-                            <!-- About profile area:
-                                 creator card on the left, playtester cards on the right. -->
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="320" />
-                                <ColumnDefinition Width="22" />
-                                <ColumnDefinition Width="598" />
-                            </Grid.ColumnDefinitions>
-
-                            <Border Grid.Column="0"
-                                    VerticalAlignment="Top"
-                                    Background="{DynamicResource PanelHighlightBrush}"
-                                    BorderBrush="{DynamicResource InputBorderBrush}"
-                                    BorderThickness="1"
-                                    CornerRadius="18"
-                                    Padding="18">
-                                <StackPanel>
-                                    <TextBlock Text="{loc:Translate 'Made By'}"
-                                               Style="{StaticResource HeadingTextStyle}"
-                                               FontSize="22"
-                                               FontWeight="SemiBold"
-                                               Foreground="{DynamicResource TextBrush}"
-                                               TextAlignment="Center"
-                                                TextWrapping="Wrap" />
-                                    <TextBlock Margin="0,8,0,0"
-                                               Text="{loc:Translate 'Creator and main tester'}"
-                                               FontSize="16"
-                                               Foreground="{DynamicResource MutedBrush}"
-                                               TextAlignment="Center"
-                                               TextWrapping="Wrap" />
-                                    <ContentControl Content="{Binding AboutCreatorProfile}"
-                                                    ContentTemplate="{StaticResource AboutTwitchProfileTemplate}" />
-                                </StackPanel>
-                            </Border>
-
-                            <Border Grid.Column="2"
-                                    VerticalAlignment="Top"
-                                    Background="{DynamicResource PanelSecondaryBrush}"
-                                    BorderBrush="{DynamicResource InputBorderBrush}"
-                                    BorderThickness="1"
-                                    CornerRadius="18"
-                                    Padding="18">
-                                <StackPanel>
-                                    <TextBlock Text="{loc:Translate 'Playtesters'}"
-                                               Style="{StaticResource HeadingTextStyle}"
-                                               FontSize="22"
-                                               FontWeight="SemiBold"
-                                               Foreground="{DynamicResource TextBrush}"
-                                               TextAlignment="Center"
-                                                TextWrapping="Wrap" />
-                                    <TextBlock Margin="0,8,0,0"
-                                               Text="{loc:Translate 'These streamers help test DiamondRelay before updates go out.'}"
-                                               FontSize="16"
-                                               Foreground="{DynamicResource MutedBrush}"
-                                               TextAlignment="Center"
-                                               TextWrapping="Wrap" />
-                                    <ItemsControl ItemsSource="{Binding AboutTesterProfiles}"
-                                                  Margin="0,6,0,0"
-                                                  ItemTemplate="{StaticResource AboutTesterProfileTemplate}">
-                                        <ItemsControl.ItemsPanel>
-                                            <ItemsPanelTemplate>
-                                                <WrapPanel Orientation="Horizontal"
-                                                           ItemWidth="274"
-                                                           HorizontalAlignment="Center" />
-                                            </ItemsPanelTemplate>
-                                        </ItemsControl.ItemsPanel>
-                                    </ItemsControl>
-                                </StackPanel>
-                            </Border>
-                        </Grid>
-                        </StackPanel>
-                    </Grid>
-                </ScrollViewer>
+                <StackPanel Margin="24" HorizontalAlignment="Center" MaxWidth="760">
+                    <TextBlock Text="DiamondRelay" FontSize="28" FontWeight="Bold" Foreground="{DynamicResource TextBrush}" />
+                    <TextBlock Margin="0,12,0,0" Text="An independent Twitch-to-VRChat bridge. Source and issue tracking: github.com/Zam6969/DiamondRelay" Foreground="{DynamicResource TextBrush}" TextWrapping="Wrap" />
+                    <TextBlock Margin="0,12,0,0" Text="Based on MIT-licensed source. Original copyright and license notices are included in LICENSE." Foreground="{DynamicResource MutedBrush}" TextWrapping="Wrap" />
+                </StackPanel>
             </Border>
         </Grid>
             <Grid x:Name="LoadingOverlay"

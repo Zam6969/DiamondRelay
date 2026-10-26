@@ -80,9 +80,6 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
 
     private const string TwitchActivationUri = "https://www.twitch.tv/activate";
     private const string TwitchDeveloperConsoleUri = "https://dev.twitch.tv/console/apps";
-    private const string KoFiSupportUri = "https://ko-fi.com/screminpal";
-    private const string KoFiWebhookSettingsUri = "https://ko-fi.com/manage/webhooks";
-    private const string DiscordInviteUri = "https://discord.gg/6DvWJXN6A2";
     private const string SettingsTestAudioRelativePath = "Assets\\engineer_no01.mp3";
     private const string TestBuildMarkerFileName = "test-build.flag";
     private const string BetaBuildMarkerFileName = "beta-build.flag";
@@ -653,7 +650,6 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
         VrChatResetAvatarOptions = [];
         AvatarParameterOptions = [];
         SetTriggerParameterOptions = [];
-        AboutCreatorProfile = new AboutTwitchProfile("screminpal", "screminpal_", "https://www.twitch.tv/screminpal_");
         AboutTesterProfiles =
         [
             new AboutTwitchProfile("Riku Satori", "RikuSatori", "https://www.twitch.tv/RikuSatori"),
@@ -665,7 +661,6 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
             new AboutTwitchProfile("EzekielTyr", "ezekieltyr", "https://www.twitch.tv/ezekieltyr"),
             new AboutTwitchProfile("TheRaccoonCat", "theraccooncat", "https://www.twitch.tv/theraccooncat")
         ];
-        AboutCreatorProfile.PropertyChanged += OnAboutProfilePropertyChanged;
         foreach (var testerProfile in AboutTesterProfiles)
         {
             testerProfile.PropertyChanged += OnAboutProfilePropertyChanged;
@@ -716,7 +711,6 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
         [
             new CashPaymentProviderOption(CashPaymentProvider.StreamElements, "StreamElements"),
             new CashPaymentProviderOption(CashPaymentProvider.Streamlabs, "Streamlabs"),
-            new CashPaymentProviderOption(CashPaymentProvider.KoFi, "Ko-fi")
         ];
         ActionTypes = [.. allActionTypes];
         ThemeOptions =
@@ -870,9 +864,6 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
         OpenTwitchDeveloperConsoleCommand = new RelayCommand(OpenTwitchDeveloperConsole);
         OpenSaveFolderCommand = new RelayCommand(OpenSaveFolder);
         RepairSavedLoginStateCommand = new AsyncRelayCommand(RepairSavedLoginStateAsync, () => !isStartingSavedLoginRecovery);
-        OpenKoFiSupportCommand = new RelayCommand(OpenKoFiSupportPage);
-        OpenKoFiWebhooksCommand = new RelayCommand(OpenKoFiWebhooksPage);
-        OpenDiscordInviteCommand = new RelayCommand(OpenDiscordInvite);
         OpenBugReportCommand = new AsyncRelayCommand(() => OpenBugReportAsync());
         RefreshTwitchRewardsCommand = new AsyncRelayCommand(RefreshTwitchRewardsAsync);
         RefreshPowerUpsCommand = new AsyncRelayCommand(RefreshPowerUpsAsync);
@@ -976,7 +967,6 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
         UseCurrentAvatarForPowerUpRuleCommand = new RelayCommand(
             UseCurrentAvatarForPowerUpRule,
             () => SelectedPowerUpRule is not null && !string.IsNullOrWhiteSpace(GetResolvedCurrentVrChatAvatarId()));
-        RegenerateKoFiRelayIdentityCommand = new RelayCommand(RegenerateKoFiRelayIdentity);
         OpenSpecialRuleLockoutPickerCommand = new RelayCommand(OpenSpecialRuleLockoutPicker, CanOpenSpecialRuleLockoutPicker);
         OpenAvatarRouletPoolPickerCommand = new RelayCommand(OpenAvatarRouletPoolPicker, CanOpenAvatarRouletPoolPicker);
         OpenActiveFloatBoostRewardCommand = new RelayCommand(OpenActiveFloatBoostReward, CanOpenActiveFloatBoostReward);
@@ -1121,7 +1111,6 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
         }
     }
 
-    public AboutTwitchProfile AboutCreatorProfile { get; }
 
     public ObservableCollection<AboutTwitchProfile> AboutTesterProfiles { get; }
 
@@ -2851,11 +2840,8 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
 
     public AsyncRelayCommand RepairSavedLoginStateCommand { get; }
 
-    public RelayCommand OpenKoFiSupportCommand { get; }
 
-    public RelayCommand OpenKoFiWebhooksCommand { get; }
 
-    public RelayCommand OpenDiscordInviteCommand { get; }
 
     public AsyncRelayCommand OpenBugReportCommand { get; }
 
@@ -3045,7 +3031,6 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
 
     public RelayCommand UseCurrentAvatarForPowerUpRuleCommand { get; }
 
-    public RelayCommand RegenerateKoFiRelayIdentityCommand { get; }
 
     public RelayCommand OpenSpecialRuleLockoutPickerCommand { get; }
 
@@ -3255,7 +3240,6 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
         }
 
         UnwireSettings(Settings);
-        AboutCreatorProfile.PropertyChanged -= OnAboutProfilePropertyChanged;
         foreach (var testerProfile in AboutTesterProfiles)
         {
             testerProfile.PropertyChanged -= OnAboutProfilePropertyChanged;
@@ -7127,13 +7111,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
         AppendLog($"Power Up rule '{SelectedPowerUpRule.DisplayTitle}' now belongs to '{SelectedPowerUpRule.AvatarScopeLabel}'.");
     }
 
-    private void RegenerateKoFiRelayIdentity()
-    {
-        Settings.CashPayments.RegenerateKoFiRelayIdentity();
-        QueueSave();
-        QueueBridgeRefresh();
-        AppendLog("Regenerated the Ko-fi hosted relay webhook URL.");
-    }
+
 
     private async Task ImportFoomaInteractionConfigAsync()
     {
@@ -16263,12 +16241,7 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
 
     private IEnumerable<AboutTwitchProfile> EnumerateAboutProfiles()
     {
-        yield return AboutCreatorProfile;
-
-        foreach (var tester in AboutTesterProfiles)
-        {
-            yield return tester;
-        }
+        yield break; // No upstream creator/playtester promotion or profile requests.
     }
 
     private void RefreshRuntimeSummary()
@@ -18340,42 +18313,11 @@ public sealed class MainWindowViewModel : ObservableObject, IAsyncDisposable, IT
         OpenUri(TwitchDeveloperConsoleUri);
     }
 
-    private void OpenKoFiSupportPage()
-    {
-        var shouldOpenKoFi = ThemedDialogWindow.ShowYesNo(
-            Application.Current?.MainWindow,
-            SelectedTheme,
-            T("Support DiamondRelay on Ko-fi"),
-            T("DiamondRelay is completely free for everyone. If it helps your stream and you want to support development, you can leave a tip on Ko-fi. Every contribution helps keep the program free and growing."),
-            T("Open Ko-fi"),
-            T("Close"));
 
-        if (shouldOpenKoFi)
-        {
-            OpenUri(KoFiSupportUri);
-        }
-    }
 
-    private void OpenKoFiWebhooksPage()
-    {
-        OpenUri(KoFiWebhookSettingsUri);
-    }
 
-    private void OpenDiscordInvite()
-    {
-        var shouldOpenDiscord = ThemedDialogWindow.ShowYesNo(
-            Application.Current?.MainWindow,
-            SelectedTheme,
-            T("Join the DiamondRelay Discord"),
-            T("Get live update pings, sneak peeks, dev-related information, and meet other DiamondRelay users."),
-            T("Open Discord"),
-            T("Close"));
 
-        if (shouldOpenDiscord)
-        {
-            OpenUri(DiscordInviteUri);
-        }
-    }
+
 
     private async Task OpenBugReportAsync(
         string? presetCategory = null,
@@ -22094,7 +22036,6 @@ public enum TwitchChatRoleCardKind
 
 public sealed class TwitchChatMessageEntry : ObservableObject
 {
-    private const string DiamondRelayDeveloperLogin = "Screminpal_";
     private const string KaiBloodwolfLogin = "kai_bloodwolf";
     private const string HypercraftiingLogin = "hypercraftiing";
     private const string KyouZakiraLogin = "kyou_zakira";
@@ -22676,11 +22617,7 @@ public sealed class TwitchChatMessageEntry : ObservableObject
     private static bool IsDiamondRelayDeveloperAccount(string displayName, string login) =>
         false; // Upstream accounts do not receive this fork's developer badge.
 
-    private static bool IsDiamondRelayDeveloperName(string value)
-    {
-        var normalized = NormalizeTwitchName(value);
-        return string.Equals(normalized, DiamondRelayDeveloperLogin, StringComparison.OrdinalIgnoreCase);
-    }
+
 
     private static bool IsKaiBloodwolfAccount(string displayName, string login) =>
         IsKaiBloodwolfName(displayName) || IsKaiBloodwolfName(login);

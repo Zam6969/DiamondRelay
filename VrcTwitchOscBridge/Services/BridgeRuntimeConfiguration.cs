@@ -367,15 +367,7 @@ public sealed record CashPaymentConnectionSnapshot(
     string StreamElementsAccountId,
     string StreamElementsJwtToken,
     bool StreamlabsEnabled,
-    string StreamlabsAccessToken,
-    bool KoFiEnabled,
-    KoFiConnectionMode KoFiConnectionMode,
-    string KoFiRelayBaseUrl,
-    string KoFiRelayChannelId,
-    string KoFiRelayClientSecret,
-    int KoFiLocalPort,
-    string KoFiWebhookPath,
-    string KoFiVerificationToken);
+    string StreamlabsAccessToken);
 
 public sealed record CashPaymentRuleSnapshot(
     Guid Id,
@@ -660,7 +652,7 @@ public sealed record BridgeRuntimeConfiguration(
                 }
 
                 // Register the payment rule with the cash-payment matcher so it fires on
-                // StreamElements / Streamlabs / Ko-fi events. The fired TriggerAction is routed
+                // StreamElements / Streamlabs events. The fired TriggerAction is routed
                 // back to this profile's target avatar via FindAvatarSwapProfileForRule.
                 if (TryToCashPaymentSnapshot(rule, avatarScaleSafety, out var cashSnapshot))
                 {
@@ -1548,17 +1540,7 @@ public sealed record BridgeRuntimeConfiguration(
             settings.StreamElementsAccountId.Trim(),
             settings.StreamElementsJwtToken,
             settings.StreamlabsEnabled,
-            settings.StreamlabsAccessToken,
-            settings.KoFiEnabled,
-            Enum.IsDefined(settings.KoFiConnectionMode) ? settings.KoFiConnectionMode : KoFiConnectionMode.HostedRelay,
-            string.IsNullOrWhiteSpace(settings.KoFiRelayBaseUrl)
-                ? CashPaymentConnectionSettings.DefaultKoFiRelayBaseUrl
-                : settings.KoFiRelayBaseUrl.Trim().TrimEnd('/'),
-            settings.KoFiRelayChannelId.Trim(),
-            settings.KoFiRelayClientSecret,
-            Math.Clamp(settings.KoFiLocalPort, 1, 65535),
-            string.IsNullOrWhiteSpace(settings.KoFiWebhookPath) ? "/kofi" : settings.KoFiWebhookPath.Trim(),
-            settings.KoFiVerificationToken);
+            settings.StreamlabsAccessToken);
     }
 
     private static AvatarScaleBitGrowthRangeSnapshot ToAvatarScaleBitGrowthRangeSnapshot(

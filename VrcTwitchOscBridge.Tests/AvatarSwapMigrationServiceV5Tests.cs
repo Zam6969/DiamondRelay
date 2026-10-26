@@ -49,7 +49,7 @@ public sealed class AvatarSwapMigrationServiceV5Tests
     }
 
     [Fact]
-    public void Converter_PassesThroughModernCashPaymentRule()
+    public void Converter_PreservesRemovedProviderRuleButDisablesIt()
     {
         const string modernJson = @"{
             ""Name"": ""Modern"",
@@ -71,7 +71,7 @@ public sealed class AvatarSwapMigrationServiceV5Tests
         Assert.Equal(50m, rule.MaximumAmount);
         Assert.Equal("USD", rule.CurrencyCode);
         Assert.Equal("cheer", rule.MessageContains);
-        Assert.True(rule.IsEnabled);
+        Assert.False(rule.IsEnabled);
         Assert.Equal(CashPaymentActionKind.TriggerAction, rule.ActionKind);
     }
 }

@@ -61,7 +61,7 @@ public sealed class InlinePaymentRuleRowViewModel : ObservableObject, IRuleRowVi
     {
         CashPaymentProvider.StreamElements => "StreamElements",
         CashPaymentProvider.Streamlabs => "Streamlabs",
-        CashPaymentProvider.KoFi => "Ko-fi",
+        CashPaymentProvider.KoFi => "Unsupported legacy provider",
         _ => provider.ToString()
     };
 
